@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6C6992AF-0C6C-4A43-93CD-AF5A6853882F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>RE_X.My.MyApplication</StartupObject>
+    <RootNamespace>RE_X</RootNamespace>
+    <AssemblyName>RE_X</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>RE_X.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>RE_X.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>1390497507_17009.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Design, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Enterprise.Viewing.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="itextsharp">
+      <HintPath>..\..\..\..\REI Urben\REI\bin\Debug\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="ZipForge">
+      <HintPath>..\..\..\..\AUTOX TAG\AutoX\bin\Debug\ZipForge.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BkDA.vb" />
+    <Compile Include="BkDS.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BkDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="BkDS.vb">
+      <DependentUpon>BkDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="CommonDA.vb" />
+    <Compile Include="CompDS.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CompDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="CompDS.vb">
+      <DependentUpon>CompDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="CrptRpt.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CrptRpt.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CryRptServiceSLI.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CryRptServiceSLI.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CryRptServiceSSI.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCashRegister.designer.vb">
+      <DependentUpon>FrmCashRegister.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCashRegister.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCashRegisterDetails.designer.vb">
+      <DependentUpon>FrmCashRegisterDetails.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCashRegisterDetails.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmClipBoard.designer.vb">
+      <DependentUpon>FrmClipBoard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmClipBoard.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCrptRptViewer.designer.vb">
+      <DependentUpon>FrmCrptRptViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCrptRptViewer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmEntryHead.designer.vb">
+      <DependentUpon>FrmEntryHead.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmEntryHead.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmLoading.designer.vb">
+      <DependentUpon>FrmLoading.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmLoading.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmLogin.designer.vb">
+      <DependentUpon>FrmLogin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmLogin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMDI.designer.vb">
+      <DependentUpon>FrmMDI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmMDI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmServiceLedgers.designer.vb">
+      <DependentUpon>FrmServiceLedgers.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmServiceLedgers.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTallyServiceOnTime.Designer.vb">
+      <DependentUpon>FrmTallyServiceOnTime.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmTallyServiceOnTime.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmVehicleStockGrp.designer.vb">
+      <DependentUpon>FrmVehicleStockGrp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmVehicleStockGrp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTallySpareStock.designer.vb">
+      <DependentUpon>FrmTallySpareStock.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmTallySpareStock.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSettings.designer.vb">
+      <DependentUpon>FrmSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTallySparePur.Designer.vb">
+      <DependentUpon>FrmTallySparePur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmTallySparePur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTallyVehiclePur.Designer.vb">
+      <DependentUpon>FrmTallyVehiclePur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmTallyVehiclePur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTallyService.Designer.vb">
+      <DependentUpon>FrmTallyService.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmTallyService.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmWait.designer.vb">
+      <DependentUpon>FrmWait.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmWait.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListViewComparer.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="PublicShared.vb" />
+    <Compile Include="TallyDs.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TallyDs.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="TallyDs.vb">
+      <DependentUpon>TallyDs.xsd</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CrptRpt.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrptRpt.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CryRptServiceSLI.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CryRptServiceSLI.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCashRegister.resx">
+      <DependentUpon>FrmCashRegister.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCashRegisterDetails.resx">
+      <DependentUpon>FrmCashRegisterDetails.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmClipBoard.resx">
+      <DependentUpon>FrmClipBoard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCrptRptViewer.resx">
+      <DependentUpon>FrmCrptRptViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmEntryHead.resx">
+      <DependentUpon>FrmEntryHead.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmLoading.resx">
+      <DependentUpon>FrmLoading.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmLogin.resx">
+      <DependentUpon>FrmLogin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMDI.resx">
+      <DependentUpon>FrmMDI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmServiceLedgers.resx">
+      <DependentUpon>FrmServiceLedgers.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTallyServiceOnTime.resx">
+      <DependentUpon>FrmTallyServiceOnTime.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmVehicleStockGrp.resx">
+      <DependentUpon>FrmVehicleStockGrp.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTallySpareStock.resx">
+      <DependentUpon>FrmTallySpareStock.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmSettings.resx">
+      <DependentUpon>FrmSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTallySparePur.resx">
+      <DependentUpon>FrmTallySparePur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTallyVehiclePur.resx">
+      <DependentUpon>FrmTallyVehiclePur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTallyService.resx">
+      <DependentUpon>FrmTallyService.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmWait.resx">
+      <DependentUpon>FrmWait.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BkDS.xsc">
+      <DependentUpon>BkDS.xsd</DependentUpon>
+    </None>
+    <None Include="BkDS.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>BkDS.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="BkDS.xss">
+      <DependentUpon>BkDS.xsd</DependentUpon>
+    </None>
+    <None Include="CompDS.xsc">
+      <DependentUpon>CompDS.xsd</DependentUpon>
+    </None>
+    <None Include="CompDS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CompDS.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="CompDS.xss">
+      <DependentUpon>CompDS.xsd</DependentUpon>
+    </None>
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="TallyDs.xsc">
+      <DependentUpon>TallyDs.xsd</DependentUpon>
+    </None>
+    <None Include="TallyDs.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TallyDs.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="TallyDs.xss">
+      <DependentUpon>TallyDs.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bg\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Windows\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="MSXML2">
+      <Guid>{F5078F18-C551-11D3-89B9-0000F81FE221}</Guid>
+      <VersionMajor>3</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="1390497507_17009.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
