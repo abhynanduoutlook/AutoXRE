@@ -450,7 +450,36 @@ Public Class FrmMDI
 
     End Function
 
+    Private Function ProcessDataSetColumns(Dsimport As DataSet, RowValues As String) As DataSet
 
+        Dim ClNameRow As Boolean = False
+        Dim Rowvals() = RowValues.ToString.Split(",")
+        Dim TpDs As DataSet = Dsimport
+        For Each dr As DataRow In TpDs.Tables(0).Rows
+
+            For Each cl As DataColumn In TpDs.Tables(0).Columns
+
+                For Each col In Rowvals
+                    If dr(cl).ToString = col Then
+                        cl.ColumnName = col
+                        ClNameRow = True
+                        Exit For
+                    End If
+                Next
+
+            Next
+
+            If ClNameRow Then
+                GoTo end_of_for
+            End If
+        Next
+end_of_for:
+
+
+
+
+        Return TpDs
+    End Function
 
     Private Function ImportVehiclePur(ByVal FileName As String) As String
 
@@ -463,7 +492,7 @@ Public Class FrmMDI
         SaveDs = ReadFile(FileName, "PurchaseVehicle")
         'SaveDs.Merge(TempDs)
         LblStatus(True, "Importing File  " & FileName & " ")
-
+        SaveDs = ProcessDataSetColumns(SaveDs, Read_Settings("VehiclePurchase_ColumnOrder"))
         Status = CommonDA.Insert_PurchaseVehicle(SaveDs, LblServiceStatus)
         LastMovedFile = ""
         If Status = "True" Then
