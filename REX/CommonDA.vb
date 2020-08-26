@@ -4913,9 +4913,9 @@ Public Class CommonDA
                     End If
 
                     BillType = Left(InvNo, 3)
-                        Taxable = Format(Total_Amt - (CGST + SGST), "0.00")
+                    Taxable = Format(Total_Amt - (CGST + SGST), "0.00")
 
-                        Qry_Insert = " INSERT INTO service (Job_Card,Job_Card_Date,Invoice_Number,Company_Name,Service_Advisor,Header_Job_Type,Job_Type,Customer_Name, " &
+                    Qry_Insert = " INSERT INTO service (Job_Card,Job_Card_Date,Invoice_Number,Company_Name,Service_Advisor,Header_Job_Type,Job_Type,Customer_Name, " &
                                 " Mobile_No,Type,Part_Labour_Code,Part_Labour_Description,HSN_SAC_code,Issued_Qty,Rate,Discount,Discount_per, " &
                                 " CGST_Per,CGST,SGST_Per,SGST,Taxable,KFC,KFC_Per,IGST_Per,IGST,Total_Amount) Values (" &
                                 "'" & IIf(BillType = "IPI", "", InvNo.Trim) & "','" & Format(DrD("F2"), "yyyy-MM-dd") & "','" & InvNo.Trim & "','" & ReplaceQuote(DrD("Company")) & "', " &
@@ -4925,36 +4925,36 @@ Public Class CommonDA
                                 " '" & Val(DrD("Qty")) & "','" & Val(DrD("Rate")) & "','" & Dsic & "','" & Disc_per & "'," &
                                 " '" & CGST_per & "','" & CGST & "', '" & SGST_per & "','" & SGST & "','" & Taxable & "','" & KFC & "','" & KFC_per & "','" & IGST_per & "','" & IGST & "','" & Total_Amt & "' ); "
 
-                        Status = RunQuery(Qry_Insert)
-                        Grand_tot = Grand_tot + Total_Amt
+                    Status = RunQuery(Qry_Insert)
+                    Grand_tot = Grand_tot + Total_Amt
 
-                        If CGST_per.ToString.Contains("14") Then
-                            Sum_CGST14 += CGST
-                        ElseIf CGST_per.ToString.Contains("9") Then
-                            Sum_CGST9 += CGST
-                        End If
+                    If CGST_per.ToString.Contains("14") Then
+                        Sum_CGST14 += CGST
+                    ElseIf CGST_per.ToString.Contains("9") Then
+                        Sum_CGST9 += CGST
+                    End If
 
-                        If SGST_per.ToString.Contains("14") Then
-                            Sum_SGST14 += SGST
-                        ElseIf SGST_per.ToString.Contains("9") Then
-                            Sum_SGST9 += SGST
-                        End If
+                    If SGST_per.ToString.Contains("14") Then
+                        Sum_SGST14 += SGST
+                    ElseIf SGST_per.ToString.Contains("9") Then
+                        Sum_SGST9 += SGST
+                    End If
 
-                        If IGST_per.ToString.Contains("28") Then
-                            Sum_IGST28 += IGST
-                        ElseIf IGST_per.ToString.Contains("18") Then
-                            Sum_IGST18 += IGST
-                        End If
-
-
-                        If KFC > 0 Then
-                            sum_KFC += KFC
-                        End If
+                    If IGST_per.ToString.Contains("28") Then
+                        Sum_IGST28 += IGST
+                    ElseIf IGST_per.ToString.Contains("18") Then
+                        Sum_IGST18 += IGST
+                    End If
 
 
-                    ElseIf Inser_Header = True And old_Inv <> "" Then
+                    If KFC > 0 Then
+                        sum_KFC += KFC
+                    End If
 
-                        Qry_Insert = " Insert into service_header (Invoice_Number,Invoice_Date,Invoice_Amount,`CGST14_Per`,`CGST14`,`SGST14_Per`,`SGST14`," &
+
+                ElseIf Inser_Header = True And old_Inv <> "" Then
+
+                    Qry_Insert = " Insert into service_header (Invoice_Number,Invoice_Date,Invoice_Amount,`CGST14_Per`,`CGST14`,`SGST14_Per`,`SGST14`," &
                                 "`CGST9_Per`,`CGST9`,`SGST9_Per`,`SGST9`,`KFC1_Per`,`KFC1`,IGST18_Per,IGST18,IGST28_Per,IGST28) " &
                       " Select '" & old_Inv.Trim & "',Job_Card_Date,'" & Grand_tot & "','" & IIf(Sum_CGST14 > 0, "14.00", "0.00") & "','" & Sum_CGST14 & "'," &
                       "'" & IIf(Sum_SGST14 > 0, "14.00", "0.00") & "','" & Sum_CGST14 & "','" & IIf(Sum_CGST9 > 0, "9.00", "0.00") & "','" & Sum_CGST9 & "'," &
@@ -5574,7 +5574,7 @@ Public Class CommonDA
         Dim BillType As String = ""
         cmd.Connection = cn
         cn.Open()
-        Dim F_per = val(Read_Settings("Freight_spare_per")), D_per As Double = Val(Read_Settings("Disc_spare_per"))
+        Dim F_per = Val(Read_Settings("Freight_spare_per")), D_per As Double = Val(Read_Settings("Disc_spare_per"))
 
         Qry = " select * FROM gst_details "
         da.SelectCommand = cmd
