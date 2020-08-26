@@ -2186,6 +2186,7 @@ Public Class CommonDA
         Dim DrD As TallyDs.PurchaseVehicleRow
         Dim dr As TallyDs.veh_masterRow
         Dim Taxable_amt As Double = 0
+        Dim Igst As Decimal = 0.0
         Dim Total_amt As Decimal
         Dim Missing_Stock As String = ""
         cmd.Connection = cn
@@ -2217,18 +2218,16 @@ Public Class CommonDA
             For Each DrD In Ds.PurchaseVehicle.Rows
 
 
-
-
-                If DrD("Model Description") <> "" And DrD("RE Invoice No") <> "" And DrD("Chassis No") <> "" Then
+                If DrD("Material Description") <> "" And DrD("RE Invoice no") <> "" And DrD("Chassis Number") <> "" Then
 
                     TepDS = New TallyDs
-                    TepDS.Merge(TDS.veh_master.Select("ModelFamily = '" & DrD("Model Description") & "' "))
+                    TepDS.Merge(TDS.veh_master.Select("ModelFamily = '" & DrD("Material Description") & "' "))
 
                     If TepDS.veh_master.Rows.Count = 0 Then
-                        Missing_Stock = Missing_Stock & DrD("Model Description") & vbCrLf
+                        Missing_Stock = Missing_Stock & DrD("Material Description") & vbCrLf
                     ElseIf TepDS.veh_master.Select("SGST_Per > 0 and CGST_Per > 0").Count = 0 Then
 
-                        Missing_Stock = Missing_Stock & DrD("Model Description") & "Tax Values Not Found In Vehicle Master" & vbCrLf
+                        Missing_Stock = Missing_Stock & DrD("Material Description") & "Tax Values Not Found In Vehicle Master" & vbCrLf
 
 
                     Else
@@ -2271,33 +2270,33 @@ Public Class CommonDA
                 LblStat.Refresh()
 
 
-                BillType = Strings.Left(DrD("F2"), 3)
+                BillType = DrD("SAP Parent code")
 
                 If BillType = "DPR" Then
                     Continue For
                 End If
 
-                If (DrD("Document Name") <> "") Then
-                    Doc_Date = DateSerial((Right(DrD("Document Name"), 4)), (Mid(DrD("Document Name"), 4, 2)), (Left(DrD("Document Name"), 2)))
+                If (DrD("GRN Date").ToString <> "") Then
+                    Doc_Date = DateSerial((Right(DrD("GRN Date"), 4)), (Mid(DrD("GRN Date"), 4, 2)), (Left(DrD("GRN Date"), 2)))
                 End If
 
-                If InvNo <> DrD("RE Invoice No") Then
+                If InvNo <> DrD("RE Invoice no") Then
 
-                    Qry_Delete = " Delete from PurchaseVehicle where `Doc_Date` = '" & Format(Doc_Date, "yyyy-MM-dd") & "' and `Invoice_No` = '" & DrD("RE Invoice No") & "'  and PostedToTally=0 ; "
+                    Qry_Delete = " Delete from PurchaseVehicle where `Doc_Date` = '" & Format(Doc_Date, "yyyy-MM-dd") & "' and `Invoice_No` = '" & DrD("RE Invoice no") & "'  and PostedToTally=0 ; "
                     Status = RunQuery(Qry_Delete)
-                    InvNo = DrD("RE Invoice No")
+                    InvNo = DrD("RE Invoice no")
 
                 End If
 
 
-                If Model <> DrD("Model Description") Then
+                If Model <> DrD("Material Description") Then
 
                     sgst_p = 0
                     cgst_p = 0
                     cess_p = 0
 
                     TepDS = New TallyDs
-                    TepDS.Merge(TDS.veh_master.Select("ModelFamily = '" & DrD("Model Description") & "' "))
+                    TepDS.Merge(TDS.veh_master.Select("ModelFamily = '" & DrD("Material Description") & "' "))
 
                     If TepDS.veh_master.Rows.Count > 0 Then
 
@@ -2309,7 +2308,7 @@ Public Class CommonDA
 
                     End If
 
-                    Model = DrD("Model Description")
+                    Model = DrD("Material Description")
 
                 End If
 
@@ -2318,7 +2317,7 @@ Public Class CommonDA
 
                 Try
                     Dim PId = "0"
-                    Qry_Check = " select Invoice_Number from PurchaseVehicle where `Doc_Date` = '" & Format(Doc_Date, "yyyy-MM-dd") & "' and `Invoice_No` = '" & DrD("RE Invoice No") & "' and PostedToTally=1 ; "
+                    Qry_Check = " select Invoice_Number from PurchaseVehicle where `Doc_Date` = '" & Format(Doc_Date, "yyyy-MM-dd") & "' and `Invoice_No` = '" & DrD("RE Invoice no") & "' and PostedToTally=1 ; "
                     cmd.CommandText = Qry_Check
                     PId = cmd.ExecuteScalar()
                     If PId = "0" Then
@@ -2330,40 +2329,52 @@ Public Class CommonDA
                 End Try
 
 
-                If DrD("RE Invoice No") <> "" And DrD("Chassis No") <> "" Then
+                If DrD("RE Invoice no") <> "" And DrD("Chassis Number") <> "" Then
 
 
 
 
 
-                    If No_Freight_Depo.Contains(DrD("Depot")) Then
-                        DrD.Freight = Freight
-                        Taxable_amt = Freight + Val(DrD("Rate"))
+                    'If No_Freight_Depo.Contains(DrD("Depot")) Then
+                    '    DrD.Freight = Format(Val(DrD("Service Charges")), "0.00")
+                    '    Taxable_amt = Freight + Val(DrD("Line Amount"))
+                    'Else
+                    '    DrD.Freight = 0
+                    Taxable_amt = Val(DrD("Service Charges").ToString.Replace(",", "")) + Val(DrD("Line Amount").ToString.Replace(",", ""))
+                    'End If
+
+                    DrD.Freight = Val(DrD("Service Charges").ToString.Replace(",", ""))
+                    'DrD.SGST = Format(Val(DrD("SGST")), "0.00")
+                    'DrD.CGST = Format(Val(DrD("CGST")), "0.00")
+                    'DrD.CESS = Format(Val(DrD("Cess")), "0.00")
+                    Igst = Format(Val(DrD("IGST").ToString.Replace(",", "")), "0.00")
+
+                    If Taxable_amt > 0 Then
+                        sgst_p = DrD.SGST * 100 / Taxable_amt
+                        cgst_p = DrD.CGST * 100 / Taxable_amt
+                        cess_p = DrD.CESS * 100 / Taxable_amt
                     Else
-                        DrD.Freight = 0
-                        Taxable_amt = Val(DrD("Rate"))
-                    End If
-                    DrD.Freight = Format(Val(DrD("FreightCharge")), "0.00")
-                    DrD.SGST = Format(Val(DrD.SGST), "0.00")
-                    DrD.CGST = Format(Val(DrD.CGST), "0.00")
-                    DrD.CESS = Format(Val(DrD.CESS), "0.00")
-                    Total_amt = DrD.Freight + Val(DrD("Rate")) + DrD.SGST + DrD.CGST + DrD.CESS
 
-                    If Total_amt <> Val(DrD("Total Amount")) Then
-                        Create_Log("Total Mismatch in Bill", DrD("RE Invoice No").ToString, "Sum Of:" & Total_amt.ToString & "<> Bill Total" & Val(DrD("Total Amount")))
                     End If
 
 
+                    Total_amt = DrD.Freight + Val(DrD("Line Amount")) + DrD.SGST + DrD.CGST + DrD.CESS + Igst
+
+                    'If Total_amt <> Val(DrD("Total Amount")) Then
+                    '    Create_Log("Total Mismatch in Bill", DrD("RE Invoice no").ToString, "Sum Of:" & Total_amt.ToString & "<> Bill Total" & Val(DrD("Total Amount")))
+                    'End If
 
 
-                    Qry_Insert = "Insert into purchasevehicle(Doc_Date,Document_No,Company,Store,Depot,ModelFamily,Invoice_Date, " &
+
+
+                    Qry_Insert = "Insert into purchasevehicle(Doc_Date,Document_No,Invoice_Number,ModelFamily,Invoice_Date, " &
                                  " Model_Code,Description,Chassis_No,Engine_No," &
                                  " MFG_Date,Invoice_No,Remarks,Rate,Amount,Total_Amount,SGST_Per,CGST_Per,CESS_Per,SGST,CGST,CESS,Freight) Values (" &
-                            "'" & Format(Doc_Date, "yyyy-MM-dd") & "','" & DrD("F2") & "','" & DrD("Company") & "', " &
-                            "'" & DrD("Store") & "','" & DrD("Depot") & "','" & DrD("Model Family") & "' ,'" & Format(DrD("RE Invoice Date"), "yyyy-MM-dd") & "', " &
-                            "'" & DrD("Model Code") & "','" & CommonDA.ReplaceQuote(DrD("Model Description")) & "','" & DrD("Chassis No") & "', " &
-                            "'" & DrD("Engine No") & "','" & Format(DrD("Mfg Month"), "yyyy-MM-dd") & "','" & DrD("RE Invoice No") & "','" & DrD("Remarks") & "'," &
-                            "'" & Val(DrD("Rate")) & "','" & Val(DrD("Amount")) & "','" & Val(DrD("Total Amount")) & "', " &
+                            "'" & Format(Doc_Date, "yyyy-MM-dd") & "','" & DrD("SAP GRN Number") & "','" & DrD("RE Invoice no") & "'," &
+                            "'" & DrD("Material Description") & "' ,'" & Format(DrD("RE Invoice date"), "yyyy-MM-dd") & "', " &
+                            "'" & DrD("Material Code") & "','" & CommonDA.ReplaceQuote(DrD("Material Description")) & "','" & DrD("Chassis Number") & "', " &
+                            "'" & DrD("Engine Number") & "','" & Format(DrD("Mfg Date"), "yyyy-MM-dd") & "','" & DrD("RE Invoice no") & "','" & DrD("GRN Status") & "'," &
+                            "'" & Val(DrD("Line Amount")) & "','" & Taxable_amt & "','" & Total_amt & "', " &
                             "'" & sgst_p & "','" & cgst_p & "','" & cess_p & "','" & DrD.SGST & "','" & DrD.CGST & "','" & DrD.CESS & "','" & DrD.Freight & "' ); "
 
                     Status = RunQuery(Qry_Insert)
@@ -5574,7 +5585,7 @@ Public Class CommonDA
 
         ' RunQuery("TRUNCATE `re_spare_purchase`")
 
-        ' Dim Total As Integer = Ds.re_spare_purchase.Select("`Supplier Invoice No`<>'' and `Model`<>'' ").Count
+        ' Dim Total As Integer = Ds.re_spare_purchase.Select("`Invoice`<>'' and `Model`<>'' ").Count
         Dim Total As Integer = Ds.re_spare_purchase.Rows.Count
 
 
@@ -5607,15 +5618,15 @@ Public Class CommonDA
 
 
 
-                If (DrD("GRN No") <> "") Then
-                    Grn_date = DateSerial((Right(DrD("GRN No"), 4)), (Mid(DrD("GRN No"), 4, 2)), (Left(DrD("GRN No"), 2)))
+                If (DrD("Date").ToString <> "") Then
+                    Grn_date = DateSerial((Right(DrD("Date"), 4)), (Mid(DrD("Date"), 4, 2)), (Left(DrD("Date"), 2)))
                 End If
 
-                If DrD("Supplier Invoice No") = "42271322" Or DrD("Supplier Invoice No") = "42276300" Then
+                If DrD("Invoice") = "42271322" Or DrD("Invoice") = "42276300" Then
                     Dim ssss As String = ""
                 End If
 
-                If exist = True And InvNo = DrD("Supplier Invoice No") Then
+                If exist = True And InvNo = DrD("Invoice") Then
                     x += 1
 
                     'LblStatus.Text = "Import Status : " & Total & "/" & x
@@ -5626,14 +5637,14 @@ Public Class CommonDA
 
                 End If
 
-                If InvNo <> DrD("Supplier Invoice No") Then
+                If InvNo <> DrD("Invoice") Then
 
-                    Qry = "Select myid from re_spare_purchase where locked=1 and `GRN Date` = '" & Format(Grn_date, "yyyy-MM-dd") & "' and `Supplier Invoice No` = '" & DrD("Supplier Invoice No") & "' ; "
+                    Qry = "Select myid from re_spare_purchase where locked=1 and `GRN Date` = '" & Format(Grn_date, "yyyy-MM-dd") & "' and `Supplier Invoice No` = '" & DrD("Invoice") & "' ; "
                     da.SelectCommand = cmd
                     cmd.CommandText = Qry
                     Delid = cmd.ExecuteScalar
 
-                    InvNo = DrD("Supplier Invoice No")
+                    InvNo = DrD("Invoice")
                     TaxOnly = True
 
                     If Delid > 0 Then
@@ -5641,12 +5652,12 @@ Public Class CommonDA
                         Status = True
                         x += 1
 
-                        'LblStatus.Text = "Import Status : " & Total & "/" & x
+                        'LblStatus.Text = "Import Status : " & Total & "/" & -x
                         'LblStatus.Refresh()
 
                         Continue For
                     Else
-                        Qry_Delete = " Delete from re_spare_purchase where `GRN Date` = '" & Format(Grn_date, "yyyy-MM-dd") & "' and `Supplier Invoice No` = '" & DrD("Supplier Invoice No") & "' ; "
+                        Qry_Delete = " Delete from re_spare_purchase where `GRN Date` = '" & Format(Grn_date, "yyyy-MM-dd") & "' and `Supplier Invoice No` = '" & DrD("Invoice") & "' ; "
                         Status = RunQuery(Qry_Delete)
                         exist = False
 
@@ -5654,7 +5665,7 @@ Public Class CommonDA
 
                 End If
 
-                If DrD("Supplier Invoice No") <> "" And DrD("Model") <> "" Then
+                If DrD("Invoice") <> "" And DrD("Item name") <> "" Then
 
                     Insert = False
                     taxable = 0
@@ -5672,148 +5683,26 @@ Public Class CommonDA
 
                     Net_with_Disc = 0
 
-                    rate = Val(DrD("Rate"))
-                    qty = Val(DrD("Qty"))
-                    Gross_amount = rate * qty
-                    Total_Amount = Math.Round(Val(DrD("Total Amount")), 2)
-                    Given_Tax = Math.Round(Val(DrD("Tax Amount")), 2)
-
-                    If Given_Tax = 0 Then
-                        taxable = Gross_amount
-                        Freight = 0
-                        Freight_per = 0
-                        Disc_per = 0
-                        Disc = 0
-                        IGST = 0
-                        IGST_per = 0
-                        Insert = True
-                        TaxOnly = False
-                        f_bill = False
-                        d_bill = False
-                    End If
-
-                    If TaxOnly = True Then
-                        IGST_per = Math.Round((Given_Tax / Gross_amount) * 100)
-
-                        If TDS.GST_Details.Select("GST_Name = 'IGST' and GST_per = '" & IGST_per & "'").Count > 0 Then
-                            IGST = Given_Tax
-                            taxable = Gross_amount
-
-                            Disc = 0
-                            Disc_per = 0
-                            Freight = 0
-                            Freight_per = 0
-
-                            Insert = True
-                            f_bill = False
-                            d_bill = False
-                            TaxOnly = True
-
-                        Else
-
-                            d_bill = True
-                            f_bill = True
-                            TaxOnly = False
-                        End If
-
-
-                    End If
-
-                    If f_bill = True Then
-                        Freight_per = F_per
-                        Freight = Math.Round((Gross_amount * Freight_per) / 100, 2)
-                        taxable = Math.Round(Freight + Gross_amount, 2)
-                        IGST_per = Math.Round((Given_Tax / taxable) * 100)
-
-                        Arrived_tax = Math.Round((taxable * IGST_per) / 100, 2)
-                        IGST = Arrived_tax
-
-
-                        If TDS.GST_Details.Select("GST_Name = 'IGST' and GST_per = '" & IGST_per & "'").Count > 0 And Arrived_tax = Given_Tax Then
-
-                            taxable = Gross_amount
-                            Total_Amount = Math.Round(taxable + IGST + Freight, 2)
-
-                            Disc = 0
-                            Disc_per = 0
-
-                            Insert = True
-                            f_bill = True
-                            d_bill = False
-                            TaxOnly = False
-
-                        Else
-                            d_bill = True
-                            TaxOnly = True
-                            f_bill = False
-                        End If
-
-                    End If
-
-                    If d_bill = True Then
-                        Disc_per = D_per
-                        Net_with_Disc = Math.Round((Total_Amount * 100) / (100 - Disc_per), 2)
-                        IGST = Math.Round(Net_with_Disc - Gross_amount, 2)
-                        IGST_per = Math.Round((IGST / Gross_amount) * 100)
-                        taxable = Gross_amount
-                        Disc = Math.Round((Net_with_Disc * Disc_per) / 100, 2)
-                        Arrived_tax = Math.Round(IGST - Disc, 2)
-
-                        If TDS.GST_Details.Select("GST_Name = 'IGST' and GST_per = '" & IGST_per & "'").Count > 0 And Arrived_tax = Given_Tax Then
-
-                            Freight = 0
-                            Disc = 0
-                            taxable = 0
-                            Freight_per = 0
-
-                            Disc = Math.Round((Gross_amount * Disc_per) / 100, 2)
-                            taxable = Math.Round(Gross_amount - Disc, 2)
-                            IGST = Math.Round((taxable * IGST_per) / 100, 2)
-                            IGST = Format(Total_Amount - taxable, "0.00")
-                            TaxOnly = False
-                            f_bill = False
-                            d_bill = True
-                            Insert = True
-                        Else
-                            d_bill = False
-                            f_bill = True
-                            TaxOnly = True
-                        End If
-
-                    End If
-
-
-                    If Insert = False Then
-                        IGST_per = Math.Round((Given_Tax / Gross_amount) * 100)
-                        taxable = Gross_amount
-                        IGST = Given_Tax
-
-                        Disc = 0
-                        Disc_per = 0
-                        Freight = 0
-                        Freight_per = 0
-                        TaxOnly = True
-                    End If
-                    BillType = Strings.Left(DrD("F2"), 3)
-                    If BillType = "DRP" Then
-                        Continue For
-                    End If
-                    Dim LrDate As Date = DrD("LR Date")
+                    'rate = Val(DrD("Rate"))
+                    'qty = Val(DrD("Qty"))
+                    'Gross_amount = rate * qty
+                    'Total_Amount = Math.Round(Val(DrD("Total Amount")), 2)
+                    'Given_Tax = Math.Round(Val(DrD("Tax Amount")), 2)
 
 
 
-                    Qry_Insert += " INSERT INTO re_spare_purchase (`GRN Date`,`GRN No`,Company,Branch," &
+
+
+                    Qry_Insert += " INSERT INTO re_spare_purchase (`GRN Date`,`GRN No`,Company,Remarks,HSNCode," &
                     " Supplier,`Supplier Invoice No`,`Supplier Invoice Date`,Model,Description,`Part Catalog`,`Part Category`,UOM,Qty,Rate," &
-                    " `Tax Amount`,LineTaxAmount,Remarks,`LR No`,`LR Date`,`Transporter No`,`Road Permit No`,`Header Tax Amount`,`Header Tax Authority`,Company1, " &
-                    "branchcontactattachment,IGST_per,IGST,Freight_per,Freight,Discount_per,Discount,Gross_amt,taxable_amount,`Total Amount`) Values (" &
-                    "'" & Format(Grn_date, "yyyy-MM-dd") & "','" & DrD("F2") & "','" & DrD("Company") & "', " &
-                    "'" & DrD("Branch") & "','" & DrD("Supplier") & "','" & DrD("Supplier Invoice No") & "' ,'" & Format(DrD("Supplier Invoice Date"), "yyyy-MM-dd") & "', " &
-                    "'" & DrD("Model") & "','" & CommonDA.ReplaceQuote(DrD("Description")) & "','" & DrD("Part Catalog") & "','" & DrD("Part Category") & "','" & DrD("UOM") & "','" & Val(DrD("Qty")) & "','" & Val(DrD("Rate")) & "'," &
-                    "'" & Val(DrD("Tax Amount")) & "','" & Val(DrD("LineTaxAmount")) & "','" & DrD("Remarks") & "','" & DrD("LR No") & "'," &
-                    "'" & Format(LrDate, "yyyy-MM-dd") & "','" & DrD("Transporter No") & "','" & DrD("Road Permit No") & "','" & DrD("Header Tax Amount") & "'," &
-                    "'" & DrD("Header Tax Authority") & "', '" & DrD("Company1") & "', " &
-                    "'" & DrD("branchcontactattachment") & "','" & IGST_per & "','" & IGST & "','" & Freight_per & "','" & Freight & "','" & Disc_per & "', " &
-                    "'" & Disc & "'," & Gross_amount & "," & taxable & ",'" & Total_Amount & "'); "
+                    " `Tax Amount`," &
+                    "IGST_per,IGST,Freight_per,Freight,Discount_per,Discount,Gross_amt,taxable_amount,`Total Amount`) Values (" &
+                    "'" & Format(Grn_date, "yyyy-MM-dd") & "','" & DrD("Document No") & "','" & DrD("My GSTIN") & "','" & DrD("Address") & "','" & DrD("HSN codes") & "', " &
+                    "'" & DrD("Cust/Vend Account") & "','" & DrD("Invoice") & "' ,'" & Format(DrD("Date"), "yyyy-MM-dd") & "', " &
+                    "'" & DrD("Material Code") & "','" & CommonDA.ReplaceQuote(DrD("Item name")) & "','" & DrD("Item group") & "','" & DrD("Part Category") & "','" & DrD("Item Unit Of Measurement") & "','" & Val(DrD("Quantity").ToString.Replace(",", "")) & "','" & Val(DrD("Item rate/ Exshowroom price")) & "'," &
+                    "'" & Val(DrD("Total invoice value").ToString.Replace(",", "")) - Val(DrD("Taxable value").ToString.Replace(",", "")) & "', " &
+                    "'" & Val(DrD("Tax rate IGST").ToString.Replace(",", "")) & "','" & Val(DrD("IGST amount").ToString.Replace(",", "")) & "','" & Freight_per & "','" & Freight & "','" & Val(DrD("Discount %").ToString.Replace(", ", "")) & "', " &
+                    "'" & Val(DrD("Discount").ToString.Replace(",", "")) & "'," & Gross_amount & "," & Val(DrD("Taxable value").ToString.Replace(",", "")) & ",'" & Val(DrD("Total invoice value").ToString.Replace(",", "")) & "'); "
 
 
 
