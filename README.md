@@ -1,2 +1,2 @@
 # AutoXRE
-Royal Enfield Tally Integration With Cash Register
+Royal Enfield Tally 
