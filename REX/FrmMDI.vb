@@ -587,7 +587,7 @@ end_of_for:
         Dim NewFileName As String = ""
         LblStatus(True, "Reading" & FileName & "")
         TempDs = ReadFile(FileName, "re_spare_purchase")
-
+        ' TempDs = ProcessDataSetColumns(TempDs, Read_Settings("SparePurchase_ColumnOrder"))
         Status = CommonDA.Insert_SparePurchase(TempDs, LblServiceStatus)
 
         If Status Then
