@@ -62,6 +62,8 @@ Public Class FrmTallyVehiclePur
         BranchName = Read_Settings("TallyCompanyBranch")
         Create_Header()
         Create_Heads()
+        CmbSearchBy.SelectedIndex = 0
+
 
     End Sub
 
@@ -234,10 +236,18 @@ Public Class FrmTallyVehiclePur
         If ImportDs.PurchaseVehicle.Rows.Count > 0 Then
 
             If RbtActive.Checked = True Then
-                ImportDs = New TallyDs
-                ImportDs.Merge(VehicleDS.PurchaseVehicle.Select("To_Tally=0 and Invoice_Number <>'' "))
-                ImportDs.Merge(VehicleDS.PurchaseVehicle_Detail.Select("To_Tally=0 and Invoice_Number <> ''"))
-                '  BtnImport.Width = 0
+                If TxtSearch.Text = "" Then
+
+                    ImportDs = New TallyDs
+                    ImportDs.Merge(VehicleDS.PurchaseVehicle.Select("To_Tally=0 and Invoice_Number <>'' "))
+                    ImportDs.Merge(VehicleDS.PurchaseVehicle_Detail.Select("To_Tally=0 and Invoice_Number <> ''"))
+                    '  BtnImport.Width = 0
+                Else
+                    'ImportDs.PurchaseVehicle.Rows.Clear()
+                    'ImportDs.Merge(VehicleDS.PurchaseVehicle_Detail.Select("Invoice_Number like '%" & TxtSearch.Text.Trim & "%'"))
+
+
+                End If
                 PanelPlsWait.Visible = True
                 Import_To_Tally(ImportDs)
                 PanelPlsWait.Visible = False
@@ -1180,7 +1190,7 @@ Public Class FrmTallyVehiclePur
                 Xml_Invn_Items += "<ALLINVENTORYENTRIES.LIST>" &
                                             "<STOCKITEMNAME>" & drd.Description.Replace("&", "&amp;") & " " & drd.Chassis_No & "</STOCKITEMNAME>" &
                                              "<ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>" &
-                                             "<RATE>-" & drd.Rate & "/Nos</RATE>" &
+                                             "<RATE>" & drd.Rate & "/Nos</RATE>" &
                                              "<AMOUNT>-" & drd.Rate & "</AMOUNT>" &
                                              "<ACTUALQTY>" & drd.qty & " Nos</ACTUALQTY>" &
                                              "<BILLEDQTY>" & drd.qty & " Nos</BILLEDQTY>" &

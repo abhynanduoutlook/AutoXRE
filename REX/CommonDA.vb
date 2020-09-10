@@ -872,7 +872,7 @@ Public Class CommonDA
             cmd.Connection = cn
             cn.Open()
 
-            strQuery = " select ifnull(b.Job_Card,0) as Job_Card ,b.Part_Labour_Description,b.Customer_Name,b.Chassis_No,b.Service_Advisor,b.Insurance_Provider,b.Insurance_Policy_No,b.Insurance_Start_Date,b.Insurance_Expiry_Date," &
+            strQuery = " select ifnull(b.Job_Card,0) as Job_Card ,b.GSTIN,b.Part_Labour_Description,b.Customer_Name,b.Chassis_No,b.Service_Advisor,b.Insurance_Provider,b.Insurance_Policy_No,b.Insurance_Start_Date,b.Insurance_Expiry_Date," &
             "a.* from service_header a left join service b on a.Invoice_Number=b.Invoice_Number where 1=1"
 
             If FrmDate <> Nothing Then
@@ -2209,7 +2209,10 @@ Public Class CommonDA
         Dim StatusString As String = "...................................................................................................."
         Dim Regex = New Regex(".")
 
+        Dim Dss As New TallyDs
 
+        Dss.Merge(Ds.PurchaseVehicle.Select("", "RE Invoice no"))
+        Ds = Dss
 
         Try
 
@@ -2277,7 +2280,11 @@ Public Class CommonDA
                 End If
 
                 If (DrD("GRN Date").ToString <> "") Then
-                    Doc_Date = DateSerial((Right(DrD("GRN Date"), 4)), (Mid(DrD("GRN Date"), 4, 2)), (Left(DrD("GRN Date"), 2)))
+                    If IsDate(DrD("GRN Date")) Then
+                        Doc_Date = DrD("GRN Date")
+                    Else
+                        Doc_Date = DateSerial((Right(DrD("GRN Date"), 4)), (Mid(DrD("GRN Date"), 4, 2)), (Left(DrD("GRN Date"), 2)))
+                    End If
                 End If
 
                 If InvNo <> DrD("RE Invoice no") Then
@@ -2346,7 +2353,7 @@ Public Class CommonDA
                     DrD.Freight = Val(DrD("Service Charges").ToString.Replace(",", ""))
                     'DrD.SGST = Format(Val(DrD("SGST")), "0.00")
                     'DrD.CGST = Format(Val(DrD("CGST")), "0.00")
-                    'DrD.CESS = Format(Val(DrD("Cess")), "0.00")
+                    DrD.CESS = Format(Val(DrD("Cess")), "0.00")
                     Igst = Format(Val(DrD("IGST").ToString.Replace(",", "")), "0.00")
 
                     If Taxable_amt > 0 Then
@@ -2367,10 +2374,10 @@ Public Class CommonDA
 
 
 
-                    Qry_Insert = "Insert into purchasevehicle(Doc_Date,Document_No,Invoice_Number,ModelFamily,Invoice_Date, " &
+                    Qry_Insert = "Insert into purchasevehicle(Doc_Date,Document_No,ModelFamily,Invoice_Date, " &
                                  " Model_Code,Description,Chassis_No,Engine_No," &
                                  " MFG_Date,Invoice_No,Remarks,Rate,Amount,Total_Amount,SGST_Per,CGST_Per,CESS_Per,SGST,CGST,CESS,Freight) Values (" &
-                            "'" & Format(Doc_Date, "yyyy-MM-dd") & "','" & DrD("SAP GRN Number") & "','" & DrD("RE Invoice no") & "'," &
+                            "'" & Format(Doc_Date, "yyyy-MM-dd") & "','" & DrD("SAP GRN Number") & "'," &
                             "'" & DrD("Material Description") & "' ,'" & Format(DrD("RE Invoice date"), "yyyy-MM-dd") & "', " &
                             "'" & DrD("Material Code") & "','" & CommonDA.ReplaceQuote(DrD("Material Description")) & "','" & DrD("Chassis Number") & "', " &
                             "'" & DrD("Engine Number") & "','" & Format(DrD("Mfg Date"), "yyyy-MM-dd") & "','" & DrD("RE Invoice no") & "','" & DrD("GRN Status") & "'," &
@@ -2395,7 +2402,7 @@ Public Class CommonDA
             Next
 
         Catch ex As Exception
-
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "Import Error")
         End Try
         'LblStatus.Text = "Ending ..."
         'LblStatus.Refresh()
@@ -2988,10 +2995,11 @@ Public Class CommonDA
         Dim Qty As Decimal = 0.0
         Dim Qry_Delete As String = ""
         Dim Inv_date As Date
-        Dim Rate = 0.0, Disc_per = 0.0, IGST_per = 0.0, IGST = 0.0, Total_Amt = 0.0, Dsic As Double = 0.0
+        Dim Rate = 0.0, Disc_per = 0.0, IGST_per = 0.0, IGST = 0.0, Total_Amt = 0.0, Dsic = 0.00, CGST = 0.0, SGST = 0.0, CESS As Double = 0.0
         Dim GrandTotal As Decimal
         Dim PartType As String = "Item"
         Dim Accepte_Bills As String = Read_Settings("Service_Accepted_Bills")
+
 
 
         Try
@@ -3009,11 +3017,7 @@ Public Class CommonDA
             Dim Regex = New Regex(".")
 
             For Each DrD In Ds.Tables("ServiceData").Rows
-                'Try
-                '    Inv_date = DrD("Delivered Date Time")
-                'Catch ex As Exception
-                '    Continue For
-                'End Try
+
                 x = x + y
                 If Math.Round(x, 0) > Math.Round(Val(z), 0) Then
                     '  StatusString += "|"
@@ -3028,22 +3032,21 @@ Public Class CommonDA
                 ' LblStat.Text = LblStat.Text.Replace("-", "\")
                 LblStat.Refresh()
 
-                If InvNo <> DrD("Invoice Number") Then
+                If InvNo <> DrD("Invoice") Then
 
-                    BillType = Strings.Left(DrD("Invoice Number").ToString, 3)
 
-                    If BillType = "SSI" Then 'Or BillType = "CPI" Then ' Or BillType = "CLI" Then
-                        Continue For
+                    'If Accepte_Bills.Contains(BillType) Then
+                    'Else
+
+                    '    Continue For
+                    'End If
+                    If InvNo <> "" Then
+                        Qry += " Insert Into service_header (Invoice_Number,Invoice_Date,Taxable_Amount,Invoice_Amount,CGST,SGST,IGST,CESS,PaiseRound) values(" &
+                            "'" & InvNo & "','" & Format(Inv_date, "yyyy-MM-dd") & "','" & Rate & "','" & Total_Amt & "','" & CGST & "','" & SGST & "','" & IGST & "'," &
+                            "'" & CESS & "','" & Math.Round(Total_Amt) - (Rate + CGST + SGST + CESS + IGST) & "');"
+
+                        Rate = 0.0 : Disc_per = 0.0 : IGST_per = 0.0 : IGST = 0.0 : Total_Amt = 0.0 : Dsic = 0.0 : Qty = 0 : CGST = 0.0 : SGST = 0.0 : CESS = 0.0
                     End If
-
-
-
-                    If Accepte_Bills.Contains(BillType) Then
-                    Else
-
-                        Continue For
-                    End If
-
 
                     If Qry <> "" Then
                         cmd.CommandText = Qry
@@ -3051,7 +3054,8 @@ Public Class CommonDA
                     End If
 
                     If OverWrite Then
-                        Qry = " Delete from service where `Invoice_Number` = '" & DrD("Invoice Number") & "' ; "
+                        Qry = " Delete from service where `Invoice_Number` = '" & DrD("Invoice") & "' ; " &
+                             " Delete from service_header where `Invoice_Number` = '" & DrD("Invoice") & "' ;"
                     Else
                         'strQuery = " Select Locked from service where `Invoice_Number` = '" & DrD("Invoice Number") & "' ; "
                         'cmd.CommandText = strQuery
@@ -3064,74 +3068,68 @@ Public Class CommonDA
                         'End If
                     End If
 
-                    InvNo = DrD("Invoice Number")
+                    InvNo = DrD("Invoice")
 
                 End If
 
 
-                If DrD("Invoice Number") <> "" And DrD("Part/Labour Code") <> "" Then
+                If DrD("Invoice") <> "" Then
 
-                    DrD("Customer Name") = DrD("Customer Name").ToString.Replace("Mr.", "")
-                    DrD("Customer Name") = UCase(DrD("Customer Name").ToString.Trim)
+                    DrD("Customer billing name") = DrD("Customer billing name").ToString.Replace("Mr.", "")
+                    DrD("Customer billing name") = UCase(DrD("Customer billing name").ToString.Trim)
 
-                    If Labour_SACCode.Contains(DrD("HSN/SAC code").trim) Then
+                    If Labour_SACCode.Contains(DrD("HSN codes").trim) Then
                         Type = "Labour"
                     Else
                         Type = "Item"
                     End If
 
-                    If DrD("Part_LabourGroup").ToString = "Labour" Then
+                    If DrD("Part Category").ToString = "Labour" Then
                         Type = "Labour"
+                        DrD("HSN codes") = DrD("Service accounting codes")
                     Else
                         Type = "Item"
                     End If
 
 
-                    Rate = 0.0 : Disc_per = 0.0 : IGST_per = 0.0 : IGST = 0.0 : Total_Amt = 0.0 : Dsic = 0.0 : Qty = 0
 
-                    Qty = Val(DrD("Issued Qty")) - Val(DrD("Returned Qty"))
-                    Taxable = Val(DrD("Rate")) * Qty
+
+                    Qty = Val(DrD("Quantity"))
+                    Taxable = Val(DrD("Item rate/ Exshowroom price")) * Qty
                     Taxable = Taxable - Val(DrD("Discount"))
-                    InvNo = DrD("Invoice Number").trim
-                    Inv_date = DrD("Job Card Date")
+                    InvNo = DrD("Invoice").trim
+                    Inv_date = DrD("Date")
 
-                    If BillType = "ELI" Then
-
-                        DrD("CGST") = Math.Round(Taxable * Val(Read_Settings("CGST_Labour_Per")) / 100, 2)
-                        DrD("SGST") = Math.Round(Taxable * Val(Read_Settings("SGST_Labour_Per")) / 100, 2)
-                        DrD("Total Amount") = Taxable + Val(DrD("CGST")) + Val(DrD("SGST"))
-                        DrD("SGST%") = Val(Read_Settings("SGST_Labour_Per"))
-                        DrD("CGST%") = Val(Read_Settings("CGST_Labour_Per"))
-
-
-
+                    Total_Amt += Val(DrD("Total invoice value").ToString.Replace(",", ""))
+                    Rate += Val(DrD("Taxable value").ToString.Replace(",", ""))
+                    CESS += Val(DrD("State Cess amount").ToString.Replace(",", ""))
+                    CGST += Val(DrD("CGST amount").ToString.Replace(",", ""))
+                    SGST += Val(DrD("SGST amount").ToString.Replace(",", ""))
+                    IGST += Val(DrD("IGST amount").ToString.Replace(",", ""))
+                    Dim filter As String = ""
+                    Dim filterValues As String = ""
+                    If DrD("Job id").ToString <> "" Then
+                        filter = "Job_Card,Job_Card_Date,"
+                        filterValues = IIf(filter = "", "", "'" & DrD("Job id").trim & "','" & Format(DrD("Job date"), "yyyy-MM-dd") & "',")
 
                     End If
 
-
-
-                    Qry += "INSERT INTO Service (" &
-                                "Job_Card,Invoice_Number,Company_Name,Selling_Dealer_Name,Job_Card_Date,Reg_No,Chassis_No," &
-                                "Engine_No,Model_Code,Model_Description,Customer_Name,Mobile_No,Customer_Voice,KM_Reading,Service_Advisor," &
+                    Qry += "INSERT INTO Service (" & filter &
+                                "Invoice_Number,Company_Name,Customer_Voice,GSTIN," &
+                                "Customer_Name," &
                                 "Type,Part_Labour_Code,Part_Labour_Description," &
-                                "HSN_SAC_code,Header_Job_Type,Job_Type,Rate,Issued_Qty,Discount,Status,Mechanic," &
-                                "Insurance_Provider,Insurance_Policy_No,PaiseRoundingOff," &
-                                "Taxable,CGST_Per,CGST,SGST_Per,SGST,KFC,KFC_Per,Total_Amount,IGST_Per,IGST) Values (" &
-                                "'" & DrD("Job Card ").trim & "','" & DrD("Invoice Number").trim & "','" & DrD("Company Name").trim & "', " &
-                                "'" & ReplaceQuote(DrD("Selling Dealer Name")) & "','" & Format(DrD("Job Card Date"), "yyyy-MM-dd") & "','" & DrD("Reg No").trim & "', " &
-                                "'" & DrD("Chassis No") & "','" & DrD("Engine No") & "','" & DrD("Model Code") & "','" & DrD("Model Description") & "','" & ReplaceQuote(DrD("Customer Name").trim) & "'," &
-                                "'" & DrD("Mobile No") & "','" & ReplaceRightSlash(ReplaceQuote(DrD("Customer Voice"))) & "'," &
-                                "'" & Val(DrD("KM Reading")) & "','" & DrD("Service Advisor") & "','" & Type & "','" & ReplaceQuote(DrD("Part/Labour Code")) & "','" & DrD("Part/Labour Description") & "'," &
-                                "'" & DrD("HSN/SAC code") & "','" & DrD("Header Job Type") & "','" & DrD("Job Type") & "'," &
-                                "'" & Val(DrD("Rate")) & "', '" & Qty & "', '" & Val(DrD("Discount")) & "'," &
-                                "'" & DrD("Status") & "', '" & DrD("Mechanic") & "', '" & DrD("Insurance Provider") & "'," &
-                                "'" & DrD("Insurance Policy No#") & "'," &
-                                "'" & Val(DrD("PaiseRoundingOff")) & "','" & Taxable & "', '" & Val(DrD("CGST%")) & "', '" & Val(DrD("CGST")) & "'," &
-                                "'" & Val(DrD("SGST%")) & "','" & Val(DrD("SGST")) & "'," &
-                                "'" & Val(DrD("KFC1%")) & "','" & Val(DrD("KFC%")) & "'," &
-                                "'" & Val(DrD("Total Amount")) & "'," & IGST_per & "," & IGST & "); "
-
-
+                                "HSN_SAC_code,Job_Type,Rate,Issued_Qty,Discount," &
+                                "Taxable,CGST_Per,CGST,SGST_Per,SGST,KFC_Per,KFC,Total_Amount,IGST_Per,IGST) Values (" & filterValues &
+                                "'" & DrD("Invoice").trim & "','" & DrD("Dealer").trim & "', " &
+                                "'" & DrD("Address").ToString.Trim & "','" & DrD("Customer/ Vendor GSTIN").ToString.Trim & "'," &
+                                "'" & ReplaceQuote(DrD("Customer billing name").trim) & "'," &
+                                "'" & Type & "','" & ReplaceQuote(DrD("Material Code")) & "','" & ReplaceQuote(DrD("Item name")) & "'," &
+                                "'" & DrD("HSN codes") & "','" & DrD("Bill Type") & "'," &
+                                "'" & Val(DrD("Item rate/ Exshowroom price")) & "', '" & Qty & "', '" & Val(DrD("Discount")) & "'," &
+                                "'" & Val(DrD("Taxable value").ToString.Replace(",", "")) & "', '" & Val(DrD("Tax rate CGST")) & "', '" & Val(DrD("CGST amount")) & "'," &
+                                "'" & Val(DrD("Tax rate SGST")) & "','" & Val(DrD("SGST amount")) & "'," &
+                                "'" & Val(DrD("State Cess Tax Rate")) & "','" & Val(DrD("State Cess amount")) & "'," &
+                                "'" & Val(DrD("Total invoice value")) & "','" & Val(DrD("Tax rate IGST")) & "','" & Val(DrD("IGST amount").ToString.Replace(",", "")) & "'); "
 
 
 
@@ -3141,6 +3139,14 @@ Public Class CommonDA
 
 
             Next
+
+            If InvNo <> "" Then
+                Qry += " Insert Into service_header ( Invoice_Number,Invoice_Date,Taxable_Amount,Invoice_Amount,CGST,SGST,IGST,CESS,PaiseRound) values(" &
+                            "'" & InvNo & "','" & Format(Inv_date, "yyyy-MM-dd") & "','" & Rate & "','" & Total_Amt & "','" & CGST & "','" & SGST & "','" & IGST & "'," &
+                            "'" & CESS & "','" & Math.Round(Total_Amt) - (Rate + CGST + SGST + CESS + IGST) & "');"
+
+                Rate = 0.0 : Disc_per = 0.0 : IGST_per = 0.0 : IGST = 0.0 : Total_Amt = 0.0 : Dsic = 0.0 : Qty = 0 : CGST = 0.0 : SGST = 0.0 : CESS = 0.0
+            End If
 
             If Qry <> "" Then
                 cmd.CommandText = Qry
@@ -5421,16 +5427,19 @@ Public Class CommonDA
             cn.Open()
 
 
-            strQuery = " select `GRN Date` ,`GRN No`,Invoice_No,`Supplier Invoice No` as Supplier_Invoice_No,locked as to_tally,sum(RATE) as RATE ,Sum(Taxable_amount) as Taxable_amount,sum(IGST) as IGST ,`Supplier Invoice Date` as Supplier_Invoice_Date,sum(`Total Amount`) Total_Amount,sum(Freight) as Freight " &
+            strQuery = " select `GRN Date` ,`GRN No`,`Supplier Invoice No`,`Supplier Invoice No` as Supplier_Invoice_No,locked as to_tally,sum(RATE) as RATE ,Sum(Taxable_amount) as Taxable_amount,sum(IGST) as IGST ,`Supplier Invoice Date` as Supplier_Invoice_Date,sum(`Total Amount`) Total_Amount,sum(Freight) as Freight " &
             " from re_spare_purchase where  `Supplier Invoice Date` <= now() group by `Supplier Invoice No` "
 
             cmd.CommandText = strQuery
             Da.SelectCommand = cmd
             Da.Fill(Ds, "re_spare_purchase")
 
-            strQuery = " SELECT `GRN Date` ,`GRN No` ,Invoice_No,locked as to_tally,`Supplier Invoice No` as Supplier_Invoice_No,`Supplier Invoice Date` as Supplier_Invoice_Date,Gross_Amt as Rate,(taxable_amount+Freight) as taxable_amount,`total amount` as total_amount, Description,Model,S.qty,UOM,IGST,s.IGST_per,Discount,Discount_per,m.`HSN_code`,m.hsn_desc " &
-            " from re_spare_purchase s left join stock_master m on s.Model=m.`Part_no` "
+            'strQuery = " SELECT `GRN Date` ,`GRN No` ,`Supplier Invoice No`,locked as to_tally,`Supplier Invoice No` as Supplier_Invoice_No,`Supplier Invoice Date` as Supplier_Invoice_Date,Gross_Amt as Rate,(taxable_amount+Freight) as taxable_amount,`total amount` as total_amount, Description,Model,S.qty,UOM,IGST,s.IGST_per,Discount,Discount_per,s.HSNCode,m.`HSN_code`,m.hsn_desc " &
+            '" from re_spare_purchase s left join stock_master m on s.Model=m.`Part_no` "
 
+
+            strQuery = " SELECT `GRN Date` ,`GRN No` ,`Supplier Invoice No`,locked as to_tally,`Supplier Invoice No` as Supplier_Invoice_No,`Supplier Invoice Date` as Supplier_Invoice_Date,Gross_Amt as Rate,(taxable_amount+Freight) as taxable_amount,`total amount` as total_amount, Description,Model,S.qty,UOM,IGST,s.IGST_per,Discount,Discount_per,s.HSNCode as HSN_code " &
+            " from re_spare_purchase s  "
             cmd.CommandText = strQuery
             Da.SelectCommand = cmd
             Da.Fill(Ds, "re_spare_purchase_Detail")
@@ -5588,6 +5597,12 @@ Public Class CommonDA
         ' Dim Total As Integer = Ds.re_spare_purchase.Select("`Invoice`<>'' and `Model`<>'' ").Count
         Dim Total As Integer = Ds.re_spare_purchase.Rows.Count
 
+        Dim Dss As New TallyDs
+
+        Dss.Merge(Ds.re_spare_purchase.Select("", "Invoice"))
+        Ds = Dss
+
+
 
         Try
             Dim y = 100 / Total
@@ -5733,7 +5748,9 @@ Public Class CommonDA
             cn.Close()
             cn = Nothing
             Return Status
-
+            LblStat.Text = ex.Message
+            ' LblStat.Text = LblStat.Text.Replace("-", "\")
+            LblStat.Refresh()
         End Try
 
         cn.Close()
@@ -5827,6 +5844,7 @@ Public Class CommonDA
 
         Catch ex As Exception
             cn.Dispose()
+
             cn = Nothing
             Return False
         End Try

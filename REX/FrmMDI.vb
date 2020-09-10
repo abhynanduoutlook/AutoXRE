@@ -56,6 +56,7 @@ Public Class FrmMDI
     Dim ToEmail2 As String = ""
     Dim ToEmail3 As String = ""
     Public App_Ver As String = ""
+    Dim Prev_file As String = ""
     Dim FilePaths() As String
 
 
@@ -126,6 +127,7 @@ Public Class FrmMDI
         Dim BackupPath As String = ""
         Dim Exe As Boolean = True
 
+
         Try
 
 
@@ -135,16 +137,20 @@ Public Class FrmMDI
 
                     If UCase(IO.Path.GetExtension(File)) = ".XLS" Or UCase(IO.Path.GetExtension(File)) = ".XLSX" Then
 
-                        If items.Contains("Service") Then
-                            LblStatus(True, "Reading Service Bills")
-                            ImportService(File, False)
-                        ElseIf items.Contains("Spare") Then
-                            LblStatus(True, "Reading Spare Purchase")
-                            ImportSparePur(File)
-                        ElseIf items.Contains("Vehicle") Then
-                            ImportVehiclePur(File)
-                        ElseIf items.Contains("CashRegister") Then
-                            ImportCashRegister(File)
+                        If File <> Prev_file Then
+                            Prev_file = File
+                            If items.Contains("Service") Then
+                                LblStatus(True, "Reading Service Bills")
+                                ImportService(File, False)
+                            ElseIf items.Contains("Spare") Then
+                                LblStatus(True, "Reading Spare Purchase")
+                                ImportSparePur(File)
+                            ElseIf items.Contains("Vehicle") Then
+                                ImportVehiclePur(File)
+                            ElseIf items.Contains("CashRegister") Then
+                                ImportCashRegister(File)
+                            End If
+
                         End If
 
                     End If
@@ -154,7 +160,7 @@ Public Class FrmMDI
             Next
 
         Catch ex As Exception
-            'Nothing
+            LblStatus(True, ex.Message)
         End Try
 
 
@@ -197,10 +203,10 @@ Public Class FrmMDI
 
             ' Return Status
         Else
-            If TempDs.Tables("ServiceData").Columns.Contains("Invoice Number") And TempDs.Tables("ServiceData").Columns.Contains("Job Card ") Then
+            If TempDs.Tables("ServiceData").Columns.Contains("Is the item a GOOD (G) or SERVICE (S)") And TempDs.Tables("ServiceData").Columns.Contains("Invoice") Then
 
                 'JobCard
-                SaveDs.Merge(TempDs.Tables("ServiceData").Select("", "[Delivered Date Time],[Invoice Number]"))
+                SaveDs.Merge(TempDs.Tables("ServiceData").Select("", "[Date],[Invoice]"))
                 LblStatus(True, "Inserting Jobcard Statement...")
 
                 Status = CommonDA.Insert_Service(SaveDs, True, LblServiceStatus)
@@ -210,6 +216,7 @@ Public Class FrmMDI
                     Try
                         NewFileName = Application.StartupPath & "\BackUp\Serv_" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
                         IO.File.Move(FileName, NewFileName)
+
                     Catch ex As Exception
                         CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
                         Return Status
@@ -238,12 +245,12 @@ Public Class FrmMDI
 
             ElseIf TempDs.Tables("ServiceData").Columns.Contains("Invoice") And TempDs.Tables("ServiceData").Columns.Contains("Invoice Date") Then
 
-                'Invoice Details
-                SaveDs.Merge(TempDs)
-                ' Status = CommonDA.RunQuery("Truncate service_header")
-                LblStatus(True, "Inserting Invoice Summary...")
+                ''Invoice Details
+                'SaveDs.Merge(TempDs)
+                '' Status = CommonDA.RunQuery("Truncate service_header")
+                'LblStatus(True, "Inserting Invoice Summary...")
 
-                Status = CommonDA.Insert_Service_Header(SaveDs, LblServiceStatus)
+                'Status = CommonDA.Insert_Service_Header(SaveDs, LblServiceStatus)
 
                 If Status Then
 
@@ -276,10 +283,10 @@ Public Class FrmMDI
 
             ElseIf TempDs.Tables("ServiceData").Columns.Contains("Document Date") And TempDs.Tables("ServiceData").Columns.Contains("IGST%") Then
 
-                SaveDs.Merge(TempDs)
-                LblStatus(True, "Inserting Warranty  Statement...")
-                ' Status = CommonDA.RunQuery("Truncate service_header")
-                Status = CommonDA.Insert_Service_WLP(SaveDs, LblServiceStatus)
+                'SaveDs.Merge(TempDs)
+                'LblStatus(True, "Inserting Warranty  Statement...")
+                '' Status = CommonDA.RunQuery("Truncate service_header")
+                'Status = CommonDA.Insert_Service_WLP(SaveDs, LblServiceStatus)
 
 
                 If Status Then
@@ -314,10 +321,10 @@ Public Class FrmMDI
 
             ElseIf TempDs.Tables("ServiceData").Columns.Contains("Invoice Date") Then
 
-                SaveDs.Merge(TempDs)
-                LblStatus(True, "Inserting Sales Statement...")
-                ' Status = CommonDA.RunQuery("Truncate service_header")
-                Status = CommonDA.Insert_Service_SSI(SaveDs, LblServiceStatus)
+                'SaveDs.Merge(TempDs)
+                'LblStatus(True, "Inserting Sales Statement...")
+                '' Status = CommonDA.RunQuery("Truncate service_header")
+                'Status = CommonDA.Insert_Service_SSI(SaveDs, LblServiceStatus)
 
 
                 If Status Then
@@ -350,10 +357,10 @@ Public Class FrmMDI
 
             ElseIf TempDs.Tables("ServiceData").Columns.Contains("Document Name") And TempDs.Tables("ServiceData").Columns.Contains("Document Date") Then
 
-                SaveDs.Merge(TempDs)
-                LblStatus(True, "Inserting Insurance Bills...")
-                ' Status = CommonDA.RunQuery("Truncate service_header")
-                Status = CommonDA.Insert_Service_ILP(SaveDs, LblServiceStatus)
+                'SaveDs.Merge(TempDs)
+                'LblStatus(True, "Inserting Insurance Bills...")
+                '' Status = CommonDA.RunQuery("Truncate service_header")
+                'Status = CommonDA.Insert_Service_ILP(SaveDs, LblServiceStatus)
 
 
                 If Status Then
@@ -427,6 +434,7 @@ Public Class FrmMDI
             Try
                 LastMovedFile = Application.StartupPath & "\BackUp\CashReg_" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
                 IO.File.Move(FileName, LastMovedFile)
+                Prev_file = ""
             Catch ex As Exception
                 LastMovedFile = ""
                 CommonDA.Create_Log("Import To Tally", "Failed To move CashReg_" & FileName, "")
@@ -440,6 +448,7 @@ Public Class FrmMDI
             Try
                 LastMovedFile = Application.StartupPath & "\BackUp\CashReg_Err_" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
                 IO.File.Move(FileName, LastMovedFile)
+                Prev_file = ""
             Catch ex As Exception
                 CommonDA.Create_Log("Import To Tally", "Failed To move CashReg_" & FileName, "")
             End Try
@@ -499,6 +508,7 @@ end_of_for:
             Try
                 LastMovedFile = Application.StartupPath & "\BackUp\VehiclePur_" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
                 IO.File.Move(FileName, LastMovedFile)
+                Prev_file = ""
             Catch ex As Exception
                 LastMovedFile = ""
                 CommonDA.Create_Log("Import To Tally", "Failed To move VehiclePur_" & FileName, "")
@@ -551,6 +561,7 @@ end_of_for:
             Try
                 LastMovedFile = Application.StartupPath & "\BackUp\VehiclePur_Err_" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
                 IO.File.Move(FileName, LastMovedFile)
+                Prev_file = ""
             Catch ex As Exception
                 CommonDA.Create_Log("Import To Tally", "Failed To move VehiclePur_" & FileName, "")
             End Try
@@ -594,6 +605,7 @@ end_of_for:
             Try
                 NewFileName = Application.StartupPath & "\BackUp\Spare_Pur" & Format(Date.Now, "ddMMMyy_HHmmss") & ".Xls"
                 IO.File.Move(FileName, NewFileName)
+                Prev_file = ""
             Catch ex As Exception
                 LastMovedFile = ""
                 CommonDA.Create_Log("Import To Tally", "Failed To move Spare_Pur " & FileName, "")
@@ -606,6 +618,7 @@ end_of_for:
             Try
                 NewFileName = Application.StartupPath & "\BackUp\Error_Spare_Pur_" & Format(Date.Now, "ddMMMyy_HHmmss") & ".Xls"
                 IO.File.Move(FileName, NewFileName)
+                Prev_file = ""
             Catch ex As Exception
                 CommonDA.Create_Log("Import To Tally", "Failed To move Spare_Pur" & FileName, "")
             End Try
@@ -856,7 +869,7 @@ end_of_for:
         End If
 
         PLblUser.Text = "User : " & PublicShared.User_Name & "             " &
-                           "Last Login : " & Format(Me.Last_Login_time, "dd-MM-yyyy hh:mm:ss tt")
+                        "Last Login : " & Format(Me.Last_Login_time, "dd-MM-yyyy hh:mm:ss tt")
 
         ObjDa = Nothing
         Ds = Nothing
@@ -1199,16 +1212,16 @@ end_of_for:
     End Sub
 
     Private Sub Load_TallySparePur()
-        If ObjFrmtallysparepur Is Nothing Then
-            ObjFrmtallysparepur = New FrmTallySparePur()
-            ObjFrmtallysparepur.MdiParent = Me
-            ObjFrmtallysparepur.Show()
-        ElseIf ObjFrmtallysparepur.IsDisposed Then
-            ObjFrmtallysparepur = New FrmTallySparePur()
-            ObjFrmtallysparepur.MdiParent = Me
-            ObjFrmtallysparepur.Show()
+        If ObjFrmTallySparePur Is Nothing Then
+            ObjFrmTallySparePur = New FrmTallySparePur()
+            ObjFrmTallySparePur.MdiParent = Me
+            ObjFrmTallySparePur.Show()
+        ElseIf ObjFrmTallySparePur.IsDisposed Then
+            ObjFrmTallySparePur = New FrmTallySparePur()
+            ObjFrmTallySparePur.MdiParent = Me
+            ObjFrmTallySparePur.Show()
         Else
-            ObjFrmtallysparepur.BringToFront()
+            ObjFrmTallySparePur.BringToFront()
         End If
     End Sub
 

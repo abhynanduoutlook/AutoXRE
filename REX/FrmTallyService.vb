@@ -105,6 +105,7 @@ Public Class FrmTallyService
         ListView1.Columns.Add("TAXABLE", 70, HorizontalAlignment.Right)
         ListView1.Columns.Add("INVOICE AMOUNT", 100, HorizontalAlignment.Right)
         ListView1.Columns.Add("TALLY", 60, HorizontalAlignment.Center)
+        ListView1.Columns.Add("GSTIN", 60, HorizontalAlignment.Center)
         ListView1.Columns.Add("LAST UPDATED ON", 150, HorizontalAlignment.Center)
 
     End Sub
@@ -210,8 +211,8 @@ Public Class FrmTallyService
             lvItem.SubItems.Add(Dr.KFC1)
             lvItem.SubItems.Add(Dr.Taxable_Amount)
             lvItem.SubItems.Add(Dr.Invoice_Amount)
-            'lvItem.SubItems.Add("")
             lvItem.SubItems.Add(IIf(Dr.Updated = "1", "Yes", "No"))
+            lvItem.SubItems.Add(Dr.GSTIN)
             ' lvItem.SubItems.Add(Dr.LastSeen)
 
         Next
@@ -456,7 +457,7 @@ Public Class FrmTallyService
             '    Exit Sub
             'End If
 
-            Get_Ledgers()
+            Get_Ledgers("")
 
             Dim totalCount As Integer = ImportDs.Service.Rows.Count
             For Each Dr In ImportDs.Service.Rows
@@ -487,6 +488,10 @@ Public Class FrmTallyService
                     SalesVoucherType = Read_Ledgers("Service_VT_SLI")
                 Else
                     SalesVoucherType = Read_Ledgers("Service_VT_" & BillType & "")
+                End If
+
+                If SalesVoucherType = "" Then
+                    SalesVoucherType = Read_Ledgers("Service_VT")
                 End If
 
 
@@ -752,40 +757,59 @@ Public Class FrmTallyService
         Dim Taxable18 As Decimal = 0.00
         Dim Taxable28 As Decimal = 0.00
 
-        If BillType = "SSI" Then
-            PartyLedgerService = Read_Ledgers("Service_PartyLedger_SSI")
-        ElseIf BillType = "WLI" Or BillType = "WPI" Then
+        'If BillType = "SSI" Then
+        '    PartyLedgerService = Read_Ledgers("Service_PartyLedger_SSI")
+        'ElseIf BillType = "WLI" Or BillType = "WPI" Then
 
-            Is_Igst = True
-            RefNo = Dr.Job_Card
-            PartyLedgerService = IIf(Dr.Part_Labour_Description.Contains("Free Service Coupon") Or Dr.Part_Labour_Description.Contains("free service coupon"), Read_Ledgers("Service_PartyLedger_FreeService"), Read_Ledgers("Service_PartyLedger_WLP"))
+        '    Is_Igst = True
+        '    RefNo = Dr.Job_Card
+        '    PartyLedgerService = IIf(Dr.Part_Labour_Description.Contains("Free Service Coupon") Or Dr.Part_Labour_Description.Contains("free service coupon"), Read_Ledgers("Service_PartyLedger_FreeService"), Read_Ledgers("Service_PartyLedger_WLP"))
 
-            ' PartyLedgerService = Read_Ledgers("Service_PartyLedger_WLP")
+        '    ' PartyLedgerService = Read_Ledgers("Service_PartyLedger_WLP")
 
-        ElseIf BillType = "ILI" Or BillType = "IPI" Then
-            '  PartyLedgerService = Read_Ledgers("Service_PartyLedger_ILIP")
-            PartyLedgerService = Read_Ledgers("Service_PartyLedger_INS_" & Dr.Customer_Name.Trim & "")
-            If PartyLedgerService = "" Then
-                Show_ClipBoard("Ledger Missing", " No Ledger Found in Settings  For " & Dr.Customer_Name & vbCrLf & "")
-                CommonDA.Create_Settings(True, "Service_PartyLedger_INS_" & Dr.Customer_Name.Trim & "", "")
-                CommonDA.Create_Log("Importing", "Service_PartyLedger_INS_" & Dr.Customer_Name.Trim, "")
-                Return ""
-                Exit Function
+        'ElseIf BillType = "ILI" Or BillType = "IPI" Then
+        '    '  PartyLedgerService = Read_Ledgers("Service_PartyLedger_ILIP")
+        '    PartyLedgerService = Read_Ledgers("Service_PartyLedger_INS_" & Dr.Customer_Name.Trim & "")
+        '    If PartyLedgerService = "" Then
+        '        Show_ClipBoard("Ledger Missing", " No Ledger Found in Settings  For " & Dr.Customer_Name & vbCrLf & "")
+        '        CommonDA.Create_Settings(True, "Service_PartyLedger_INS_" & Dr.Customer_Name.Trim & "", "")
+        '        CommonDA.Create_Log("Importing", "Service_PartyLedger_INS_" & Dr.Customer_Name.Trim, "")
+        '        Return ""
+        '        Exit Function
+        '    End If
+        '    Is_Ins = True
+        '    If Dr.IGST18 > 0 Or Dr.IGST28 > 0 Then
+        '        Is_Igst = True
+        '    End If
+
+        'Else
+        '    PartyLedgerService = Read_Ledgers("Service_PartyLedger_" & BillType & "")
+        'End If
+
+        'If PartyLedgerService = "" Then
+        '    Show_ClipBoard("PartyLedgerService", "PartyLedgerService is Missing for " & vbCrLf & Dr.Invoice_Number)
+        '    Return ""
+        '    Exit Function
+        'End If
+
+        If Dr.GSTIN <> "" Then
+
+            If DsLedger.Tables.Count > 0 Then
+                If DsLedger.Tables("ledger").Select("$PARTYGSTIN = '" & Dr.GSTIN & "'").Count = 0 Then
+                    ' StrXmldata = XmlFormat_Ledger(Dr.GSTIN, PartyLedgerService, Read_Settings("partyledgerservice_parent"), Dr.VEHICLENO)
+                    'Export_Tally_Method1(StrXmldata)
+                Else
+                    PartyLedgerService = DsLedger.Tables("ledger").Select("$PARTYGSTIN = '" & Dr.GSTIN & "'").First.Item("$NAME").ToString
+                End If
             End If
-            Is_Ins = True
-            If Dr.IGST18 > 0 Or Dr.IGST28 > 0 Then
-                Is_Igst = True
-            End If
 
+            Narration = Narration & ",GST-NO:" & Dr.GSTIN
         Else
-            PartyLedgerService = Read_Ledgers("Service_PartyLedger_" & BillType & "")
+            PartyLedgerService = Read_Ledgers("Service_PartyLedger")
         End If
 
-        If PartyLedgerService = "" Then
-            Show_ClipBoard("PartyLedgerService", "PartyLedgerService is Missing for " & vbCrLf & Dr.Invoice_Number)
-            Return ""
-            Exit Function
-        End If
+
+
 
 
         'If PartyLedgerService.Trim = "" Then
@@ -803,7 +827,7 @@ Public Class FrmTallyService
         'End If
 
         Dim CustVeh As String = Dr.Customer_Name & "(" & Dr.Reg_No & ")"
-        Narration = "Job Card No :" & Dr.Job_Card & " , Cust Name:" & CustVeh & ",Chassis_No :" & Dr.Chassis_No & ""
+        Narration += "Job Card No :" & Dr.Job_Card & " , Cust Name:" & CustVeh & ""
 
 
 
@@ -1125,6 +1149,44 @@ Public Class FrmTallyService
         End Try
 
     End Sub
+
+
+    Private Sub Get_Ledgers(ByVal Parent As String)
+
+        Dim Qry As String
+        Dim TallyCon As New OdbcConnection(Read_Settings("TallyODBC"))
+        Dim Cmd As New OdbcCommand
+        Dim Da As New OdbcDataAdapter
+        'Dim Parent As String = Read_Settings("PartyLedgerService_Parent")
+        Dim StrXmldata As String = ""
+
+        Cmd.Connection = TallyCon
+
+        Try
+
+            TallyCon.Open()
+
+            DsLedger.Clear()
+
+            If Parent <> "" Then
+                Qry = "Select $NAME,$LEDGERMOBILE,$PARTYGSTIN from ListOfLedgers WHERE $PARENT = '" & Parent & "'"
+            Else
+                Qry = "Select $NAME,$LEDGERMOBILE,$PARTYGSTIN from ListOfLedgers "
+            End If
+
+            Cmd.CommandText = Qry
+            Da.SelectCommand = Cmd
+            Da.Fill(DsLedger, "Ledger")
+
+            TallyCon.Close()
+            TallyCon.Dispose()
+
+        Catch ex As Exception
+        End Try
+
+    End Sub
+
+
 
     Private Sub Load_Labour_Ledgers()
 
