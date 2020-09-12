@@ -11,9 +11,13 @@ Public Class FrmTallyService
     Dim ServiceDs As TallyDs
 
     Dim StatusLabel As Label
-    Public Sub New(ByRef LblStatus As Label)
+    Dim StatusPanel As Panel
+    Dim lbl As Object
+    Public Sub New(ByRef LblStatus As Label, ByRef ImportTallyPanel As Panel)
         ServiceDs = CommonDA.Get_Summary_ServiceOnTime(Now, Now)
         StatusLabel = LblStatus
+        StatusPanel = ImportTallyPanel
+        lbl = StatusPanel.Controls("TextBox1")
         ' This call is required by the designer.
         InitializeComponent()
 
@@ -174,10 +178,10 @@ Public Class FrmTallyService
         Dim i As Integer = 0
 
         If RbtActive.Checked = True Then
-            ImportDs.Merge(ServiceDs.Service.Select("Updated=0 and Job_Card >='1'"))
+            ImportDs.Merge(ServiceDs.Service.Select("Updated=0 and Invoice_Number >='1'"))
             ' ImportDs.Merge(ServiceDs.Service_Detail.Select("Updated=0 and JobCard_Date is not null"))
         ElseIf RbtImported.Checked = True Then
-            ImportDs.Merge(ServiceDs.Service.Select("Updated=1 and Job_Card >='1'"))
+            ImportDs.Merge(ServiceDs.Service.Select("Updated=1 and Invoice_Number >='1'"))
         ElseIf RbtMissing.Checked = True Then
             ImportDs.Merge(ServiceDs.Service.Select("Job_Card ='0' or Job_Card =''", "Invoice_Amount"))
         ElseIf RbtAll.Checked = True Then
@@ -186,9 +190,11 @@ Public Class FrmTallyService
 
         If CmbSearchBy.Text = "JobCardNumber" Then
             TempDs.Merge(ImportDs.Service.Select("Job_Card like '%" & TxtSearch.Text.Trim & "%'"))
+            TempDs.Merge(ImportDs.Service_Detail)
             ImportDs = TempDs
         ElseIf CmbSearchBy.Text = "InvoiceNumber" Then
             TempDs.Merge(ImportDs.Service.Select("Invoice_Number like '%" & TxtSearch.Text.Trim & "%'"))
+            TempDs.Merge(ImportDs.Service_Detail)
             ImportDs = TempDs
         Else
 
@@ -367,15 +373,18 @@ Public Class FrmTallyService
         PleaseWait(True)
         Process_Import()
         PleaseWait(False)
+        'lbl.clear()
+        StatusPanel.Refresh()
     End Sub
 
     Public Sub Process_Import()
 
         PleaseWait(True)
 
+
         If RbtActive.Checked = True Then
 
-            If ImportDs.Service.Select("Updated=0 and Job_Card >='1'").Count > 0 Then
+            If ImportDs.Service.Select("Updated=0 and Invoice_Number >='1'").Count > 0 Then
                 BtnImport.Width = 0
                 Import_To_Tally(True)
                 BtnImport.Width = PnlImport.Width
@@ -444,8 +453,9 @@ Public Class FrmTallyService
             '  ImportDs.Merge(ServiceDs.Service_Bills.Select("Updated=0 and JobCard_Date is not null"))
         End If
 
+        StatusPanel.Visible = True
         If ImportDs.Service.Rows.Count > 0 Then
-            Load_PartName()
+            '   Load_PartName()
 
             If CheckPartNames() = False Then
                 Exit Sub
@@ -456,6 +466,7 @@ Public Class FrmTallyService
             'If CheckLabourLedgers() = False Then
             '    Exit Sub
             'End If
+
 
             Get_Ledgers("")
 
@@ -479,20 +490,31 @@ Public Class FrmTallyService
                 'End If
 
                 PleaseWait_Progress("Importing.. Invoice Number:" & Dr.Invoice_Number & "")
+                lbl.text = lbl.text & vbCrLf & Dr.Invoice_Number & ":"
 
-                If BillType = "SSI" Then
-                    SalesVoucherType = Read_Ledgers("Service_VT_SSI")
-                ElseIf BillType = "SPI" Then
-                    SalesVoucherType = Read_Ledgers("Service_VT_SPI")
+                If ServiceDs.Service_Detail.Select("Invoice_Number = '" & Dr.Invoice_Number & "'").Count > 0 Then
+                    If ServiceDs.Service_Detail.Select("Invoice_Number = '" & Dr.Invoice_Number & "'").First.Item("Job_Card").ToString = "" Then
+                        BillType = "CS"
+                    End If
+                End If
+
+                If BillType = "IIN" Then
+                    SalesVoucherType = Read_Ledgers("Service_VT_IIN")
+                ElseIf BillType = "CS" Then
+                    SalesVoucherType = Read_Ledgers("Service_VT_CS")
                 ElseIf BillType = "SLI" Then
                     SalesVoucherType = Read_Ledgers("Service_VT_SLI")
                 Else
                     SalesVoucherType = Read_Ledgers("Service_VT_" & BillType & "")
                 End If
 
-                If SalesVoucherType = "" Then
-                    SalesVoucherType = Read_Ledgers("Service_VT")
+                If BillType = "DSI" Then
+                    Continue For
                 End If
+
+                'If SalesVoucherType = "" Then
+                '    SalesVoucherType = Read_Ledgers("Service_VT")
+                'End If
 
 
 
@@ -522,16 +544,17 @@ Public Class FrmTallyService
                     Try
                         ObjXml.open("POST", TallyHost, False)
 
-                        DsDetails.Merge(ImportDs.Service.Select("Invoice_Number = '" & Dr.Invoice_Number & "'", "Id"))
+                        DsDetails.Merge(ServiceDs.Service_Detail.Select("Invoice_Number = '" & Dr.Invoice_Number & "'", "Id"))
+                        'DsDetails.Merge(ImportDs.Service_Detail.Select("Invoice_Number = '" & Dr.Invoice_Number & "'", "Id"))
 
                         If DsDetails.Service_Detail.Rows.Count = 0 Then
                             Import_Log += vbCrLf & " Job Card details not found for : " & Dr.Invoice_Number
+                            lbl.text = lbl.text & " No Details"
+                            lbl.refresh()
                         End If
-                        If Dr.Job_Card <> "" Then
 
+                        StrXmldata = XmlFormat_Sales_WithOut_Stock(Dr, DsDetails.Tables("Service_Detail"), SalesVoucherType)
 
-                            StrXmldata = XmlFormat_Sales_WithOut_Stock(Dr, DsDetails.Tables("Service_Detail"), SalesVoucherType)
-                        End If
                         DsDetails.Service_Detail.Rows.Clear()
 
                         If Strings.Left(StrXmldata, 10) <> "<ENVELOPE>" Then
@@ -631,6 +654,7 @@ Public Class FrmTallyService
                     Catch ex As Exception
                         Import_Log += vbCrLf & Dr.Invoice_Number & " -Error- " & ex.Message
                         CommonDA.Create_Log("Import To Tally Service", "Import Error", ex.Message & vbCrLf & ex.StackTrace)
+                        lbl.text = lbl.text & ex.Message & vbCrLf & ex.StackTrace
 
                         LblStatus(True, Import_Log)
                         If XmlDS.Tables.Count > 0 Then
@@ -726,6 +750,23 @@ Public Class FrmTallyService
         Return Value
     End Function
 
+    Public Function CreateLedgerSplitDs(ByVal Columns As String, ByVal tblname As String) As DataSet
+        Dim Ds As New DataSet
+        Dim drp As DataRow
+        Ds.Tables.Add()
+        Ds.Tables(0).TableName = tblname
+        Ds.Tables(tblname).Columns.Add("Amount", GetType(Decimal))
+        Ds.Tables(tblname).Columns.Add("Ledger", GetType(String))
+
+        For Each Col In Columns.Split(",")
+            drp = Ds.Tables(tblname).Rows.Add
+            drp("Ledger") = Col
+            drp("Amount") = 0.00
+        Next
+
+        Return Ds
+    End Function
+
 
 
     Public Function XmlFormat_Sales_WithOut_Stock(ByVal Dr As TallyDs.ServiceRow, ByVal Dt As DataTable, ByVal SalesSpare_VoucherType As String) As String
@@ -744,53 +785,18 @@ Public Class FrmTallyService
         Dim ROType As String = Strings.Left(Dr.Job_Card, 3)
         Dim COST_CENTER As String = ""
         Dim PartyLedgerService As String = ""
-        Dim Alloc_Ledger As String = ""
-        Dim StrXmldata As String = ""
-        Dim IsClaim As Boolean = False
-        Dim IsEW As Boolean = False
-        Dim IsRSA As Boolean = False
         Dim Total_Labour As Decimal
         Dim Is_Igst As Boolean = False
         Dim RefNo As String = Dr.Job_Card
         Dim Is_Ins As Boolean = False
         Dim DrL As TallyDs.Service_LedgersRow
-        Dim Taxable18 As Decimal = 0.00
-        Dim Taxable28 As Decimal = 0.00
 
-        'If BillType = "SSI" Then
-        '    PartyLedgerService = Read_Ledgers("Service_PartyLedger_SSI")
-        'ElseIf BillType = "WLI" Or BillType = "WPI" Then
 
-        '    Is_Igst = True
-        '    RefNo = Dr.Job_Card
-        '    PartyLedgerService = IIf(Dr.Part_Labour_Description.Contains("Free Service Coupon") Or Dr.Part_Labour_Description.Contains("free service coupon"), Read_Ledgers("Service_PartyLedger_FreeService"), Read_Ledgers("Service_PartyLedger_WLP"))
 
-        '    ' PartyLedgerService = Read_Ledgers("Service_PartyLedger_WLP")
-
-        'ElseIf BillType = "ILI" Or BillType = "IPI" Then
-        '    '  PartyLedgerService = Read_Ledgers("Service_PartyLedger_ILIP")
-        '    PartyLedgerService = Read_Ledgers("Service_PartyLedger_INS_" & Dr.Customer_Name.Trim & "")
-        '    If PartyLedgerService = "" Then
         '        Show_ClipBoard("Ledger Missing", " No Ledger Found in Settings  For " & Dr.Customer_Name & vbCrLf & "")
         '        CommonDA.Create_Settings(True, "Service_PartyLedger_INS_" & Dr.Customer_Name.Trim & "", "")
         '        CommonDA.Create_Log("Importing", "Service_PartyLedger_INS_" & Dr.Customer_Name.Trim, "")
-        '        Return ""
-        '        Exit Function
-        '    End If
-        '    Is_Ins = True
-        '    If Dr.IGST18 > 0 Or Dr.IGST28 > 0 Then
-        '        Is_Igst = True
-        '    End If
-
-        'Else
-        '    PartyLedgerService = Read_Ledgers("Service_PartyLedger_" & BillType & "")
-        'End If
-
-        'If PartyLedgerService = "" Then
-        '    Show_ClipBoard("PartyLedgerService", "PartyLedgerService is Missing for " & vbCrLf & Dr.Invoice_Number)
-        '    Return ""
-        '    Exit Function
-        'End If
+        '
 
         If Dr.GSTIN <> "" Then
 
@@ -809,8 +815,11 @@ Public Class FrmTallyService
         End If
 
 
-
-
+        If Dr.Job_Card.ToString = "" Then
+            PartyLedgerService = Read_Ledgers("Service_PartyLedger_CS")
+            Dr.Job_Card = Dr.Invoice_Number
+            RefNo = Dr.Job_Card
+        End If
 
         'If PartyLedgerService.Trim = "" Then
         '    PartyLedgerService = Dr.Customer_Name & " " & Dr.Chassis_No  ' "Mr. Gigi K  (MR7164748285)" '
@@ -826,90 +835,8 @@ Public Class FrmTallyService
         '    Export_Tally_Method1(StrXmldata)
         'End If
 
-        Dim CustVeh As String = Dr.Customer_Name & "(" & Dr.Reg_No & ")"
+        Dim CustVeh As String = Dr.Customer_Name
         Narration += "Job Card No :" & Dr.Job_Card & " , Cust Name:" & CustVeh & ""
-
-
-
-        If Is_Igst Then
-
-
-            Dim Taxable1 As Decimal = 0.0
-
-            If Val(Dr.IGST28_Per) > 0 Then
-                Taxable28 = Math.Round((Val(Dr.IGST28) / (Val(Dr.IGST28_Per))) * 100, 2)
-            End If
-            If Val(Dr.IGST18_Per) > 0 Then
-                Taxable18 = Math.Round((Val(Dr.IGST18) / (Val(Dr.IGST18_Per))) * 100, 2)
-            End If
-
-
-            Dim IGST28 As Decimal = 0.0
-            Dim IGST18 As Decimal = 0.0
-
-
-            IGST28 = Taxable28 * (Dr.IGST28_Per) / 100
-            IGST18 = Taxable18 * (Dr.IGST18_Per) / 100
-
-            Dr.IGST18 = Math.Round(IGST18, 2)
-            Dr.IGST28 = Math.Round(IGST28, 2)
-
-
-            Dr.Total_Amount = Taxable28 + Taxable18 + Dr.IGST18 + Dr.IGST28
-
-
-
-        Else
-
-
-
-            Dim Taxable1 As Decimal = 0.0
-
-            If Val(Dr.CGST14) > 0 Then
-                Taxable28 = Math.Round(((Val(Dr.CGST14) + Val(Dr.SGST14)) / (Val(Dr.SGST14_Per) + Val(Dr.CGST14_Per))) * 100, 2)
-            End If
-            If Val(Dr.CGST9) > 0 Then
-                Taxable18 = Math.Round(((Val(Dr.CGST9) + Val(Dr.SGST9)) / (Val(Dr.SGST9_Per) + Val(Dr.CGST9_Per))) * 100, 2)
-            End If
-
-            If Val(Dr.KFC1) > 0 Then
-                Taxable1 = Math.Round(Val(Dr.KFC1) / Val(Dr.KFC1_Per) * 100, 2)
-            End If
-
-            Dim GST14 As Decimal = 0.0
-            Dim GST9 As Decimal = 0.0
-
-
-            Dim CGST14 As Decimal = 0.0
-            Dim SGST9 As Decimal = 0.0
-            Dim SGST14 As Decimal = 0.0
-            Dim CGST9 As Decimal = 0.0
-            Dim KFC1 As Decimal = 0.0
-
-            GST14 = Taxable28 * (Dr.CGST14_Per + Dr.SGST14_Per) / 100
-            GST9 = Taxable18 * (Dr.CGST9_Per + Dr.SGST9_Per) / 100
-
-            KFC1 = Taxable1 * Dr.KFC1_Per / 100
-
-            Dr.KFC1 = KFC1
-
-            Dr.CGST14 = Math.Round(GST14 / 2, 2)
-            Dr.SGST14 = Math.Round(GST14 / 2, 2)
-
-            Dr.SGST9 = Math.Round(GST9 / 2, 2)
-            Dr.CGST9 = Math.Round(GST9 / 2, 2)
-
-            If BillType.Contains("LI") Then
-                Dr.Total_Amount = Taxable28 + Dr.Taxable_Amount + Dr.CGST14 + Dr.SGST14 + Dr.CGST9 + Dr.SGST9 + Dr.KFC1
-
-            Else
-                Dr.Total_Amount = Taxable28 + Taxable18 + Dr.CGST14 + Dr.SGST14 + Dr.CGST9 + Dr.SGST9 + Dr.KFC1
-
-            End If
-
-        End If
-
-
 
         Dr.Invoice_Amount = Math.Round(Dr.Invoice_Amount)
 
@@ -921,137 +848,152 @@ Public Class FrmTallyService
             Parts_Entries = "<ALLINVENTORYENTRIES.LIST></ALLINVENTORYENTRIES.LIST>"
         End If
 
-
-        If BillType.Contains("LI") Then
-
-            If Is_Igst Then
-                If Taxable18 > 0 Then
-                    Dim LabourLedger As String = ""
-                    If Read_Ledgers("Service_PartyLedger_INS_" & Dr.Customer_Name.Trim & "") <> "" Then
-                        LabourLedger = Read_Ledgers("Service_LabourLedger_INS_IGST")
-                    Else
-                        LabourLedger = IIf(Dr.Part_Labour_Description.Contains("Free Service Coupon") Or Dr.Part_Labour_Description.Contains("free service coupon"), Read_Ledgers("Service_LabourLedger_FreeService"), Read_Ledgers("Service_LabourLedger_WLI"))
-                    End If
-
-                    COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Labour"), Taxable18)
-                    Additional_Ledgers += Create_XML_LEDGERENTRIES(LabourLedger, Taxable18, COST_CENTER)
-                End If
-
-            Else
-
-                If Dr.Taxable_Amount > 0 Then
-                    COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Labour"), Dr.Taxable_Amount)
-                    Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers("Service_LabourLedger_" & BillType), Dr.Taxable_Amount, COST_CENTER)
-                End If
-            End If
-
-        Else
-
-            If Not Is_Igst Then
-                If Taxable18 > 0 Then
-                    COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Part"), Taxable18)
-                    Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers("Service_PartsLedger_18"), Taxable18, COST_CENTER)
-                End If
-            Else
-                COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Part"), Taxable18)
-                Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers("Service_PartsLedger_18_IGST" & IIf(Is_Ins, "_INS", "")), Taxable18, COST_CENTER)
-            End If
-
-        End If
-
-
-        If Taxable28 > 0 Then
-            COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Part"), Taxable28)
-            Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers("Service_PartsLedger_28" & IIf(Is_Igst, "_IGST" & IIf(Is_Ins, "_INS", ""), "")), Taxable28, COST_CENTER)
-        End If
-
-
-
         Dim DrGST As TallyDs.GST_DetailsRow
         GstDs_Temp = New TallyDs
         GstDs_Temp.Merge(GST_Ds)
+        Dim taxDs As New DataSet
+        taxDs = CreateLedgerSplitDs(Read_Ledgers("Service_PartsGST_Values"), "PartLedgerDs")
+        Dim WarrentyNarration As String = " | "
+        Dim drp As DataRow
+        Dim labourSum As Decimal = 0.0
+        Dim PartSum As Decimal = 0.0
 
-        ' For Each Drn As TallyDs.Service_BillsRow In Dt.Rows
+        lbl.text = lbl.text & "Total Items : " & Dt.Rows.Count & "| "
+        lbl.refresh()
 
-        If GstDs_Temp.GST_Details.Select("GST_Name = 'CGST' And GST_Per = '" & Dr.CGST14_Per & "'", "").Count > 0 Then
-            DrGST = GstDs_Temp.GST_Details.Select("GST_Name = 'CGST' And GST_Per = '" & Dr.CGST14_Per & "'", "").First
-            DrGST.Amount = Dr.CGST14
-        End If
+        For Each Drn As TallyDs.Service_DetailRow In Dt.Rows
 
-        If GstDs_Temp.GST_Details.Select("GST_Name = 'SGST' And GST_Per = '" & Dr.SGST14_Per & "'", "").Count > 0 Then
-            DrGST = GstDs_Temp.GST_Details.Select("GST_Name = 'SGST' And GST_Per = '" & Dr.SGST14_Per & "'", "").First
-            DrGST.Amount = Dr.SGST14
-        End If
+            If Drn("Type") = "Labour" Then
 
-        If GstDs_Temp.GST_Details.Select("GST_Name = 'CGST' And GST_Per = '" & Dr.CGST9_Per & "'", "").Count > 0 Then
-            DrGST = GstDs_Temp.GST_Details.Select("GST_Name = 'CGST' And GST_Per = '" & Dr.CGST9_Per & "'", "").First
-            DrGST.Amount = Dr.CGST9
-        End If
+                If Drn.Total_Amount > 0 Then
+                    labourSum += Drn.Taxable
+                End If
 
-        If GstDs_Temp.GST_Details.Select("GST_Name = 'SGST' And GST_Per = '" & Dr.SGST9_Per & "'", "").Count > 0 Then
-            DrGST = GstDs_Temp.GST_Details.Select("GST_Name = 'SGST' And GST_Per = '" & Dr.SGST9_Per & "'", "").First
-            DrGST.Amount = Dr.SGST9
-        End If
+            Else
 
-        If GstDs_Temp.GST_Details.Select("GST_Name = 'IGST' And GST_Per = '" & Dr.IGST18_Per & "'", "").Count > 0 Then
-            DrGST = GstDs_Temp.GST_Details.Select("GST_Name = 'IGST' And GST_Per = '" & Dr.IGST18_Per & "'", "").First
-            DrGST.Amount = Dr.IGST18
-        End If
+                If taxDs.Tables("PartLedgerDs").Select("Ledger='" & Val(Drn.CGST_Per + Drn.SGST_Per) & "'").Count > 0 Then
+                    Is_Igst = False
+                    drp = taxDs.Tables("PartLedgerDs").Select("Ledger='" & Val(Drn.CGST_Per + Drn.SGST_Per) & "'").First
+                    drp("Amount") += IIf(Drn.Total_Amount > 0, Drn.Taxable, 0)
+                    taxDs.AcceptChanges()
+                ElseIf taxDs.Tables("PartLedgerDs").Select("Ledger='" & Val(Drn.IGST_Per) & "'").Count > 0 Then
+                    Is_Igst = True
+                    drp = taxDs.Tables("PartLedgerDs").Select("Ledger='" & Val(Drn.IGST_Per) & "'").First
+                    drp("Amount") += IIf(Drn.Total_Amount > 0, Drn.Taxable, 0)
+                    taxDs.AcceptChanges()
+                Else
+                    lbl.text = lbl.text & " | Missing " & IIf(Val(Drn.IGST_Per) = 0, Val(Drn.CGST_Per + Drn.SGST_Per), Val(Drn.IGST_Per)) & "GST Ledger "
+                    'MsgBox("Missing gst percentages")
+                End If
 
-        If GstDs_Temp.GST_Details.Select("GST_Name = 'IGST' And GST_Per = '" & Dr.IGST28_Per & "'", "").Count > 0 Then
-            DrGST = GstDs_Temp.GST_Details.Select("GST_Name = 'IGST' And GST_Per = '" & Dr.IGST28_Per & "'", "").First
-            DrGST.Amount = Dr.IGST28
-        End If
+            End If
+
+
+
+
+
+
+
+            If GstDs_Temp.GST_Details.Select("GST_Name = 'CGST' And GST_Per = '" & Drn("CGST_Per") & "'", "").Count > 0 Then
+                DrGST = GstDs_Temp.GST_Details.Select("GST_Name = 'CGST' And GST_Per = '" & Drn("CGST_Per") & "'", "").First
+                DrGST.Amount += Val(Drn("CGST"))
+                Is_Igst = False
+            End If
+
+            If GstDs_Temp.GST_Details.Select("GST_Name = 'SGST' And GST_Per = '" & Drn("SGST_Per") & "'", "").Count > 0 Then
+                DrGST = GstDs_Temp.GST_Details.Select("GST_Name = 'SGST' And GST_Per = '" & Drn("SGST_Per") & "'", "").First
+                DrGST.Amount += Val(Drn("SGST"))
+                Is_Igst = False
+            End If
+
+            If GstDs_Temp.GST_Details.Select("GST_Name = 'IGST' And GST_Per = '" & Drn("IGST_Per") & "'", "").Count > 0 Then
+                DrGST = GstDs_Temp.GST_Details.Select("GST_Name = 'IGST' And GST_Per = '" & Drn("IGST_Per") & "'", "").First
+                DrGST.Amount += Val(Drn("IGST"))
+                Is_Igst = True
+            End If
+
+            If GstDs_Temp.GST_Details.Select("GST_Name = 'CESS' And GST_Per = '" & Drn("KFC_Per") & "'", "").Count > 0 Then
+                DrGST = GstDs_Temp.GST_Details.Select("GST_Name = 'CESS' And GST_Per = '" & Drn("KFC_Per") & "'", "").First
+                DrGST.Amount += Val(Drn("KFC"))
+
+            End If
+
+
+            If Not Drn("Job_Type").ToString = "" Then
+                WarrentyNarration = WarrentyNarration & Drn.Part_Labour_Code & " - " & Drn("Job_Type") & " | "
+            End If
+
+            GstDs_Temp.AcceptChanges()
+
+        Next
 
         GstDs_Temp.AcceptChanges()
 
 
+        For Each drp In taxDs.Tables("PartLedgerDs").Rows
+
+            If Val(drp("Amount")) > 0 Then
+                COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Part"), Val(drp("Amount")))
+                Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers("Service_PartsLedger_" & Val(drp("Ledger")) & IIf(Is_Igst, "_IGST", "") & IIf(Is_Ins, "_INS", "")), Val(drp("Amount")), COST_CENTER)
+                If Read_Ledgers("Service_PartsLedger_" & Val(drp("Ledger")) & IIf(Is_Igst, "_IGST", "") & IIf(Is_Ins, "_INS", "")) = "" Then
+                    lbl.text = lbl.text & "| Service_PartsLedger_ not found :Service_PartsLedger_" & Val(drp("Ledger")) & IIf(Is_Igst, "_IGST", "") & IIf(Is_Ins, "_INS", "") & " |"
+                End If
+            End If
+
+        Next
+
+        Dim LabourLedger As String = Read_Ledgers("Service_LabourLedger" & IIf(Is_Igst, "_IGST", "") & "")
+
+
+        If labourSum > 0 Then
+            If LabourLedger = "" Then : lbl.text = lbl.text & "| Missing LabourLedger  |" : End If
+
+            COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Labour"), labourSum)
+            Additional_Ledgers += Create_XML_LEDGERENTRIES(LabourLedger, labourSum, COST_CENTER)
+        Else
+
+        End If
+
+
+        Dim FloodLedger As String = ""
         ''GST Ledger
         For Each DrG As TallyDs.GST_DetailsRow In GstDs_Temp.GST_Details.Rows
+
             If DrG.Amount > 0 Then
                 Additional_Ledgers += Create_XML_LEDGERENTRIES(DrG.Tally_Ledger, DrG.Amount, "")
 
             End If
+
         Next
 
 
 
-        If Dr.KFC1 > 0 Then
-            Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers("Ledger_KFCess"), Dr.KFC1, "")
-        End If
+        'If Dr.KFC1 > 0 Then
+        '    Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers("Ledger_KFCess"), Dr.KFC1, "")
+        'End If
 
-        Dr.PaiseRoundingOff = Dr.Invoice_Amount - Dr.Total_Amount
-
-
-        If Dr.Invoice_Amount = Dr.Total_Amount + Dr.PaiseRoundingOff Then
-
-        ElseIf Dr.Invoice_Amount = Dr.Total_Amount + Dr.PaiseRound Then
-            Dr.PaiseRoundingOff = Dr.PaiseRound
-        Else
-            ' MsgBox("Round off")
-        End If
 
 
         Dim CostCentreName As String = ""
 
-        If BillType.Contains("LI") Then
-            CostCentreName = "Cost_Center_Labour"
-        Else
-            CostCentreName = "Cost_Center_Part"
-        End If
+        'If BillType.Contains("LI") Then
+        '    CostCentreName = "Cost_Center_Labour"
+        'Else
+        CostCentreName = "Cost_Center_Part"
+        'End If
 
 
 
-        If Dr.PaiseRoundingOff <> 0 And Dr.PaiseRoundingOff < 1 Then
-            COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers(CostCentreName), Format(Dr.PaiseRoundingOff, "0.00"))
-            Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers("Ledger_PaiseRoundOff"), Dr.PaiseRoundingOff, COST_CENTER, True)
-        ElseIf Dr.PaiseRound <> 0 And Dr.PaiseRound < 1 And dr.PaiseRoundingOff <> 0 Then
+        If Dr.PaiseRound <> 0 And Dr.PaiseRound < 1 Then
+            COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers(CostCentreName), Format(Dr.PaiseRound, "0.00"))
+            Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers("Ledger_PaiseRoundOff"), Dr.PaiseRound, COST_CENTER, True)
+        ElseIf Dr.PaiseRound <> 0 And Dr.PaiseRound < 1 And Dr.PaiseRound <> 0 Then
             COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers(CostCentreName), Dr.PaiseRound)
             Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers("Ledger_PaiseRoundOff"), Dr.PaiseRound, COST_CENTER, True)
         End If
 
         Try
-
+            Narration = Narration & WarrentyNarration
             '"<STATICVARIABLES>" & _
             '    "<SVCURRENTCOMPANY>EVM CARS - (From 1-Apr-2015)</SVCURRENTCOMPANY>" & _
             '"</STATICVARIABLES>" & _

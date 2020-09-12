@@ -42,8 +42,12 @@ Partial Class FrmMDI
         Me.BgWrkSendMail = New System.ComponentModel.BackgroundWorker()
         Me.TimerSysJobs = New System.Windows.Forms.Timer(Me.components)
         Me.BGWorker = New System.ComponentModel.BackgroundWorker()
+        Me.pnelimportStatus = New System.Windows.Forms.Panel()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         Me.PanelService.SuspendLayout()
+        Me.pnelimportStatus.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
@@ -62,7 +66,7 @@ Partial Class FrmMDI
         Me.PLblUser.ForeColor = System.Drawing.Color.White
         Me.PLblUser.Location = New System.Drawing.Point(3, 1)
         Me.PLblUser.Name = "PLblUser"
-        Me.PLblUser.Size = New System.Drawing.Size(52, 20)
+        Me.PLblUser.Size = New System.Drawing.Size(39, 15)
         Me.PLblUser.TabIndex = 0
         Me.PLblUser.Text = "User : "
         '
@@ -80,9 +84,9 @@ Partial Class FrmMDI
         Me.PanelService.BackColor = System.Drawing.Color.Teal
         Me.PanelService.Controls.Add(Me.LblServiceStatus)
         Me.PanelService.Controls.Add(Me.LblServiceInfo)
-        Me.PanelService.Location = New System.Drawing.Point(656, 368)
+        Me.PanelService.Location = New System.Drawing.Point(587, 368)
         Me.PanelService.Name = "PanelService"
-        Me.PanelService.Size = New System.Drawing.Size(534, 18)
+        Me.PanelService.Size = New System.Drawing.Size(603, 18)
         Me.PanelService.TabIndex = 7
         '
         'LblServiceStatus
@@ -91,7 +95,7 @@ Partial Class FrmMDI
         Me.LblServiceStatus.ForeColor = System.Drawing.Color.White
         Me.LblServiceStatus.Location = New System.Drawing.Point(3, -2)
         Me.LblServiceStatus.Name = "LblServiceStatus"
-        Me.LblServiceStatus.Size = New System.Drawing.Size(58, 20)
+        Me.LblServiceStatus.Size = New System.Drawing.Size(46, 15)
         Me.LblServiceStatus.TabIndex = 0
         Me.LblServiceStatus.Text = "Status :"
         '
@@ -101,7 +105,7 @@ Partial Class FrmMDI
         Me.LblServiceInfo.ForeColor = System.Drawing.Color.White
         Me.LblServiceInfo.Location = New System.Drawing.Point(3, 1)
         Me.LblServiceInfo.Name = "LblServiceInfo"
-        Me.LblServiceInfo.Size = New System.Drawing.Size(87, 20)
+        Me.LblServiceInfo.Size = New System.Drawing.Size(69, 15)
         Me.LblServiceInfo.TabIndex = 0
         Me.LblServiceInfo.Text = "SeviceInfo :"
         Me.LblServiceInfo.Visible = False
@@ -208,15 +212,50 @@ Partial Class FrmMDI
         'BGWorker
         '
         '
+        'pnelimportStatus
+        '
+        Me.pnelimportStatus.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.pnelimportStatus.BackColor = System.Drawing.Color.Teal
+        Me.pnelimportStatus.Controls.Add(Me.Label1)
+        Me.pnelimportStatus.Controls.Add(Me.TextBox1)
+        Me.pnelimportStatus.Location = New System.Drawing.Point(1034, 222)
+        Me.pnelimportStatus.Name = "pnelimportStatus"
+        Me.pnelimportStatus.Size = New System.Drawing.Size(156, 140)
+        Me.pnelimportStatus.TabIndex = 1
+        Me.pnelimportStatus.Visible = False
+        '
+        'TextBox1
+        '
+        Me.TextBox1.BackColor = System.Drawing.Color.Teal
+        Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TextBox1.Location = New System.Drawing.Point(5, 3)
+        Me.TextBox1.Multiline = True
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.ReadOnly = True
+        Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.TextBox1.Size = New System.Drawing.Size(142, 134)
+        Me.TextBox1.TabIndex = 0
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.BackColor = System.Drawing.Color.Transparent
+        Me.Label1.Location = New System.Drawing.Point(132, 4)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(14, 15)
+        Me.Label1.TabIndex = 1
+        Me.Label1.Text = "X"
+        '
         'FrmMDI
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.BackgroundImage = Global.RE_X.My.Resources.Resources.formbgwp
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1193, 389)
         Me.ControlBox = False
+        Me.Controls.Add(Me.pnelimportStatus)
         Me.Controls.Add(Me.BtnMin)
         Me.Controls.Add(Me.BtnExit)
         Me.Controls.Add(Me.PanelVmenu)
@@ -236,6 +275,8 @@ Partial Class FrmMDI
         Me.Panel1.PerformLayout()
         Me.PanelService.ResumeLayout(False)
         Me.PanelService.PerformLayout()
+        Me.pnelimportStatus.ResumeLayout(False)
+        Me.pnelimportStatus.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -257,4 +298,7 @@ Partial Class FrmMDI
     Friend WithEvents BgWrkSendMail As System.ComponentModel.BackgroundWorker
     Friend WithEvents TimerSysJobs As System.Windows.Forms.Timer
     Friend WithEvents BGWorker As System.ComponentModel.BackgroundWorker
+    Friend WithEvents pnelimportStatus As Panel
+    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents Label1 As Label
 End Class

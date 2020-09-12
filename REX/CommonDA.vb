@@ -897,7 +897,7 @@ Public Class CommonDA
             Da.Fill(Ds, "Service")
 
 
-            strQuery = " select a.*,b.* from service_header a inner join Service b on a.Invoice_Number = b.Invoice_Number  "
+            strQuery = " select b.*,a.* from service_header a inner join Service b on a.Invoice_Number = b.Invoice_Number  "
             If FrmDate <> Nothing Then
                 strQuery = strQuery & "where a.Invoice_Date between '" & Format(FrmDate, "yyyy-MM-dd") & "' AND '" & Format(ToDate, "yyyy-MM-dd") & "'"
             Else
@@ -5490,8 +5490,7 @@ Public Class CommonDA
             strQuery = strQuery & " And Acc_Type = '" & Acc_Type & "' "
         End If
 
-
-        strQuery = strQuery & " Order by GST_Per,GST_Name "
+        strQuery = strQuery & " Order by GST_Per desc "
 
         da.SelectCommand = cmd
         cmd.CommandText = strQuery

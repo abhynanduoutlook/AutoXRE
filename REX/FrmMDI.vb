@@ -512,6 +512,8 @@ end_of_for:
             Catch ex As Exception
                 LastMovedFile = ""
                 CommonDA.Create_Log("Import To Tally", "Failed To move VehiclePur_" & FileName, "")
+                TextBox1.Text = TextBox1.Text & "Failed To move VehiclePur_" & FileName
+                TextBox1.Refresh()
             End Try
             LblStatus(True, FileName & "Import Success ")
             LblServiceStatus.Tag = LastMovedFile
@@ -1243,11 +1245,11 @@ end_of_for:
 
     Private Sub Load_TallyService()
         If ObjFrmTallyService Is Nothing Then
-            ObjFrmTallyService = New FrmTallyService(LblServiceStatus)
+            ObjFrmTallyService = New FrmTallyService(LblServiceStatus, pnelimportStatus)
             ObjFrmTallyService.MdiParent = Me
             ObjFrmTallyService.Show()
         ElseIf ObjFrmTallyService.IsDisposed Then
-            ObjFrmTallyService = New FrmTallyService(LblServiceStatus)
+            ObjFrmTallyService = New FrmTallyService(LblServiceStatus, pnelimportStatus)
             ObjFrmTallyService.MdiParent = Me
             ObjFrmTallyService.Show()
         Else
@@ -1532,5 +1534,13 @@ end_of_for:
         Catch ex As Exception
 
         End Try
+    End Sub
+
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+        pnelimportStatus.Visible = False
+    End Sub
+
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
+
     End Sub
 End Class
