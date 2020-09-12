@@ -785,7 +785,6 @@ Public Class FrmTallyService
         Dim ROType As String = Strings.Left(Dr.Job_Card, 3)
         Dim COST_CENTER As String = ""
         Dim PartyLedgerService As String = ""
-        Dim Total_Labour As Decimal
         Dim Is_Igst As Boolean = False
         Dim RefNo As String = Dr.Job_Card
         Dim Is_Ins As Boolean = False
