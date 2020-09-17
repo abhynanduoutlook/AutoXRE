@@ -397,10 +397,31 @@ Public Class FrmTallyVehiclePur
                                     Altered += Val(XmlDS.Tables("response").Rows(0).Item("ALTERED").ToString)
                                     Errors += Val(XmlDS.Tables("response").Rows(0).Item("ERRORS").ToString)
 
-                                    Import_Log += dr.Invoice_No & " - " &
-                                                "Created :" & XmlDS.Tables("response").Rows(0).Item("CREATED").ToString &
-                                                ",Altered :" & XmlDS.Tables("response").Rows(0).Item("ALTERED").ToString &
-                                                ",Errors :" & XmlDS.Tables("response").Rows(0).Item("ERRORS").ToString
+
+                                    If XmlDS.Tables("response").Rows(0).Item(0).ToString.Contains("already exists") Then
+                                        Import_Log += dr.Invoice_Number & " - " &
+                                           "Created :" & XmlDS.Tables("response").Rows(0).Item("CREATED").ToString &
+                                           ",Skipped :" & XmlDS.Tables("response").Rows(0).Item("ERRORS").ToString &
+                                            ",Altered :" & XmlDS.Tables("response").Rows(0).Item("ALTERED").ToString
+                                        CommonDA.Update_Purchase(dr)
+                                        AlreadyExist_Int += 1
+                                        Errors -= 1
+
+                                    Else
+
+
+                                        Import_Log += dr.Invoice_Number & " - " &
+                                            "Created :" & XmlDS.Tables("response").Rows(0).Item("CREATED").ToString &
+                                            ",Altered :" & XmlDS.Tables("response").Rows(0).Item("ALTERED").ToString &
+                                            ",Errors :" & XmlDS.Tables("response").Rows(0).Item("ERRORS").ToString
+
+                                    End If
+
+
+                                    'Import_Log += dr.Invoice_No & " - " &
+                                    '            "Created :" & XmlDS.Tables("response").Rows(0).Item("CREATED").ToString &
+                                    '            ",Altered :" & XmlDS.Tables("response").Rows(0).Item("ALTERED").ToString &
+                                    '            ",Errors :" & XmlDS.Tables("response").Rows(0).Item("ERRORS").ToString
 
                                     If Val(XmlDS.Tables("response").Rows(0).Item("ERRORS").ToString) > 0 Then
                                         Import_Log += " ," & XmlDS.Tables("response").Rows(0).Item("LINEERROR").ToString

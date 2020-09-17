@@ -207,7 +207,7 @@ Public Class FrmMDI
 
                 'JobCard
                 SaveDs.Merge(TempDs.Tables("ServiceData").Select("", "[Date],[Invoice]"))
-                LblStatus(True, "Inserting Jobcard Statement...")
+                LblStatus(True, "Inserting Invoice Statement...")
 
                 Status = CommonDA.Insert_Service(SaveDs, True, LblServiceStatus)
 
@@ -219,6 +219,7 @@ Public Class FrmMDI
 
                     Catch ex As Exception
                         CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
+                        MsgBox("Failed To Move File Please Delete File From Service", vbCritical, "Failed To Move File")
                         Return Status
 
                     End Try
@@ -232,6 +233,7 @@ Public Class FrmMDI
                         IO.File.Move(FileName, NewFileName)
                     Catch ex As Exception
                         CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
+                        MsgBox("Failed To Move File Please Delete File From Service", vbCritical, "Failed To Move File")
                         Return Status
 
                     End Try
@@ -260,6 +262,7 @@ Public Class FrmMDI
                         IO.File.Move(FileName, NewFileName)
                     Catch ex As Exception
                         CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
+                        MsgBox("Failed To Move File Please Delete File From Service", vbCritical, "Failed To Move File")
                     End Try
                     Return Status
                 Else
@@ -270,6 +273,7 @@ Public Class FrmMDI
                         IO.File.Move(FileName, NewFileName)
                     Catch ex As Exception
                         CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
+                        MsgBox("Failed To Move File Please Delete File From Service", vbCritical, "Failed To Move File")
                         Return Status
 
                     End Try
@@ -438,6 +442,7 @@ Public Class FrmMDI
             Catch ex As Exception
                 LastMovedFile = ""
                 CommonDA.Create_Log("Import To Tally", "Failed To move CashReg_" & FileName, "")
+                MsgBox("Failed To Move File Please Delete File From CashRegister", vbCritical, "Failed To Move File")
             End Try
 
             LblStatus(True, FileName & "Import Success ")
@@ -451,6 +456,7 @@ Public Class FrmMDI
                 Prev_file = ""
             Catch ex As Exception
                 CommonDA.Create_Log("Import To Tally", "Failed To move CashReg_" & FileName, "")
+                '   MsgBox("Failed To Move File Please Delete File From Cash Register", vbCritical, "Failed To Move File")
             End Try
             LblStatus(True, FileName & "Import Error ")
             LblServiceStatus.Tag = LastMovedFile
@@ -514,6 +520,7 @@ end_of_for:
                 CommonDA.Create_Log("Import To Tally", "Failed To move VehiclePur_" & FileName, "")
                 TextBox1.Text = TextBox1.Text & "Failed To move VehiclePur_" & FileName
                 TextBox1.Refresh()
+                MsgBox("Failed To Move File Please Delete File From Vehicle", vbCritical, "Failed To Move File")
             End Try
             LblStatus(True, FileName & "Import Success ")
             LblServiceStatus.Tag = LastMovedFile
@@ -611,6 +618,7 @@ end_of_for:
             Catch ex As Exception
                 LastMovedFile = ""
                 CommonDA.Create_Log("Import To Tally", "Failed To move Spare_Pur " & FileName, "")
+                MsgBox("Failed To Move File Please Delete File From Spare", vbCritical, "Failed To Move File")
             End Try
             MsgBox("Import Spare Purchase Successfully" & vbCrLf & FileName, vbInformation, "Import")
 
@@ -756,6 +764,9 @@ end_of_for:
                 AddHandler Obj.MouseHover, AddressOf Mouse_focus
             End If
         Next
+
+
+
 
         Set_Invisible_Form()
         Get_App_Ver()

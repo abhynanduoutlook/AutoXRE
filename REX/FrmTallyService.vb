@@ -453,7 +453,8 @@ Public Class FrmTallyService
             '  ImportDs.Merge(ServiceDs.Service_Bills.Select("Updated=0 and JobCard_Date is not null"))
         End If
 
-        StatusPanel.Visible = True
+        StatusPanel.Visible = IIf(Read_Settings("ShowServiceDetailPanel") = "Y", True, False)
+
         If ImportDs.Service.Rows.Count > 0 Then
             '   Load_PartName()
 
@@ -490,10 +491,10 @@ Public Class FrmTallyService
                 'End If
 
                 PleaseWait_Progress("Importing.. Invoice Number:" & Dr.Invoice_Number & "")
-                lbl.text = lbl.text & vbCrLf & Dr.Invoice_Number & ":"
+                lbl.text = lbl.text & vbCrLf & Dr.Invoice_Number & ":" & BillType
 
-                If ServiceDs.Service_Detail.Select("Invoice_Number = '" & Dr.Invoice_Number & "'").Count > 0 Then
-                    If ServiceDs.Service_Detail.Select("Invoice_Number = '" & Dr.Invoice_Number & "'").First.Item("Job_Card").ToString = "" Then
+                If ServiceDs.Service_Detail.Select("Invoice_Number = '" & Dr.Invoice_Number & "'").Count > 0 And BillType = "INV" Then
+                    If ServiceDs.Service_Detail.Select("Invoice_Number = '" & Dr.Invoice_Number & "'").First.Item("Job_Card").ToString = Dr.Invoice_Number Then
                         BillType = "CS"
                     End If
                 End If
@@ -508,9 +509,9 @@ Public Class FrmTallyService
                     SalesVoucherType = Read_Ledgers("Service_VT_" & BillType & "")
                 End If
 
-                If BillType = "DSI" Then
-                    Continue For
-                End If
+                'If BillType = "DSI" Then
+                '    Continue For
+                'End If
 
                 'If SalesVoucherType = "" Then
                 '    SalesVoucherType = Read_Ledgers("Service_VT")
@@ -553,14 +554,13 @@ Public Class FrmTallyService
                             lbl.refresh()
                         End If
 
-                        StrXmldata = XmlFormat_Sales_WithOut_Stock(Dr, DsDetails.Tables("Service_Detail"), SalesVoucherType)
+                        StrXmldata = XmlFormat_Sales_WithOut_Stock(Dr, DsDetails.Tables("Service_Detail"), SalesVoucherType, BillType)
 
                         DsDetails.Service_Detail.Rows.Clear()
 
                         If Strings.Left(StrXmldata, 10) <> "<ENVELOPE>" Then
                             ErrorList += StrXmldata
                         End If
-
 
 
                         If Read_Settings("Show_Request_XML") = "Y" Then
@@ -604,7 +604,7 @@ Public Class FrmTallyService
                                            "Created :" & XmlDS.Tables("response").Rows(0).Item("CREATED").ToString &
                                            ",Skipped :" & XmlDS.Tables("response").Rows(0).Item("ERRORS").ToString &
                                             ",Altered :" & XmlDS.Tables("response").Rows(0).Item("ALTERED").ToString
-                                        'CommonDA.Update_Service(Dr)
+                                        CommonDA.Update_Service(Dr)
                                         AlreadyExist_Int += 1
                                         Errors -= 1
 
@@ -769,7 +769,7 @@ Public Class FrmTallyService
 
 
 
-    Public Function XmlFormat_Sales_WithOut_Stock(ByVal Dr As TallyDs.ServiceRow, ByVal Dt As DataTable, ByVal SalesSpare_VoucherType As String) As String
+    Public Function XmlFormat_Sales_WithOut_Stock(ByVal Dr As TallyDs.ServiceRow, ByVal Dt As DataTable, ByVal SalesSpare_VoucherType As String, ByVal BillType As String) As String
 
         Dim Xml As String = ""
         Dim Additional_Ledgers As String = ""
@@ -781,7 +781,7 @@ Public Class FrmTallyService
 
         Dim InvDate As Date = Dr.Invoice_Date
         Dim InvDateString As String = Format(InvDate, "yyyyMMdd")
-        Dim BillType As String = Strings.Left(Dr.Invoice_Number, 3)
+        ' Dim BillType As String = Strings.Left(Dr.Invoice_Number, 3)
         Dim ROType As String = Strings.Left(Dr.Job_Card, 3)
         Dim COST_CENTER As String = ""
         Dim PartyLedgerService As String = ""
@@ -797,7 +797,7 @@ Public Class FrmTallyService
         '        CommonDA.Create_Log("Importing", "Service_PartyLedger_INS_" & Dr.Customer_Name.Trim, "")
         '
 
-        If Dr.GSTIN <> "" Then
+        If Dr.GSTIN <> "" And Not Read_Ledgers("ServiceLedgerExcludeGSTIN").Contains(BillType) Then
 
             If DsLedger.Tables.Count > 0 Then
                 If DsLedger.Tables("ledger").Select("$PARTYGSTIN = '" & Dr.GSTIN & "'").Count = 0 Then
@@ -810,19 +810,24 @@ Public Class FrmTallyService
 
             Narration = Narration & ",GST-NO:" & Dr.GSTIN
         Else
-            PartyLedgerService = Read_Ledgers("Service_PartyLedger")
+            ' PartyLedgerService = Read_Ledgers("Service_PartyLedger")
+            PartyLedgerService = Read_Ledgers("Service_PartyLedger_" & BillType)
+
         End If
 
 
-        If Dr.Job_Card.ToString = "" Then
+        If BillType = "CS" Then
             PartyLedgerService = Read_Ledgers("Service_PartyLedger_CS")
             Dr.Job_Card = Dr.Invoice_Number
             RefNo = Dr.Job_Card
+
         End If
 
-        'If PartyLedgerService.Trim = "" Then
-        '    PartyLedgerService = Dr.Customer_Name & " " & Dr.Chassis_No  ' "Mr. Gigi K  (MR7164748285)" '
-        'End If
+        If PartyLedgerService.Trim = "" Then
+            lbl.text = lbl.text & " | Missing Party Ledger From GST No | "
+
+            PartyLedgerService = Read_Ledgers("Service_PartyLedger_" & BillType)
+        End If
 
         'If DsLedger.Tables.Count > 0 Then
         '    If DsLedger.Tables("Ledger").Select("$NAME = '" & PartyLedgerService & "'").Count = 0 Then
@@ -837,6 +842,9 @@ Public Class FrmTallyService
         Dim CustVeh As String = Dr.Customer_Name
         Narration += "Job Card No :" & Dr.Job_Card & " , Cust Name:" & CustVeh & ""
 
+        If Dr.GSTIN <> "" Then
+            Narration = Narration & "GSTIN : " & Dr.GSTIN & " | "
+        End If
         Dr.Invoice_Amount = Math.Round(Dr.Invoice_Amount)
 
         Main_Ledgers = Create_XML_LEDGERENTRIES_PARTYLEDGER(PartyLedgerService, -Math.Round(Dr.Invoice_Amount), RefNo, True)

@@ -907,10 +907,10 @@ Public Class FrmCashRegisterDetails
 
                 If Dr.JobCardNo.Contains("RJC") Then
                     Party_Ledger = Read_Ledgers("Service_PartyLedger_SLI")
-                ElseIf Dr.JobCardNo.Contains("SSI") Then
+                ElseIf Dr.JobCardNo.Contains("INV") Then
                     Party_Ledger = Read_Ledgers("Service_PartyLedger_SSI")
                 Else
-                    Party_Ledger = Read_Ledgers("Service_PartyLedger_ILIP")
+                    'Party_Ledger = Read_Ledgers("Service_PartyLedger_ILIP")
                 End If
 
 
@@ -1203,6 +1203,8 @@ Public Class FrmCashRegisterDetails
             Additional_Ledgers += Create_XML_ALLLEDGERENTRIES_PARTYLEDGER(Read_Ledgers("LedgerServBank"), -dr.Amount, "", False)
         ElseIf dr.Payment_Mode = "Cash" Then
             Additional_Ledgers += Create_XML_ALLLEDGERENTRIES_PARTYLEDGER(Read_Ledgers("LedgerServiceCash"), -dr.Amount, "", False)
+        ElseIf dr.Payment_Mode = "UPI" Then
+            Additional_Ledgers += Create_XML_ALLLEDGERENTRIES_PARTYLEDGER(Read_Ledgers("LedgerServiceUPI"), -dr.Amount, "", False)
         End If
 
 

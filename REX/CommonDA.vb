@@ -3111,7 +3111,9 @@ Public Class CommonDA
                     If DrD("Job id").ToString <> "" Then
                         filter = "Job_Card,Job_Card_Date,"
                         filterValues = IIf(filter = "", "", "'" & DrD("Job id").trim & "','" & Format(DrD("Job date"), "yyyy-MM-dd") & "',")
-
+                    ElseIf DrD("Job id").ToString = "" Then
+                        filter = "Job_Card,"
+                        filterValues = IIf(filter = "", "", "'" & DrD("Invoice").trim & "',")
                     End If
 
                     Qry += "INSERT INTO Service (" & filter &
