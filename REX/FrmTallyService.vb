@@ -453,15 +453,17 @@ Public Class FrmTallyService
             '  ImportDs.Merge(ServiceDs.Service_Bills.Select("Updated=0 and JobCard_Date is not null"))
         End If
 
-        StatusPanel.Visible = True
+        StatusPanel.Visible = IIf(Read_Settings("StatusPanelVisible") = "Y", True, False)
+
+
         If ImportDs.Service.Rows.Count > 0 Then
-            '   Load_PartName()
+            Load_PartName()
 
             If CheckPartNames() = False Then
                 Exit Sub
             End If
 
-            'Load_Labour_Ledgers()
+            Load_Labour_Ledgers()
 
             'If CheckLabourLedgers() = False Then
             '    Exit Sub
@@ -512,6 +514,11 @@ Public Class FrmTallyService
                     Continue For
                 End If
 
+
+                If SalesVoucherType.Trim = "" Then
+                    SalesVoucherType = Read_Ledgers("Service_VT_" & Dr.CompanyCode & "_" & BillType & "")
+                End If
+
                 'If SalesVoucherType = "" Then
                 '    SalesVoucherType = Read_Ledgers("Service_VT")
                 'End If
@@ -553,7 +560,7 @@ Public Class FrmTallyService
                             lbl.refresh()
                         End If
 
-                        StrXmldata = XmlFormat_Sales_WithOut_Stock(Dr, DsDetails.Tables("Service_Detail"), SalesVoucherType)
+                        StrXmldata = XmlFormat_Sales_With_Stock(Dr, DsDetails.Tables("Service_Detail"), SalesVoucherType, BillType)
 
                         DsDetails.Service_Detail.Rows.Clear()
 
@@ -604,7 +611,7 @@ Public Class FrmTallyService
                                            "Created :" & XmlDS.Tables("response").Rows(0).Item("CREATED").ToString &
                                            ",Skipped :" & XmlDS.Tables("response").Rows(0).Item("ERRORS").ToString &
                                             ",Altered :" & XmlDS.Tables("response").Rows(0).Item("ALTERED").ToString
-                                        'CommonDA.Update_Service(Dr)
+                                        CommonDA.Update_Service(Dr)
                                         AlreadyExist_Int += 1
                                         Errors -= 1
 
@@ -767,9 +774,7 @@ Public Class FrmTallyService
         Return Ds
     End Function
 
-
-
-    Public Function XmlFormat_Sales_WithOut_Stock(ByVal Dr As TallyDs.ServiceRow, ByVal Dt As DataTable, ByVal SalesSpare_VoucherType As String) As String
+    Public Function XmlFormat_Sales_With_Stock(ByVal Dr As TallyDs.ServiceRow, ByVal Dt As DataTable, ByVal SalesSpare_VoucherType As String, ByVal BillType As String) As String
 
         Dim Xml As String = ""
         Dim Additional_Ledgers As String = ""
@@ -778,10 +783,10 @@ Public Class FrmTallyService
         Dim Parts_Entries As String = ""
         Dim Missing_Parts As String = ""
         Dim Narration As String = ""
-
+        Dim Alloc_Ledger As String = ""
         Dim InvDate As Date = Dr.Invoice_Date
         Dim InvDateString As String = Format(InvDate, "yyyyMMdd")
-        Dim BillType As String = Strings.Left(Dr.Invoice_Number, 3)
+        ' Dim BillType As String = Strings.Left(Dr.Invoice_Number, 3)
         Dim ROType As String = Strings.Left(Dr.Job_Card, 3)
         Dim COST_CENTER As String = ""
         Dim PartyLedgerService As String = ""
@@ -789,53 +794,61 @@ Public Class FrmTallyService
         Dim RefNo As String = Dr.Job_Card
         Dim Is_Ins As Boolean = False
         Dim DrL As TallyDs.Service_LedgersRow
-
+        Dim GST_Taxable_Per As String = ""
+        Dim StrXmldata As String = ""
 
 
         '        Show_ClipBoard("Ledger Missing", " No Ledger Found in Settings  For " & Dr.Customer_Name & vbCrLf & "")
         '        CommonDA.Create_Settings(True, "Service_PartyLedger_INS_" & Dr.Customer_Name.Trim & "", "")
         '        CommonDA.Create_Log("Importing", "Service_PartyLedger_INS_" & Dr.Customer_Name.Trim, "")
         '
-
-        If Dr.GSTIN <> "" Then
-
-            If DsLedger.Tables.Count > 0 Then
-                If DsLedger.Tables("ledger").Select("$PARTYGSTIN = '" & Dr.GSTIN & "'").Count = 0 Then
-                    ' StrXmldata = XmlFormat_Ledger(Dr.GSTIN, PartyLedgerService, Read_Settings("partyledgerservice_parent"), Dr.VEHICLENO)
-                    'Export_Tally_Method1(StrXmldata)
-                Else
-                    PartyLedgerService = DsLedger.Tables("ledger").Select("$PARTYGSTIN = '" & Dr.GSTIN & "'").First.Item("$NAME").ToString
-                End If
-            End If
-
-            Narration = Narration & ",GST-NO:" & Dr.GSTIN
-        Else
-            PartyLedgerService = Read_Ledgers("Service_PartyLedger")
-        End If
+        Dr.Customer_Name = Dr.Customer_Name.Replace("Mr", "")
+        Dr.Customer_Name = Dr.Customer_Name.Replace("Mr.", "")
 
 
-        If Dr.Job_Card.ToString = "" Then
+        'If DsLedger.Tables.Count > 0 Then
+        '    PartyLedgerService = Dr.Customer_Name.ToString.Trim & Dr.Reg_No.ToString.Trim
+        '    If DsLedger.Tables("ledger").Select("$PARTYGSTIN = '" & Dr.GSTIN & "'").Count = 0 Then
+        '        StrXmldata = XmlFormat_Ledger(Dr.GSTIN, PartyLedgerService, Read_Settings("partyledgerservice_parent"))
+        '        Export_Tally_Method1(StrXmldata)
+        '    Else
+        '        PartyLedgerService = DsLedger.Tables("ledger").Select("$PARTYGSTIN = '" & Dr.GSTIN & "'").First.Item("$NAME").ToString
+        '    End If
+        'End If
+
+        'Narration = Narration & ",GST-NO:" & Dr.GSTIN
+
+
+
+        If Dr.Job_Card.ToString = "" Or Dr("Job_Type").ToString = "CS" Then
             PartyLedgerService = Read_Ledgers("Service_PartyLedger_CS")
             Dr.Job_Card = Dr.Invoice_Number
             RefNo = Dr.Job_Card
         End If
 
-        'If PartyLedgerService.Trim = "" Then
-        '    PartyLedgerService = Dr.Customer_Name & " " & Dr.Chassis_No  ' "Mr. Gigi K  (MR7164748285)" '
-        'End If
+        lbl.text = lbl.text & vbCrLf & "PartyLedgerService : " & PartyLedgerService & "| "
+        lbl.refresh()
+        If PartyLedgerService.Trim = "" Then
+            PartyLedgerService = Dr.Customer_Name.ToUpper & " " & Dr.Model_Description.ToUpper & " " & Dr.Reg_No.ToUpper    ' "Mr. Gigi K  (MR7164748285)" '
+        End If
 
-        'If DsLedger.Tables.Count > 0 Then
-        '    If DsLedger.Tables("Ledger").Select("$NAME = '" & PartyLedgerService & "'").Count = 0 Then
-        '        StrXmldata = XmlFormat_Ledger(PartyLedgerService, Read_Ledgers("Service_PartyLedger_Parent"))
-        '        Export_Tally_Method1(StrXmldata)
-        '    End If
-        'Else
-        '    StrXmldata = XmlFormat_Ledger(PartyLedgerService, Read_Ledgers("Service_PartyLedger_Parent"))
-        '    Export_Tally_Method1(StrXmldata)
-        'End If
+        If DsLedger.Tables.Count > 0 Then
+            If DsLedger.Tables("Ledger").Select("$NAME = '" & PartyLedgerService & "'").Count = 0 Then
+                StrXmldata = XmlFormat_Ledger(PartyLedgerService, Read_Ledgers("Service_PartyLedger_Parent"))
+                Export_Tally_Method1(StrXmldata)
+            End If
+        Else
+            StrXmldata = XmlFormat_Ledger(PartyLedgerService, Read_Ledgers("Service_PartyLedger_Parent"))
+            Export_Tally_Method1(StrXmldata)
+        End If
 
-        Dim CustVeh As String = Dr.Customer_Name
-        Narration += "Job Card No :" & Dr.Job_Card & " , Cust Name:" & CustVeh & ""
+
+        Narration += IIf(Dr.Chassis_No = "", "", "Ch No :" & Dr.Chassis_No)
+        Narration += IIf(Dr.Service_Advisor = "", "", ", Service Adv: " & Dr.Service_Advisor)
+
+        If Narration = "" Then
+            Narration = "INV :" & Dr.Invoice_Number
+        End If
 
         Dr.Invoice_Amount = Math.Round(Dr.Invoice_Amount)
 
@@ -843,9 +856,7 @@ Public Class FrmTallyService
 
         Parts_Entries = ""
 
-        If Parts_Entries = "" Then
-            Parts_Entries = "<ALLINVENTORYENTRIES.LIST></ALLINVENTORYENTRIES.LIST>"
-        End If
+
 
         Dim DrGST As TallyDs.GST_DetailsRow
         GstDs_Temp = New TallyDs
@@ -862,9 +873,22 @@ Public Class FrmTallyService
 
         For Each Drn As TallyDs.Service_DetailRow In Dt.Rows
 
+            Dim PartName As String
+            Dim Qty_Type As String
+
+
+
+
+            If Not Drn.Job_Type.ToString.Trim = "PaidService" And Dr("Job_Type").ToString <> "CS" Then
+                Continue For
+            End If
+
+
+
             If Drn("Type") = "Labour" Then
 
-                If Drn.Total_Amount > 0 Then
+
+                If Drn.Total_Amount > 0 And Drn.Job_Type.ToString.Trim = "PaidService" Then
                     labourSum += Drn.Taxable
                 End If
 
@@ -872,18 +896,67 @@ Public Class FrmTallyService
 
                 If taxDs.Tables("PartLedgerDs").Select("Ledger='" & Val(Drn.CGST_Per + Drn.SGST_Per) & "'").Count > 0 Then
                     Is_Igst = False
-                    drp = taxDs.Tables("PartLedgerDs").Select("Ledger='" & Val(Drn.CGST_Per + Drn.SGST_Per) & "'").First
-                    drp("Amount") += IIf(Drn.Total_Amount > 0, Drn.Taxable, 0)
-                    taxDs.AcceptChanges()
+                    'drp = taxDs.Tables("PartLedgerDs").Select("Ledger='" & Val(Drn.CGST_Per + Drn.SGST_Per) & "'").First
+                    'drp("Amount") += IIf(Drn.Total_Amount > 0, Drn.Taxable, 0)
+                    'taxDs.AcceptChanges()
                 ElseIf taxDs.Tables("PartLedgerDs").Select("Ledger='" & Val(Drn.IGST_Per) & "'").Count > 0 Then
                     Is_Igst = True
-                    drp = taxDs.Tables("PartLedgerDs").Select("Ledger='" & Val(Drn.IGST_Per) & "'").First
-                    drp("Amount") += IIf(Drn.Total_Amount > 0, Drn.Taxable, 0)
-                    taxDs.AcceptChanges()
+                    'drp = taxDs.Tables("PartLedgerDs").Select("Ledger='" & Val(Drn.IGST_Per) & "'").First
+                    'drp("Amount") += IIf(Drn.Total_Amount > 0, Drn.Taxable, 0)
+                    'taxDs.AcceptChanges()
                 Else
                     lbl.text = lbl.text & " | Missing " & IIf(Val(Drn.IGST_Per) = 0, Val(Drn.CGST_Per + Drn.SGST_Per), Val(Drn.IGST_Per)) & "GST Ledger "
                     'MsgBox("Missing gst percentages")
                 End If
+
+                lbl.text = lbl.text & "|" & Drn("Part_Labour_Code").ToString
+
+                If Drn("Part_Labour_Code") <> "0" And Drn("Part_Labour_Code") <> "" Then
+
+                    PartName = Get_PartName(Drn("Part_Labour_Code").ToString.Trim)
+                    Qty_Type = Get_PartUnit(Drn("Part_Labour_Code").ToString.Trim)
+
+                    If PartName = "" Then
+                        Missing_Parts = IIf(Missing_Parts = "", "BILL:" & Dr.Invoice_Number, Missing_Parts)
+                        Missing_Parts += "," & Drn("Part_Labour_Code").ToString.Trim
+                    End If
+
+                    GST_Taxable_Per = Val(Drn("CGST_Per")) + Val(Drn("SGST_Per"))
+                    Alloc_Ledger = Read_Ledgers("Service_PartsLedger_" & GST_Taxable_Per & IIf(Is_Igst, "_IGST", "") & IIf(Is_Ins, "_INS", ""))
+
+                    Parts_Entries += "<ALLINVENTORYENTRIES.LIST>"
+
+                    Parts_Entries += " <STOCKITEMNAME>" & PartName.Replace("&", "&amp;") & "</STOCKITEMNAME>" &
+                                    "<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>" &
+                                    "<RATE>" & Val(Drn("Rate")) & "/" & Qty_Type & "</RATE>" &
+                                    "<AMOUNT>" & Val(Drn("Taxable")) & "</AMOUNT>" &
+                                    "<ACTUALQTY>" & Val(Drn("Issued_Qty")) & " " & Qty_Type & "</ACTUALQTY>" &
+                                    "<BILLEDQTY>" & Val(Drn("Issued_Qty")) & " " & Qty_Type & "</BILLEDQTY>" &
+                                    "<BATCHALLOCATIONS.LIST>" &
+                                    "<GODOWNNAME>Main Location</GODOWNNAME>" &
+                                    "<BATCHNAME>Primary Batch</BATCHNAME>" &
+                                    "<DESTINATIONGODOWNNAME>Main Location</DESTINATIONGODOWNNAME>" &
+                                    "<AMOUNT>" & Val(Drn("Taxable")) & "</AMOUNT>" &
+                                    "<ACTUALQTY>" & Val(Drn("Issued_Qty")) & " " & Qty_Type & "</ACTUALQTY>" &
+                                    "<BILLEDQTY>" & Val(Drn("Issued_Qty")) & " " & Qty_Type & "</BILLEDQTY>" &
+                                    "</BATCHALLOCATIONS.LIST>"
+
+
+                    Parts_Entries += "<ACCOUNTINGALLOCATIONS.LIST>" &
+                                    "<LEDGERNAME>" & Alloc_Ledger & "</LEDGERNAME>" &
+                                    "<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>" &
+                                    "<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>" &
+                                    "<LEDGERFROMITEM>No</LEDGERFROMITEM>" &
+                                    "<AMOUNT>" & Val(Drn("Taxable")) & "</AMOUNT>" &
+                                    "</ACCOUNTINGALLOCATIONS.LIST>"
+
+                    Parts_Entries += "</ALLINVENTORYENTRIES.LIST>"
+
+
+                End If
+
+
+
 
             End If
 
@@ -919,27 +992,32 @@ Public Class FrmTallyService
 
 
             If Not Drn("Job_Type").ToString = "" Then
-                WarrentyNarration = WarrentyNarration & Drn.Part_Labour_Code & " - " & Drn("Job_Type") & " | "
+                ' WarrentyNarration = WarrentyNarration & Drn.Part_Labour_Code & " - " & Drn("Job_Type") & " | "
             End If
 
             GstDs_Temp.AcceptChanges()
+
+
+
 
         Next
 
         GstDs_Temp.AcceptChanges()
 
+        If Parts_Entries = "" Then
+            Parts_Entries = "<ALLINVENTORYENTRIES.LIST></ALLINVENTORYENTRIES.LIST>"
+        End If
+        'For Each drp In taxDs.Tables("PartLedgerDs").Rows
 
-        For Each drp In taxDs.Tables("PartLedgerDs").Rows
+        '    If Val(drp("Amount")) > 0 Then
+        '        COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Part"), Val(drp("Amount")))
+        '        Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers("Service_PartsLedger_" & Val(drp("Ledger")) & IIf(Is_Igst, "_IGST", "") & IIf(Is_Ins, "_INS", "")), Val(drp("Amount")), COST_CENTER)
+        '        If Read_Ledgers("Service_PartsLedger_" & Val(drp("Ledger")) & IIf(Is_Igst, "_IGST", "") & IIf(Is_Ins, "_INS", "")) = "" Then
+        '            lbl.text = lbl.text & "| Service_PartsLedger_ not found :Service_PartsLedger_" & Val(drp("Ledger")) & IIf(Is_Igst, "_IGST", "") & IIf(Is_Ins, "_INS", "") & " |"
+        '        End If
+        '    End If
 
-            If Val(drp("Amount")) > 0 Then
-                COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Part"), Val(drp("Amount")))
-                Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers("Service_PartsLedger_" & Val(drp("Ledger")) & IIf(Is_Igst, "_IGST", "") & IIf(Is_Ins, "_INS", "")), Val(drp("Amount")), COST_CENTER)
-                If Read_Ledgers("Service_PartsLedger_" & Val(drp("Ledger")) & IIf(Is_Igst, "_IGST", "") & IIf(Is_Ins, "_INS", "")) = "" Then
-                    lbl.text = lbl.text & "| Service_PartsLedger_ not found :Service_PartsLedger_" & Val(drp("Ledger")) & IIf(Is_Igst, "_IGST", "") & IIf(Is_Ins, "_INS", "") & " |"
-                End If
-            End If
-
-        Next
+        'Next
 
         Dim LabourLedger As String = Read_Ledgers("Service_LabourLedger" & IIf(Is_Igst, "_IGST", "") & "")
 
@@ -947,8 +1025,8 @@ Public Class FrmTallyService
         If labourSum > 0 Then
             If LabourLedger = "" Then : lbl.text = lbl.text & "| Missing LabourLedger  |" : End If
 
-            COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Labour"), labourSum)
-            Additional_Ledgers += Create_XML_LEDGERENTRIES(LabourLedger, labourSum, COST_CENTER)
+            ' COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Labour"), labourSum)
+            Additional_Ledgers += Create_XML_LEDGERENTRIES(LabourLedger, labourSum, "")
         Else
 
         End If
@@ -984,11 +1062,11 @@ Public Class FrmTallyService
 
 
         If Dr.PaiseRound <> 0 And Dr.PaiseRound < 1 Then
-            COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers(CostCentreName), Format(Dr.PaiseRound, "0.00"))
-            Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers("Ledger_PaiseRoundOff"), Dr.PaiseRound, COST_CENTER, True)
+            ' COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers(CostCentreName), Format(Dr.PaiseRound, "0.00"))
+            Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers("Ledger_PaiseRoundOff"), Dr.PaiseRound, "")
         ElseIf Dr.PaiseRound <> 0 And Dr.PaiseRound < 1 And Dr.PaiseRound <> 0 Then
-            COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers(CostCentreName), Dr.PaiseRound)
-            Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers("Ledger_PaiseRoundOff"), Dr.PaiseRound, COST_CENTER, True)
+            'COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers(CostCentreName), Dr.PaiseRound)
+            Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers("Ledger_PaiseRoundOff"), Dr.PaiseRound, "")
         End If
 
         Try
@@ -1020,7 +1098,7 @@ Public Class FrmTallyService
                                           "<NARRATION>" & Narration.Replace("&", "&amp;") & "</NARRATION>" &
                                           "<PARTYLEDGERNAME>" & VOUHCER_PARTYLEDGERNAME.Replace("&", "&amp;") & "</PARTYLEDGERNAME>" &
                                           "<ISINVOICE>Yes</ISINVOICE>" &
-                                           Main_Ledgers & Additional_Ledgers & Parts_Entries &
+                                           Main_Ledgers & Parts_Entries & Additional_Ledgers &
                                       "</VOUCHER>" &
                                   "</TALLYMESSAGE>" &
                               "</REQUESTDATA>" &

@@ -2635,6 +2635,8 @@ Partial Public Class TallyDs
         
         Private columnGSTIN As Global.System.Data.DataColumn
         
+        Private columnCompanyCode As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub New()
@@ -3151,6 +3153,14 @@ Partial Public Class TallyDs
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property CompanyCodeColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCompanyCode
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -3247,9 +3257,10 @@ Partial Public Class TallyDs
                     ByVal IGST28 As Decimal,  _
                     ByVal IGST18_Per As Decimal,  _
                     ByVal IGST28_Per As Decimal,  _
-                    ByVal GSTIN As String) As ServiceRow
+                    ByVal GSTIN As String,  _
+                    ByVal CompanyCode As String) As ServiceRow
             Dim rowServiceRow As ServiceRow = CType(Me.NewRow,ServiceRow)
-            Dim columnValuesArray() As Object = New Object() {Id, Invoice_Number, Job_Card, Company_Name, Selling_Dealer_Name, Invoice_Date, Job_Card_Date, Reg_No, Chassis_No, Engine_No, Model_Code, Model_Description, Customer_Name, Mobile_No, Customer_Voice, KM_Reading, Service_Advisor, Work_Started_Date, Work_Completion_Date, Delivered_Date_Time, Type, Part_Labour_Code, Part_Labour_Description, HSN_SAC_code, Header_Job_Type, Job_Type, Rate, Issued_Qty, Discount, Status, Cancellation_Date, Mechanic, Insurance_Provider, Insurance_Policy_No, Insurance_Start_Date, Insurance_Expiry_Date, PaiseRoundingOff, CGST14_Per, CGST14, SGST14_Per, SGST14, Total_Amount, Taxable, Invoice_Amount, Updated, Tally, LastSeen, SGST9_Per, SGST9, CGST9_Per, CGST9, KFC1_Per, KFC1, PaiseRound, Taxable_Amount, IGST18, IGST28, IGST18_Per, IGST28_Per, GSTIN}
+            Dim columnValuesArray() As Object = New Object() {Id, Invoice_Number, Job_Card, Company_Name, Selling_Dealer_Name, Invoice_Date, Job_Card_Date, Reg_No, Chassis_No, Engine_No, Model_Code, Model_Description, Customer_Name, Mobile_No, Customer_Voice, KM_Reading, Service_Advisor, Work_Started_Date, Work_Completion_Date, Delivered_Date_Time, Type, Part_Labour_Code, Part_Labour_Description, HSN_SAC_code, Header_Job_Type, Job_Type, Rate, Issued_Qty, Discount, Status, Cancellation_Date, Mechanic, Insurance_Provider, Insurance_Policy_No, Insurance_Start_Date, Insurance_Expiry_Date, PaiseRoundingOff, CGST14_Per, CGST14, SGST14_Per, SGST14, Total_Amount, Taxable, Invoice_Amount, Updated, Tally, LastSeen, SGST9_Per, SGST9, CGST9_Per, CGST9, KFC1_Per, KFC1, PaiseRound, Taxable_Amount, IGST18, IGST28, IGST18_Per, IGST28_Per, GSTIN, CompanyCode}
             rowServiceRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowServiceRow)
             Return rowServiceRow
@@ -3332,6 +3343,7 @@ Partial Public Class TallyDs
             Me.columnIGST18_Per = MyBase.Columns("IGST18_Per")
             Me.columnIGST28_Per = MyBase.Columns("IGST28_Per")
             Me.columnGSTIN = MyBase.Columns("GSTIN")
+            Me.columnCompanyCode = MyBase.Columns("CompanyCode")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -3457,6 +3469,8 @@ Partial Public Class TallyDs
             MyBase.Columns.Add(Me.columnIGST28_Per)
             Me.columnGSTIN = New Global.System.Data.DataColumn("GSTIN", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnGSTIN)
+            Me.columnCompanyCode = New Global.System.Data.DataColumn("CompanyCode", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCompanyCode)
             Me.columnId.DefaultValue = CType("",String)
             Me.columnInvoice_Number.DefaultValue = CType("",String)
             Me.columnJob_Card.DefaultValue = CType("",String)
@@ -3509,6 +3523,7 @@ Partial Public Class TallyDs
             Me.columnIGST18_Per.DefaultValue = CType(0.00D,Decimal)
             Me.columnIGST28_Per.DefaultValue = CType(0.00D,Decimal)
             Me.columnGSTIN.DefaultValue = CType("",String)
+            Me.columnCompanyCode.DefaultValue = CType("",String)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -15333,6 +15348,21 @@ Partial Public Class TallyDs
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property CompanyCode() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService.CompanyCodeColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'CompanyCode' in table 'Service' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService.CompanyCodeColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Function IsIdNull() As Boolean
             Return Me.IsNull(Me.tableService.IdColumn)
         End Function
@@ -16049,6 +16079,18 @@ Partial Public Class TallyDs
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetGSTINNull()
             Me(Me.tableService.GSTINColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsCompanyCodeNull() As Boolean
+            Return Me.IsNull(Me.tableService.CompanyCodeColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetCompanyCodeNull()
+            Me(Me.tableService.CompanyCodeColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     

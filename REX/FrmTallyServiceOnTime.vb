@@ -1536,11 +1536,11 @@ Public Class FrmTallyServiceOnTime
         Dim RptDs As New TallyDs
         Htp = New Hashtable
 
-        Dim ObjRptSLI As New CryRptServiceSLI
+        ' Dim ObjRptSLI As New CryRptServiceSLI
         'Dim ObjRptSSI As New CryRptServiceSSI
         'Dim ObjRptSPI As New CryRptServiceSPI
 
-        Dim RptView As FrmCrptRptViewer
+        'Dim RptView As FrmCrptRptViewer
 
         Dim InvoiceNum As String = ListView1.SelectedItems.Item(0).SubItems(2).Text
         RptDs.Merge(ServiceDs.Service_Bills.Select("Invoice_Number = '" & InvoiceNum & "'"))
@@ -1558,10 +1558,10 @@ Public Class FrmTallyServiceOnTime
         '    Exit Sub
         'End If
 
-        RptView = New FrmCrptRptViewer(ObjRptSLI, RptDs, Htp)
-        RptView.StartPosition = FormStartPosition.CenterScreen
-        RptView.WindowState = FormWindowState.Maximized
-        RptView.Show()
+        'RptView = New FrmCrptRptViewer(ObjRptSLI, RptDs, Htp)
+        'RptView.StartPosition = FormStartPosition.CenterScreen
+        'RptView.WindowState = FormWindowState.Maximized
+        'RptView.Show()
 
 
 

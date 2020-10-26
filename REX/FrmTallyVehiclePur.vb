@@ -1141,7 +1141,7 @@ Public Class FrmTallyVehiclePur
                                     "<ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>" &
                                     "<LEDGERFROMITEM>No</LEDGERFROMITEM>" &
                                     "<LEDGERNAME>" & dr.LedgerVehicle & "</LEDGERNAME>" &
-                                     Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Vehicle"), drd.Rate) &
+                                   IIf(Read_Settings("VehCostCenterApplicable") = "Y", Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Vehicle"), drd.Rate), "") &
                                     "<AMOUNT>-" & drd.Rate & "</AMOUNT>"
 
                 Xml_BatchAll_Items = "<GODOWNNAME>Main Location</GODOWNNAME>" &
@@ -1269,10 +1269,10 @@ Public Class FrmTallyVehiclePur
                                          "<ISPOSTDATED>No</ISPOSTDATED>" &
                                          "<ISINVOICE>Yes</ISINVOICE>" &
                                          "<REFERENCEDATE>" & InvDateString & "</REFERENCEDATE>" &
-                                         "<REFERENCE>" & dr.Invoice_No & "</REFERENCE>" &
+                                         "<REFERENCE>" & dr.Invoice_Number & "</REFERENCE>" &
                                          "<NARRATION>" & Narration & "</NARRATION>" &
                                          "<DIFFACTUALQTY>No</DIFFACTUALQTY>" &
-                                         "<VOUCHERNUMBER>" & dr.Invoice_Number & "</VOUCHERNUMBER>" &
+                                         "<VOUCHERNUMBER>" & dr.Invoice_No & "</VOUCHERNUMBER>" &
                                          "<PARTYNAME>" & dr.PartyLedgerVehicle & "</PARTYNAME>" &
                                          "<PARTYLEDGERNAME>" & dr.PartyLedgerVehicle & "</PARTYLEDGERNAME>" &
                                          "<ASORIGINAL>No</ASORIGINAL>" &

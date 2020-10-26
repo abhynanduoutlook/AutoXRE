@@ -11,6 +11,7 @@ Imports System.ComponentModel
 Imports System.Text
 Imports iTextSharp.text.pdf
 Imports iTextSharp.text.pdf.parser
+Imports Newtonsoft.Json.Linq
 
 Public Class FrmMDI
 
@@ -59,6 +60,14 @@ Public Class FrmMDI
     Dim Prev_file As String = ""
     Dim FilePaths() As String
 
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+
+    End Sub
 
     Public Sub PleaseWait(ByVal Show As Boolean)
         If Show Then
@@ -207,7 +216,7 @@ Public Class FrmMDI
 
                 'JobCard
                 SaveDs.Merge(TempDs.Tables("ServiceData").Select("", "[Date],[Invoice]"))
-                LblStatus(True, "Inserting Jobcard Statement...")
+                LblStatus(True, "Inserting Invoices ...")
 
                 Status = CommonDA.Insert_Service(SaveDs, True, LblServiceStatus)
 
@@ -242,161 +251,168 @@ Public Class FrmMDI
                 End If
 
                 Return Status
-
-            ElseIf TempDs.Tables("ServiceData").Columns.Contains("Invoice") And TempDs.Tables("ServiceData").Columns.Contains("Invoice Date") Then
-
-                ''Invoice Details
-                'SaveDs.Merge(TempDs)
-                '' Status = CommonDA.RunQuery("Truncate service_header")
-                'LblStatus(True, "Inserting Invoice Summary...")
-
-                'Status = CommonDA.Insert_Service_Header(SaveDs, LblServiceStatus)
-
-                If Status Then
-
-                    MsgBox("Invoice Details Imported Successfully...", MsgBoxStyle.Information, "Import")
-                    Try
-                        NewFileName = Application.StartupPath & "\BackUp\Serv_InvSum" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
-                        IO.File.Move(FileName, NewFileName)
-                    Catch ex As Exception
-                        CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
-                    End Try
-                    Return Status
-                Else
-                    MsgBox("Invoice Details Imported Error...", MsgBoxStyle.Critical, "Import")
-
-                    Try
-                        NewFileName = Application.StartupPath & "\BackUp\Serv_InvSum_Err" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
-                        IO.File.Move(FileName, NewFileName)
-                    Catch ex As Exception
-                        CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
-                        Return Status
-
-                    End Try
-
-                    LblStatus(True, FileName & "Import Error ")
-                    LblServiceStatus.Tag = NewFileName
-                    Return Status
-                End If
-
-                Return Status
-
-            ElseIf TempDs.Tables("ServiceData").Columns.Contains("Document Date") And TempDs.Tables("ServiceData").Columns.Contains("IGST%") Then
-
-                'SaveDs.Merge(TempDs)
-                'LblStatus(True, "Inserting Warranty  Statement...")
-                '' Status = CommonDA.RunQuery("Truncate service_header")
-                'Status = CommonDA.Insert_Service_WLP(SaveDs, LblServiceStatus)
-
-
-                If Status Then
-                    MsgBox("Warranty  Statement Imported Successfully...", MsgBoxStyle.Information, "Import")
-                    Try
-                        NewFileName = Application.StartupPath & "\BackUp\Serv_WLP_" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
-                        IO.File.Move(FileName, NewFileName)
-                    Catch ex As Exception
-                        CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
-                    End Try
-
-                    LblStatus(True, FileName & "Imported ")
-                    LblServiceStatus.Tag = NewFileName
-                Else
-                    MsgBox("Warranty  Statement Imported Error...", MsgBoxStyle.Critical, "Import")
-
-                    Try
-                        NewFileName = Application.StartupPath & "\BackUp\Serv_WLP_Err" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
-                        IO.File.Move(FileName, NewFileName)
-                    Catch ex As Exception
-                        CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
-                        Return Status
-
-                    End Try
-
-                    LblStatus(True, FileName & "Import Error ")
-                    LblServiceStatus.Tag = NewFileName
-                    Return Status
-                End If
-                Return Status
-
-
-            ElseIf TempDs.Tables("ServiceData").Columns.Contains("Invoice Date") Then
-
-                'SaveDs.Merge(TempDs)
-                'LblStatus(True, "Inserting Sales Statement...")
-                '' Status = CommonDA.RunQuery("Truncate service_header")
-                'Status = CommonDA.Insert_Service_SSI(SaveDs, LblServiceStatus)
-
-
-                If Status Then
-                    MsgBox("Sales Statement Imported Successfully...", MsgBoxStyle.Information, "Import")
-                    Try
-                        NewFileName = Application.StartupPath & "\BackUp\Serv_SSI_" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
-                        IO.File.Move(FileName, NewFileName)
-                    Catch ex As Exception
-                        CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
-                    End Try
-                    LblStatus(True, FileName & "Imported ")
-                    LblServiceStatus.Tag = NewFileName
-                Else
-                    MsgBox("Sales  Statement Imported Error...", MsgBoxStyle.Critical, "Import")
-
-                    Try
-                        NewFileName = Application.StartupPath & "\BackUp\Serv_SSI_Err_" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
-                        IO.File.Move(FileName, NewFileName)
-                    Catch ex As Exception
-                        CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
-                        Return Status
-
-                    End Try
-
-                    LblStatus(True, FileName & "Import Error ")
-                    LblServiceStatus.Tag = NewFileName
-
-                End If
-                Return Status
-
-            ElseIf TempDs.Tables("ServiceData").Columns.Contains("Document Name") And TempDs.Tables("ServiceData").Columns.Contains("Document Date") Then
-
-                'SaveDs.Merge(TempDs)
-                'LblStatus(True, "Inserting Insurance Bills...")
-                '' Status = CommonDA.RunQuery("Truncate service_header")
-                'Status = CommonDA.Insert_Service_ILP(SaveDs, LblServiceStatus)
-
-
-                If Status Then
-                    MsgBox("Insurance Bills Imported Successfully...", MsgBoxStyle.Information, "Import")
-                    Try
-                        NewFileName = Application.StartupPath & "\BackUp\Serv_ILP_" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
-                        IO.File.Move(FileName, NewFileName)
-                    Catch ex As Exception
-                        CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
-                    End Try
-                    LblStatus(True, FileName & "Imported ")
-                    LblServiceStatus.Tag = NewFileName
-                    Return Status
-                Else
-                    MsgBox("Insurance  Bills Imported Error...", MsgBoxStyle.Critical, "Import")
-
-                    Try
-                        NewFileName = Application.StartupPath & "\BackUp\Serv_ILP_Err_" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
-                        IO.File.Move(FileName, NewFileName)
-                    Catch ex As Exception
-                        CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
-                        Return Status
-
-                    End Try
-
-                    LblStatus(True, FileName & "Import Error ")
-                    LblServiceStatus.Tag = NewFileName
-                End If
-                Return Status
-
             Else
 
-                ' MsgBox("File Error...", MsgBoxStyle.Critical, "Import")
+                Dim ServDs As New DataSet
+
+                ServDs = ProcessDataSetColumns(TempDs.Tables("ServiceData"))
 
 
-            End If
+                If ServDs.Tables(0).TableName = "Service_ColumnOrder_Jobcard" Then
+
+                    ''Invoice Details
+                    'SaveDs.Merge(TempDs)
+                    '' Status = CommonDA.RunQuery("Truncate service_header")
+                    LblStatus(True, "Inserting JobCards...")
+
+                    Status = CommonDA.Insert_Service_JobCard(ServDs, LblServiceStatus)
+
+                    If Status Then
+
+                        MsgBox("Invoice Details Imported Successfully...", MsgBoxStyle.Information, "Import")
+                        Try
+                            NewFileName = Application.StartupPath & "\BackUp\Serv_InvSum" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
+                            IO.File.Move(FileName, NewFileName)
+                        Catch ex As Exception
+                            CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
+                        End Try
+                        Return Status
+                    Else
+                        MsgBox("Invoice Details Imported Error...", MsgBoxStyle.Critical, "Import")
+
+                        Try
+                            NewFileName = Application.StartupPath & "\BackUp\Serv_InvSum_Err" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
+                            IO.File.Move(FileName, NewFileName)
+                        Catch ex As Exception
+                            CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
+                            Return Status
+
+                        End Try
+
+                        LblStatus(True, FileName & "Import Error ")
+                        LblServiceStatus.Tag = NewFileName
+                        Return Status
+                    End If
+
+                    Return Status
+
+                ElseIf TempDs.Tables("ServiceData").Columns.Contains("Document Date") And TempDs.Tables("ServiceData").Columns.Contains("IGST%") Then
+
+                    'SaveDs.Merge(TempDs)
+                    'LblStatus(True, "Inserting Warranty  Statement...")
+                    '' Status = CommonDA.RunQuery("Truncate service_header")
+                    'Status = CommonDA.Insert_Service_WLP(SaveDs, LblServiceStatus)
+
+
+                    If Status Then
+                        MsgBox("Warranty  Statement Imported Successfully...", MsgBoxStyle.Information, "Import")
+                        Try
+                            NewFileName = Application.StartupPath & "\BackUp\Serv_WLP_" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
+                            IO.File.Move(FileName, NewFileName)
+                        Catch ex As Exception
+                            CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
+                        End Try
+
+                        LblStatus(True, FileName & "Imported ")
+                        LblServiceStatus.Tag = NewFileName
+                    Else
+                        MsgBox("Warranty  Statement Imported Error...", MsgBoxStyle.Critical, "Import")
+
+                        Try
+                            NewFileName = Application.StartupPath & "\BackUp\Serv_WLP_Err" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
+                            IO.File.Move(FileName, NewFileName)
+                        Catch ex As Exception
+                            CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
+                            Return Status
+
+                        End Try
+
+                        LblStatus(True, FileName & "Import Error ")
+                        LblServiceStatus.Tag = NewFileName
+                        Return Status
+                    End If
+                    Return Status
+
+
+                ElseIf TempDs.Tables("ServiceData").Columns.Contains("Invoice Date") Then
+
+                    'SaveDs.Merge(TempDs)
+                    'LblStatus(True, "Inserting Sales Statement...")
+                    '' Status = CommonDA.RunQuery("Truncate service_header")
+                    'Status = CommonDA.Insert_Service_SSI(SaveDs, LblServiceStatus)
+
+
+                    If Status Then
+                        MsgBox("Sales Statement Imported Successfully...", MsgBoxStyle.Information, "Import")
+                        Try
+                            NewFileName = Application.StartupPath & "\BackUp\Serv_SSI_" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
+                            IO.File.Move(FileName, NewFileName)
+                        Catch ex As Exception
+                            CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
+                        End Try
+                        LblStatus(True, FileName & "Imported ")
+                        LblServiceStatus.Tag = NewFileName
+                    Else
+                        MsgBox("Sales  Statement Imported Error...", MsgBoxStyle.Critical, "Import")
+
+                        Try
+                            NewFileName = Application.StartupPath & "\BackUp\Serv_SSI_Err_" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
+                            IO.File.Move(FileName, NewFileName)
+                        Catch ex As Exception
+                            CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
+                            Return Status
+
+                        End Try
+
+                        LblStatus(True, FileName & "Import Error ")
+                        LblServiceStatus.Tag = NewFileName
+
+                    End If
+                    Return Status
+
+                ElseIf TempDs.Tables("ServiceData").Columns.Contains("Document Name") And TempDs.Tables("ServiceData").Columns.Contains("Document Date") Then
+
+                    'SaveDs.Merge(TempDs)
+                    'LblStatus(True, "Inserting Insurance Bills...")
+                    '' Status = CommonDA.RunQuery("Truncate service_header")
+                    'Status = CommonDA.Insert_Service_ILP(SaveDs, LblServiceStatus)
+
+
+                    If Status Then
+                        MsgBox("Insurance Bills Imported Successfully...", MsgBoxStyle.Information, "Import")
+                        Try
+                            NewFileName = Application.StartupPath & "\BackUp\Serv_ILP_" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
+                            IO.File.Move(FileName, NewFileName)
+                        Catch ex As Exception
+                            CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
+                        End Try
+                        LblStatus(True, FileName & "Imported ")
+                        LblServiceStatus.Tag = NewFileName
+                        Return Status
+                    Else
+                        MsgBox("Insurance  Bills Imported Error...", MsgBoxStyle.Critical, "Import")
+
+                        Try
+                            NewFileName = Application.StartupPath & "\BackUp\Serv_ILP_Err_" & Format(Date.Now, "ddMMMyy_HHmmss") & ".xls"
+                            IO.File.Move(FileName, NewFileName)
+                        Catch ex As Exception
+                            CommonDA.Create_Log("Import to Tally", "Failed to move " & FileName, "")
+                            Return Status
+
+                        End Try
+
+                        LblStatus(True, FileName & "Import Error ")
+                        LblServiceStatus.Tag = NewFileName
+                    End If
+                    Return Status
+
+                Else
+
+                    ' MsgBox("File Error...", MsgBoxStyle.Critical, "Import")
+
+
+                End If
+        End If
         End If
 
         Return Status
@@ -459,11 +475,188 @@ Public Class FrmMDI
 
     End Function
 
+
+
+
+    Private Function ProcessDataSetColumns(Dsimport As DataTable) As DataSet
+
+        Dim ClNameRow As Boolean = False
+        Dim Rowvals() = Read_Settings("ServiceFilesRowNames").ToString.Split("|")
+        Dim tablename As String = ""
+        Dim TpDs As New DataSet
+        TpDs.Merge(Dsimport)
+        Dim Ds As DataSet = TpDs
+        Dim startCol = -1, col As Integer = -1
+        Dim startRow = -1, Row As Integer = -1
+        Dim deleteRow As Boolean = True
+        Dim tempDs As New TallyDs
+        Dim temprow() As String
+        Try
+
+            For Each ro In Rowvals
+
+                Dim deleteRows(Ds.Tables(0).Rows.Count) As Integer
+                temprow = Read_Settings(ro).ToString.Split(",")
+                Dim comptprow(temprow.Length) As String
+                Dim n As Integer = 0
+                If temprow.Length > 5 Then
+
+                    For Each dr As DataRow In Ds.Tables(0).Rows
+                        Row += 1
+                        For Each dc As DataColumn In Ds.Tables(0).Columns
+                            col += 1
+                            If dr(dc).ToString = temprow(0) And startCol < 0 And startRow < 0 Then
+
+                                startCol = col - 1
+                                startRow = Row - 1
+
+                                For Each tprow In temprow
+
+                                    For Each dctp As DataColumn In Ds.Tables(0).Columns
+
+                                        If dr(dctp).ToString = tprow Then
+                                            comptprow(n) = dr(dctp).ToString
+                                            n += 1
+                                            Exit For
+                                        End If
+
+                                    Next
+                                Next
+
+
+                            End If
+
+
+
+                        Next
+
+                        col = -1
+
+                        If startRow <> -1 Then
+                            Exit For
+                        End If
+
+                    Next
+                End If
+
+
+
+
+                Dim x = String.Join(", ", temprow.Except(comptprow))
+                If x = "" Then
+                    tablename = ro
+                    Exit For
+                End If
+
+                If n <> 0 Then
+                    tablename = ro
+                    Exit For
+                Else
+                    startCol = -1
+                    startRow = -1
+                    col = -1
+                    Row = -1
+                End If
+
+            Next
+
+            While startRow <> -1
+                Ds.Tables(0).Rows.RemoveAt(startRow)
+                startRow -= 1
+            End While
+
+            While startCol <> -1
+                Ds.Tables(0).Columns.RemoveAt(startCol)
+                startCol -= 1
+            End While
+
+            Row = -1
+            col = -1
+
+
+
+
+
+
+            Dim DDs As New DataSet
+            DDs.Merge(Ds.Tables(0).Select.CopyToDataTable)
+
+            For Each dr As DataRow In DDs.Tables(0).Rows
+                Row += 1
+                For Each dc As DataColumn In DDs.Tables(0).Columns
+                    col += 1
+                    If dr(dc).ToString <> "" Then
+                        deleteRow = False
+                    End If
+                Next
+
+                col = -1
+
+                If deleteRow Then
+                    Ds.Tables(0).Rows.RemoveAt(Row)
+                    Row -= 1
+                End If
+
+                deleteRow = True
+
+            Next
+
+
+            If temprow.Length > 0 Then
+                Rowvals = temprow
+
+
+                For Each dr As DataRow In TpDs.Tables(0).Rows
+
+                    For Each cl As DataColumn In TpDs.Tables(0).Columns
+
+                        For Each rowcol In Rowvals
+                            If dr(cl).ToString = rowcol Then
+                                cl.ColumnName = rowcol
+                                ClNameRow = True
+                                Exit For
+                            End If
+                        Next
+
+                    Next
+
+                    If ClNameRow Then
+                        GoTo end_of_for
+                    End If
+                Next
+end_of_for:
+
+            End If
+            TpDs.Tables(0).Rows.RemoveAt(0)
+            TpDs.Tables(0).TableName = tablename
+        Catch ex As Exception
+
+        End Try
+
+
+
+        Return TpDs
+    End Function
+
+
+
+
+
+
+
+
+
+
     Private Function ProcessDataSetColumns(Dsimport As DataSet, RowValues As String) As DataSet
 
         Dim ClNameRow As Boolean = False
         Dim Rowvals() = RowValues.ToString.Split(",")
         Dim TpDs As DataSet = Dsimport
+
+
+
+
+
         For Each dr As DataRow In TpDs.Tables(0).Rows
 
             For Each cl As DataColumn In TpDs.Tables(0).Columns
@@ -756,6 +949,37 @@ end_of_for:
                 AddHandler Obj.MouseHover, AddressOf Mouse_focus
             End If
         Next
+
+
+
+
+        Dim ConStr As String = ""
+        Try
+
+            Dim fileReader As String = ""
+
+            Dim webClient As New System.Net.WebClient
+            Dim result = webClient.DownloadString("http://logicxnet.com/connector/validate_user.php?" & "Company=AUTOXREPVR")
+            Dim myJObject = JObject.Parse(result)
+            Console.WriteLine(myJObject.SelectToken("Lkey"))
+            ConStr = myJObject.SelectToken("Lkey")
+
+
+            If ConStr = "" Then
+                MsgBox("License Expired", MsgBoxStyle.Critical, "License Expiration")
+                CommonDA.RunQuery("Update users set active =0")
+            Else
+
+                CommonDA.RunQuery("Update users set active =1")
+                CommonDA.RunQuery("Update Settings Set S_Value='" & ConStr & "' where S_Key='CompanyCode'")
+            End If
+
+
+        Catch ex As Exception
+
+        End Try
+
+
 
         Set_Invisible_Form()
         Get_App_Ver()
