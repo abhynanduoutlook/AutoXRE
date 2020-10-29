@@ -157,7 +157,6 @@ Public Class FrmTallySparePur
 
         End If
 
-
         ImportDs = CommonDA.Remove_Null(ImportDs)
         ListView1.Items.Clear()
         For Each Dr In ImportDs.re_spare_purchase.Rows
@@ -359,10 +358,10 @@ Public Class FrmTallySparePur
                     Continue For
                 End If
                 Dim Bill_Type As String = Strings.Left(Dr.GRN_No, 3)
-                If Bill_Type = "GPR" Then
-                    PurchaseVoucherType = Read_Ledgers("Purchase_VT_Gear")
-                Else
+                If Bill_Type = "POR" Then
                     PurchaseVoucherType = Read_Ledgers("Purchase_VT_Spare")
+                Else
+                    'PurchaseVoucherType = Read_Ledgers("Purchase_VT_Gear")
 
                 End If
                 ' MsgBox(PurchaseVoucherType)

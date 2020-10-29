@@ -66,14 +66,17 @@
     <Reference Include="itextsharp">
       <HintPath>..\..\..\..\REI Urben\REI\bin\Debug\itextsharp.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Office.Interop.Excel">
+      <HintPath>..\..\..\..\..\DLL\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="MySql.Data, Version=6.9.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\DLL\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -200,6 +203,12 @@
     <Compile Include="FrmServiceLedgers.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FrmTallySalesAcces.Designer.vb">
+      <DependentUpon>FrmTallySalesAcces.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmTallySalesAcces.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FrmTallyServiceOnTime.Designer.vb">
       <DependentUpon>FrmTallyServiceOnTime.vb</DependentUpon>
     </Compile>
@@ -313,6 +322,9 @@
     <EmbeddedResource Include="FrmServiceLedgers.resx">
       <DependentUpon>FrmServiceLedgers.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmTallySalesAcces.resx">
+      <DependentUpon>FrmTallySalesAcces.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmTallyServiceOnTime.resx">
       <DependentUpon>FrmTallyServiceOnTime.vb</DependentUpon>
     </EmbeddedResource>
@@ -399,6 +411,15 @@
     <Folder Include="Windows\" />
   </ItemGroup>
   <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>5</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="MSXML2">
       <Guid>{F5078F18-C551-11D3-89B9-0000F81FE221}</Guid>
       <VersionMajor>3</VersionMajor>

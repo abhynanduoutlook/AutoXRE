@@ -1,4 +1,8 @@
-﻿Imports Microsoft.Office.Interop
+﻿Imports Microsoft.Office.Core
+Imports Microsoft.Office.Interop
+
+
+
 
 Public NotInheritable Class FrmWait
     Public Sub New()
@@ -38,31 +42,44 @@ Public NotInheritable Class FrmWait
 
         Dim status As Boolean = False
         Dim Ds As New TallyDs
-        Dim MyExcel As New Excel.Application
-        Dim MyWorkBook As Excel.Workbook
-        Dim WorkSheet As Excel.Worksheet
         Dim da As New OleDb.OleDbDataAdapter
-
-        MyWorkBook = MyExcel.Workbooks.Open(File, True, True, , , , True, True)
-        WorkSheet = MyWorkBook.ActiveSheet
-
-        If TableName = "" Then TableName = WorkSheet.Name
-
+        Dim MyExcel As Microsoft.Office.Interop.Excel.Application
         Try
+
+
+
+            'Dim
+            MyExcel = New Excel.Application()
+            Dim MyWorkBook As Excel.Workbook
+            Dim WorkSheet As Excel.Worksheet
+
+
+            MyWorkBook = MyExcel.Workbooks.Open(File, True, True, , , , True, True)
+            WorkSheet = MyWorkBook.ActiveSheet
+
+            If TableName = "" Then TableName = WorkSheet.Name
+
+
             Dim cnn As New OleDb.OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + File + ";Extended Properties=""Excel 12.0;HDR=YES;IMEX=1;""")
             da = New OleDb.OleDbDataAdapter("Select * from [" & WorkSheet.Name & "$]", cnn)
             da.Fill(Ds, TableName)
             PublicShared.DSt = Ds
+
+            MyExcel.Workbooks.Close()
+            MyExcel.Quit()
+
         Catch ex As Exception
             MsgBox("Import failed!" & vbCrLf & ex.Message)
-
+            'MyExcel.Workbooks.Close()
+            MyExcel.Quit()
         Finally
             da.Dispose()
             da = Nothing
+            MyExcel.Workbooks.Close()
+            MyExcel.Quit()
         End Try
 
-        MyExcel.Workbooks.Close()
-        MyExcel.Quit()
+
 
         Return Ds
 

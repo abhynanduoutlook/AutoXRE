@@ -7,7 +7,7 @@ Imports System.Linq
 Imports System.Text
 Imports System.Xml
 
-Public Class FrmTallyService
+Public Class FrmTallySalesAcces
     Dim ServiceDs As TallyDs
 
     Dim StatusLabel As Label
@@ -38,8 +38,8 @@ Public Class FrmTallyService
     Dim DsLedger As New DataSet
     Dim GST_Ds As New TallyDs
     Dim GstDs_Temp As New TallyDs
-    Dim Dr As TallyDs.ServiceRow
-    Dim drd As TallyDs.Service_DetailRow
+    Dim Dr As TallyDs.Service_AccesRow
+    Dim drd As TallyDs.Service_AccesDetailRow
     Dim Htp As New Hashtable
     Dim Refresh_Time_InMin As Double = 0.00
     Dim Existing_Entry_Checked As Boolean
@@ -163,12 +163,12 @@ Public Class FrmTallyService
 
         If DtpFrom.Value <> Prev_fromDate Or DtpTo.Value <> Prev_ToDate Then
 
-            ServiceDs = CommonDA.Get_Summary_Service(DtpFrom.Value, DtpTo.Value)
+            ServiceDs = CommonDA.Get_Summary_AccessSales(DtpFrom.Value, DtpTo.Value)
 
             Prev_fromDate = DtpFrom.Value
             Prev_ToDate = DtpTo.Value
         ElseIf ServiceDs.Service.Rows.Count = 0 Then
-            ServiceDs = CommonDA.Get_Summary_Service(DtpFrom.Value, DtpTo.Value)
+            ServiceDs = CommonDA.Get_Summary_AccessSales(DtpFrom.Value, DtpTo.Value)
 
         End If
 
@@ -178,23 +178,23 @@ Public Class FrmTallyService
         Dim i As Integer = 0
 
         If RbtActive.Checked = True Then
-            ImportDs.Merge(ServiceDs.Service.Select("Updated=0 and Invoice_Number >='1'"))
+            ImportDs.Merge(ServiceDs.Service_Acces.Select("Updated=0 and Invoice_Number >='1'"))
             ' ImportDs.Merge(ServiceDs.Service_Detail.Select("Updated=0 and JobCard_Date is not null"))
         ElseIf RbtImported.Checked = True Then
-            ImportDs.Merge(ServiceDs.Service.Select("Updated=1 and Invoice_Number >='1'"))
+            ImportDs.Merge(ServiceDs.Service_Acces.Select("Updated=1 and Invoice_Number >='1'"))
         ElseIf RbtMissing.Checked = True Then
-            ImportDs.Merge(ServiceDs.Service.Select("Job_Card ='0' or Job_Card =''", "Invoice_Amount"))
+            ImportDs.Merge(ServiceDs.Service_Acces.Select("Job_Card ='0' or Job_Card =''", "Invoice_Amount"))
         ElseIf RbtAll.Checked = True Then
             ImportDs = ServiceDs
         End If
 
         If CmbSearchBy.Text = "JobCardNumber" Then
-            TempDs.Merge(ImportDs.Service.Select("Job_Card like '%" & TxtSearch.Text.Trim & "%'"))
-            TempDs.Merge(ImportDs.Service_Detail)
+            TempDs.Merge(ImportDs.Service_Acces.Select("Job_Card like '%" & TxtSearch.Text.Trim & "%'"))
+            TempDs.Merge(ImportDs.Service_AccesDetail)
             ImportDs = TempDs
         ElseIf CmbSearchBy.Text = "InvoiceNumber" Then
-            TempDs.Merge(ImportDs.Service.Select("Invoice_Number like '%" & TxtSearch.Text.Trim & "%'"))
-            TempDs.Merge(ImportDs.Service_Detail)
+            TempDs.Merge(ImportDs.Service_Acces.Select("Invoice_Number like '%" & TxtSearch.Text.Trim & "%'"))
+            TempDs.Merge(ImportDs.Service_AccesDetail)
             ImportDs = TempDs
         Else
 
@@ -202,7 +202,7 @@ Public Class FrmTallyService
 
         ImportDs = CommonDA.Remove_Null(ImportDs)
         ListView1.Items.Clear()
-        For Each Dr In ImportDs.Service.Rows
+        For Each Dr In ImportDs.Service_Acces.Rows
             i += 1
             lvItem = ListView1.Items.Add(Dr.Id)
             lvItem.SubItems.Add(i)
@@ -244,10 +244,10 @@ Public Class FrmTallyService
         Dim InvoiceNum As String = ListView1.SelectedItems.Item(0).SubItems(2).Text
         Dim InvoiceType As String = ListView1.SelectedItems.Item(0).SubItems(3).Text
 
-        DetailedDs.Merge(ServiceDs.Service_Detail.Select("Invoice_Number = '" & InvoiceNum & "'"))
+        DetailedDs.Merge(ServiceDs.Service_AccesDetail.Select("Invoice_Number = '" & InvoiceNum & "'"))
 
         ListView2.Items.Clear()
-        For Each drd In DetailedDs.Service_Detail.Rows
+        For Each drd In DetailedDs.Service_AccesDetail.Rows
 
             i += 1
             lvItem = ListView2.Items.Add(drd.Id)
@@ -384,7 +384,7 @@ Public Class FrmTallyService
 
         If RbtActive.Checked = True Then
 
-            If ImportDs.Service.Select("Updated=0 and Invoice_Number >='1'").Count > 0 Then
+            If ImportDs.Service_Acces.Select("Updated=0 and Invoice_Number >='1'").Count > 0 Then
                 BtnImport.Width = 0
                 Import_To_Tally(True)
                 BtnImport.Width = PnlImport.Width
@@ -393,7 +393,7 @@ Public Class FrmTallyService
             End If
 
         ElseIf RbtAll.Checked = True Then
-            If ImportDs.Service.Select("Job_Card >='1'").Count > 0 Then
+            If ImportDs.Service_Acces.Select("Job_Card >='1'").Count > 0 Then
                 BtnImport.Width = 0
                 Import_To_Tally(False)
                 BtnImport.Width = PnlImport.Width
@@ -413,7 +413,7 @@ Public Class FrmTallyService
     Private Sub Load_Gst_Details()
         GST_Ds = New TallyDs
         Dim Objda As New CommonDA
-        GST_Ds = objda.Get_GST_Details(True, "O")
+        GST_Ds = Objda.Get_GST_Details(True, "O")
     End Sub
 
 
@@ -455,7 +455,7 @@ Public Class FrmTallyService
 
         StatusPanel.Visible = IIf(Read_Settings("ShowServiceDetailPanel") = "Y", True, False)
 
-        If ImportDs.Service.Rows.Count > 0 Then
+        If ImportDs.Service_Acces.Rows.Count > 0 Then
             '   Load_PartName()
 
             If CheckPartNames() = False Then
@@ -471,8 +471,8 @@ Public Class FrmTallyService
 
             Get_Ledgers("")
 
-            Dim totalCount As Integer = ImportDs.Service.Rows.Count
-            For Each Dr In ImportDs.Service.Rows
+            Dim totalCount As Integer = ImportDs.Service_Acces.Rows.Count
+            For Each Dr In ImportDs.Service_Acces.Rows
 
                 If End_Process Then
                     Exit For
@@ -490,14 +490,23 @@ Public Class FrmTallyService
                 '    SalesVoucherType = Read_Settings("SalesSpare_VoucherType")
                 'End If
 
+
+                'If ServiceDs.Service_AccesDetail.Select("Invoice_Number = '" & Dr.Invoice_Number & "'").Count > 0 And BillType = "INV" Then
+                '    If ServiceDs.Service_AccesDetail.Select("Invoice_Number = '" & Dr.Invoice_Number & "'").First.Item("Job_Card").ToString = Dr.Invoice_Number Then
+                '        BillType = "CS"
+                '    End If
+                'End If
+
+
+                If Dr.Invoice_Number.Contains(Read_Settings("Accessories_GMA_Prefix")) Then
+                    BillType = "GMA"
+                ElseIf Dr.Invoice_Number.Contains(Read_Settings("Accessories_GEAR_Prefix")) Then
+                    BillType = "GEAR"
+                End If
+
                 PleaseWait_Progress("Importing.. Invoice Number:" & Dr.Invoice_Number & "")
                 lbl.text = lbl.text & vbCrLf & Dr.Invoice_Number & ":" & BillType
 
-                If ServiceDs.Service_Detail.Select("Invoice_Number = '" & Dr.Invoice_Number & "'").Count > 0 And BillType = "INV" Then
-                    If ServiceDs.Service_Detail.Select("Invoice_Number = '" & Dr.Invoice_Number & "'").First.Item("Job_Card").ToString = Dr.Invoice_Number Then
-                        BillType = "CS"
-                    End If
-                End If
 
                 If BillType = "IIN" Then
                     SalesVoucherType = Read_Ledgers("Service_VT_IIN")
@@ -538,25 +547,25 @@ Public Class FrmTallyService
                 If Is_Already_Exist(Dr.Invoice_Number, SalesVoucherType) Then
                     AlreadyExist_Int += 1
                     AlreadyExist_String += Dr.Invoice_Number & " , "
-                    CommonDA.Update_Service(Dr)
+                    CommonDA.Update_ServiceAcces(Dr)
                     'Skip
                 Else
                     'Do
                     Try
                         ObjXml.open("POST", TallyHost, False)
 
-                        DsDetails.Merge(ServiceDs.Service_Detail.Select("Invoice_Number = '" & Dr.Invoice_Number & "'", "Id"))
+                        DsDetails.Merge(ServiceDs.Service_AccesDetail.Select("Invoice_Number = '" & Dr.Invoice_Number & "'", "Id"))
                         'DsDetails.Merge(ImportDs.Service_Detail.Select("Invoice_Number = '" & Dr.Invoice_Number & "'", "Id"))
 
-                        If DsDetails.Service_Detail.Rows.Count = 0 Then
+                        If DsDetails.Service_AccesDetail.Rows.Count = 0 Then
                             Import_Log += vbCrLf & " Job Card details not found for : " & Dr.Invoice_Number
                             lbl.text = lbl.text & " No Details"
                             lbl.refresh()
                         End If
 
-                        StrXmldata = XmlFormat_Sales_WithOut_Stock(Dr, DsDetails.Tables("Service_Detail"), SalesVoucherType, BillType)
+                        StrXmldata = XmlFormat_Sales_WithOut_Stock(Dr, DsDetails.Tables("Service_AccesDetail"), SalesVoucherType, BillType)
 
-                        DsDetails.Service_Detail.Rows.Clear()
+                        DsDetails.Service_AccesDetail.Rows.Clear()
 
                         If Strings.Left(StrXmldata, 10) <> "<ENVELOPE>" Then
                             ErrorList += StrXmldata
@@ -604,7 +613,7 @@ Public Class FrmTallyService
                                            "Created :" & XmlDS.Tables("response").Rows(0).Item("CREATED").ToString &
                                            ",Skipped :" & XmlDS.Tables("response").Rows(0).Item("ERRORS").ToString &
                                             ",Altered :" & XmlDS.Tables("response").Rows(0).Item("ALTERED").ToString
-                                        CommonDA.Update_Service(Dr)
+                                        CommonDA.Update_ServiceAcces(Dr)
                                         AlreadyExist_Int += 1
                                         Errors -= 1
 
@@ -624,12 +633,14 @@ Public Class FrmTallyService
                                             ErrorList += XmlDS.Tables("response").Rows(0).Item("LINEERROR").ToString
                                         End If
                                     End If
+
                                     If Val(XmlDS.Tables("response").Rows(0).Item("CREATED").ToString) > 0 Then
                                         Try
                                             Dim VchId As String = XmlDS.Tables("response").Rows(0).Item("LASTVCHID").ToString
-                                            CommonDA.Update_Service_VchId(Dr, VchId)
+                                            '  CommonDA.Update_Service_VchId(Dr, VchId)
+                                            CommonDA.Update_ServiceAcces(Dr)
                                         Catch ex As Exception
-                                            CommonDA.Update_Service(Dr)
+                                            CommonDA.Update_ServiceAcces(Dr)
 
                                         End Try
 
@@ -769,7 +780,7 @@ Public Class FrmTallyService
 
 
 
-    Public Function XmlFormat_Sales_WithOut_Stock(ByVal Dr As TallyDs.ServiceRow, ByVal Dt As DataTable, ByVal SalesSpare_VoucherType As String, ByVal BillType As String) As String
+    Public Function XmlFormat_Sales_WithOut_Stock(ByVal Dr As TallyDs.Service_AccesRow, ByVal Dt As DataTable, ByVal SalesSpare_VoucherType As String, ByVal BillType As String) As String
 
         Dim Xml As String = ""
         Dim Additional_Ledgers As String = ""
@@ -780,18 +791,7 @@ Public Class FrmTallyService
         Dim Narration As String = ""
 
         Dim InvDate As Date = Dr.Invoice_Date
-
         Dim InvDateString As String = Format(InvDate, "yyyyMMdd")
-        Dim ClmDate As Date
-        Dim claimDateString As String = ""
-        Try
-            ClmDate = Dr.ClamCrDate
-            claimDateString = Format(ClmDate, "yyyyMMdd")
-        Catch ex As Exception
-
-        End Try
-
-
         ' Dim BillType As String = Strings.Left(Dr.Invoice_Number, 3)
         Dim ROType As String = Strings.Left(Dr.Job_Card, 3)
         Dim COST_CENTER As String = ""
@@ -800,7 +800,7 @@ Public Class FrmTallyService
         Dim RefNo As String = Dr.Job_Card
         Dim Is_Ins As Boolean = False
         Dim DrL As TallyDs.Service_LedgersRow
-        Dim VoucherRefNo As String = Dr.Job_Card
+
 
 
         '        Show_ClipBoard("Ledger Missing", " No Ledger Found in Settings  For " & Dr.Customer_Name & vbCrLf & "")
@@ -831,7 +831,7 @@ Public Class FrmTallyService
             PartyLedgerService = Read_Ledgers("Service_PartyLedger_CS")
             Dr.Job_Card = Dr.Invoice_Number
             RefNo = Dr.Job_Card
-            VoucherRefNo = Dr.Job_Card
+
         End If
 
         If PartyLedgerService.Trim = "" Then
@@ -851,42 +851,19 @@ Public Class FrmTallyService
         'End If
 
         Dim CustVeh As String = Dr.Customer_Name
-        Narration += "Job Card No :" & Dr.Job_Card & " , Cust Name:" & CustVeh & ""
+        Narration += "Cust Name:" & CustVeh & ""
 
-        If Dr.ClaimAccDocNo.Length > 1 Then
-            Narration = Narration & " Reg No " & Dr.Reg_No & " Ch No " & Dr.Chassis_No & IIf(InvDateString <> claimDateString, " | Approv.Date :" & Dr.ClamCrDate, "")
-
-            RefNo = Dr.ClaimAccDocNo
-            VoucherRefNo = RefNo
-            If Dr.Job_Type.Contains("In-Warranty") Then
-                PartyLedgerService = Read_Ledgers("Service_PartyLedger_WLP")
-                SalesSpare_VoucherType = Read_Ledgers("Service_VT_WLI")
-            ElseIf Dr.Job_Type.Contains("Free service") Then
-                PartyLedgerService = Read_Ledgers("Service_PartyLedger_FreeService")
-            End If
-
-        End If
-
-        If PartyLedgerService.Trim = "" And BillType = "CLI" Then
-            PartyLedgerService = Read_Ledgers("Service_PartyLedger_" & BillType & "_" & Dr.Job_Type.Trim)
-            RefNo = Dr.Invoice_Number
-            VoucherRefNo = RefNo
-            If PartyLedgerService.Trim = "" Then
-                lbl.text = lbl.text & vbCrLf & "Party ledger Misssing Service_PartyLedger_" & BillType & "_" & Dr.Job_Type.Trim
-
-            End If
-        End If
-
-        If Dr.ClaimAccDocNo.Length > 1 And BillType = "CLI" Then
-            RefNo = Dr.ClaimAccDocNo.Trim
-            VoucherRefNo = RefNo
-        End If
         If Dr.GSTIN <> "" Then
             Narration = Narration & "GSTIN : " & Dr.GSTIN & " | "
         End If
-        Dr.Invoice_Amount = Math.Round(Dr.Invoice_Amount)
 
-        lbl.text = lbl.text & vbCrLf & "Refno :" & RefNo
+        If Dt.Rows.Count > 0 Then
+            If Dt.Compute("Sum(Discount)", "").ToString <> "" Then
+                Narration = Narration & " | Discount Amount :" & Dt.Compute("Sum(Discount)", "").ToString
+            End If
+        End If
+
+        Dr.Invoice_Amount = Math.Round(Dr.Invoice_Amount)
 
         Main_Ledgers = Create_XML_LEDGERENTRIES_PARTYLEDGER(PartyLedgerService, -Math.Round(Dr.Invoice_Amount), RefNo, True)
 
@@ -900,28 +877,22 @@ Public Class FrmTallyService
         GstDs_Temp = New TallyDs
         GstDs_Temp.Merge(GST_Ds)
         Dim taxDs As New DataSet
-        taxDs = CreateLedgerSplitDs(Read_Ledgers("Service_PartsGST_Values"), "PartLedgerDs")
+        taxDs = CreateLedgerSplitDs(Read_Ledgers("Service_AccesGST_Values"), "PartLedgerDs")
         Dim WarrentyNarration As String = " | "
         Dim drp As DataRow
         Dim labourSum As Decimal = 0.0
-        Dim WarrantylabourSum As Decimal = 0.0
-        Dim FreeServlabourSum As Decimal = 0.0
         Dim PartSum As Decimal = 0.0
 
         lbl.text = lbl.text & "Total Items : " & Dt.Rows.Count & "| "
         lbl.refresh()
 
-        For Each Drn As TallyDs.Service_DetailRow In Dt.Rows
+        For Each Drn As TallyDs.Service_AccesDetailRow In Dt.Rows
+
 
             If Drn("Type") = "Labour" Then
 
-                If Drn.Total_Amount > 0 And Not Drn.Job_Type.Contains("Free service") And Not Drn.Job_Type.Contains("In-Warranty") Then
+                If Drn.Total_Amount > 0 Then
                     labourSum += Drn.Taxable
-                ElseIf Drn.Job_Type.Contains("Free service") Then
-                    FreeServlabourSum += Drn.Taxable
-                ElseIf Drn.Job_Type.Contains("In-Warranty") Then
-                    WarrantylabourSum += Drn.Taxable
-
                 End If
 
             Else
@@ -942,6 +913,11 @@ Public Class FrmTallyService
                 End If
 
             End If
+
+
+
+
+
 
 
             If GstDs_Temp.GST_Details.Select("GST_Name = 'CGST' And GST_Per = '" & Drn("CGST_Per") & "'", "").Count > 0 Then
@@ -970,7 +946,7 @@ Public Class FrmTallyService
 
 
             If Not Drn("Job_Type").ToString = "" Then
-                WarrentyNarration = WarrentyNarration & Drn.Part_Labour_Code & IIf(BillType <> "CLI", " - " & Drn("Job_Type"), "") & " | "
+                WarrentyNarration = WarrentyNarration & Drn.Part_Labour_Code & " - " & Drn("Job_Type") & " | "
             End If
 
             GstDs_Temp.AcceptChanges()
@@ -981,15 +957,12 @@ Public Class FrmTallyService
 
 
         For Each drp In taxDs.Tables("PartLedgerDs").Rows
-
+            Dim SalesLedger As String = "Service_AccesLedger_" & BillType & "_" & Val(drp("Ledger"))
             If Val(drp("Amount")) > 0 Then
-
-                Dim ledgername As String = Read_Ledgers("Service_PartsLedger_" & Val(drp("Ledger")) & IIf(Is_Igst, "_IGST", "") & IIf(Is_Ins, "_INS", "") & IIf(BillType <> "CLI", "", "_" & BillType))
-
-                COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Part"), Val(drp("Amount")))
-                Additional_Ledgers += Create_XML_LEDGERENTRIES(ledgername, Val(drp("Amount")), COST_CENTER)
-                If ledgername = "" Then
-                    lbl.text = lbl.text & "| Service_PartsLedger_ not found :Service_PartsLedger_" & Val(drp("Ledger")) & IIf(Is_Igst, "_IGST", "") & IIf(Is_Ins, "_INS", "") & IIf(BillType <> "CLI", "", "_" & BillType) & " |"
+                COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Acces"), Val(drp("Amount")))
+                Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers(SalesLedger & IIf(Is_Igst, "_IGST", "") & IIf(Is_Ins, "_INS", "")), Val(drp("Amount")), COST_CENTER)
+                If Read_Ledgers(SalesLedger & IIf(Is_Igst, "_IGST", "") & IIf(Is_Ins, "_INS", "")) = "" Then
+                    lbl.text = lbl.text & "| Service_AccesGST_Values not found :" & SalesLedger & IIf(Is_Igst, "_IGST", "") & IIf(Is_Ins, "_INS", "") & " |"
                 End If
             End If
 
@@ -1003,29 +976,10 @@ Public Class FrmTallyService
 
             COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Labour"), labourSum)
             Additional_Ledgers += Create_XML_LEDGERENTRIES(LabourLedger, labourSum, COST_CENTER)
+        Else
 
         End If
 
-        If FreeServlabourSum > 0 Then
-
-            Dim freelabourledger As String = Read_Ledgers("Service_LabourLedger_FreeService" & IIf(Is_Igst, "_IGST", "") & "")
-            COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Labour"), FreeServlabourSum)
-            Additional_Ledgers += Create_XML_LEDGERENTRIES(freelabourledger, FreeServlabourSum, COST_CENTER)
-            PartyLedgerService = Read_Ledgers("Service_PartyLedger_FreeService")
-            'Main_Ledgers = Create_XML_LEDGERENTRIES_PARTYLEDGER(PartyLedgerService, -Math.Round(Dr.Invoice_Amount), RefNo, True)
-
-        End If
-
-        If WarrantylabourSum > 0 Then
-            Dim warrantybourledger As String = Read_Ledgers("Service_LabourLedger_Warranty" & IIf(Is_Igst, "_IGST", "") & "")
-            COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers("Cost_Center_Labour"), WarrantylabourSum)
-            Additional_Ledgers += Create_XML_LEDGERENTRIES(warrantybourledger, WarrantylabourSum, COST_CENTER)
-            PartyLedgerService = Read_Ledgers("Service_PartyLedger_WLP")
-            ' Main_Ledgers = Create_XML_LEDGERENTRIES_PARTYLEDGER(PartyLedgerService, -Math.Round(Dr.Invoice_Amount), RefNo, True)
-
-
-
-        End If
 
         Dim FloodLedger As String = ""
         ''GST Ledger
@@ -1051,13 +1005,13 @@ Public Class FrmTallyService
         'If BillType.Contains("LI") Then
         '    CostCentreName = "Cost_Center_Labour"
         'Else
-        CostCentreName = "Cost_Center_Part"
+        CostCentreName = "Cost_Center_Acces"
         'End If
 
 
 
-        If Dr.PaiseRound <> 0 And Dr.PaiseRound <1 Then
-            COST_CENTER= Create_XML_COSTCENTER(Read_Ledgers(CostCentreName), Format(Dr.PaiseRound, "0.00"))
+        If Dr.PaiseRound <> 0 And Dr.PaiseRound < 1 Then
+            COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers(CostCentreName), Format(Dr.PaiseRound, "0.00"))
             Additional_Ledgers += Create_XML_LEDGERENTRIES(Read_Ledgers("Ledger_PaiseRoundOff"), Dr.PaiseRound, COST_CENTER, True)
         ElseIf Dr.PaiseRound <> 0 And Dr.PaiseRound < 1 And Dr.PaiseRound <> 0 Then
             COST_CENTER = Create_XML_COSTCENTER(Read_Ledgers(CostCentreName), Dr.PaiseRound)
@@ -1089,11 +1043,11 @@ Public Class FrmTallyService
                                           "<DATE>" & InvDateString & "</DATE>" &
                                           "<EFFECTIVEDATE>" & InvDateString & "</EFFECTIVEDATE>" &
                                           "<VOUCHERNUMBER>" & Dr.Invoice_Number & "</VOUCHERNUMBER>" &
-                                          "<REFERENCE>" & VoucherRefNo & "</REFERENCE>" &
+                                          "<REFERENCE>" & Dr.Job_Card & "</REFERENCE>" &
                                           "<NARRATION>" & Narration.Replace("&", "&amp;") & "</NARRATION>" &
                                           "<PARTYLEDGERNAME>" & VOUHCER_PARTYLEDGERNAME.Replace("&", "&amp;") & "</PARTYLEDGERNAME>" &
                                           "<ISINVOICE>Yes</ISINVOICE>" &
-                                           Main_Ledgers & Parts_Entries & Additional_Ledgers &
+                                           Main_Ledgers & Additional_Ledgers & Parts_Entries &
                                       "</VOUCHER>" &
                                   "</TALLYMESSAGE>" &
                               "</REQUESTDATA>" &
@@ -1367,30 +1321,6 @@ Public Class FrmTallyService
                 Try
                     Value = PublicTallyDS.Tables("VOUCHER").Select("VOUCHERNUMBER = '" & VoucherNo & "'" &
                                                               "And VOUCHERTYPENAME = '" & VoucherType & "' And ISCANCELLED <> 'Yes'").First.Item("VOUCHERNUMBER").ToString
-                    Status = True
-                Catch ex As Exception
-                End Try
-            End If
-        End If
-        Return Status
-    End Function
-
-    Public Function Is_Already_Exist(ByVal VoucherNo As String, ByVal VoucherType As String, ByVal BillType As String) As Boolean
-
-        Dim Value As String = ""
-        Dim Status As Boolean = False
-
-        If PublicTallyDS.Tables.Count > 0 Then
-            If PublicTallyDS.Tables("VOUCHER").Rows.Count > 0 Then
-                Try
-                    If BillType = "CLI" Then
-                        Value = PublicTallyDS.Tables("VOUCHER").Select("VOUCHERNUMBER = '" & VoucherNo & "'" &
-                                                              "And VOUCHERTYPENAME = '" & VoucherType & "' And ISCANCELLED <> 'Yes'").First.Item("VOUCHERNUMBER").ToString
-                    Else
-                        Value = PublicTallyDS.Tables("VOUCHER").Select("VOUCHERNUMBER = '" & VoucherNo & "'" &
-                                                              "And VOUCHERTYPENAME = '" & VoucherType & "' And ISCANCELLED <> 'Yes'").First.Item("VOUCHERNUMBER").ToString
-
-                    End If
                     Status = True
                 Catch ex As Exception
                 End Try
@@ -1811,7 +1741,7 @@ Public Class FrmTallyService
 
     Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
         PleaseWait(True)
-        ServiceDs = CommonDA.Get_Summary_Service(DtpFrom.Value, DtpTo.Value)
+        ServiceDs = CommonDA.Get_Summary_AccessSales(DtpFrom.Value, DtpTo.Value)
         find()
         PleaseWait(False)
     End Sub

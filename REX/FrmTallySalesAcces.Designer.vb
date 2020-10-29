@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class FrmTallyService
+Partial Class FrmTallySalesAcces
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -466,7 +466,7 @@ Partial Class FrmTallyService
         Me.PrintBtn.Text = "&Print"
         Me.PrintBtn.UseVisualStyleBackColor = False
         '
-        'FrmTallyService
+        'FrmTallySalesAcces
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -503,7 +503,7 @@ Partial Class FrmTallyService
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.ImeMode = System.Windows.Forms.ImeMode.[On]
         Me.KeyPreview = True
-        Me.Name = "FrmTallyService"
+        Me.Name = "FrmTallySalesAcces"
         Me.Opacity = 0.98R
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "-"

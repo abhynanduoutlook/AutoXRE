@@ -67,6 +67,10 @@ Partial Public Class TallyDs
     
     Private tableService_Bills_Heads As Service_Bills_HeadsDataTable
     
+    Private tableService_Acces As Service_AccesDataTable
+    
+    Private tableService_AccesDetail As Service_AccesDetailDataTable
+    
     Private _schemaSerializationMode As Global.System.Data.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -158,6 +162,12 @@ Partial Public Class TallyDs
             End If
             If (Not (ds.Tables("Service_Bills_Heads")) Is Nothing) Then
                 MyBase.Tables.Add(New Service_Bills_HeadsDataTable(ds.Tables("Service_Bills_Heads")))
+            End If
+            If (Not (ds.Tables("Service_Acces")) Is Nothing) Then
+                MyBase.Tables.Add(New Service_AccesDataTable(ds.Tables("Service_Acces")))
+            End If
+            If (Not (ds.Tables("Service_AccesDetail")) Is Nothing) Then
+                MyBase.Tables.Add(New Service_AccesDetailDataTable(ds.Tables("Service_AccesDetail")))
             End If
             Me.DataSetName = ds.DataSetName
             Me.Prefix = ds.Prefix
@@ -388,6 +398,26 @@ Partial Public Class TallyDs
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
+     Global.System.ComponentModel.Browsable(false),  _
+     Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
+    Public ReadOnly Property Service_Acces() As Service_AccesDataTable
+        Get
+            Return Me.tableService_Acces
+        End Get
+    End Property
+    
+    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
+     Global.System.ComponentModel.Browsable(false),  _
+     Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
+    Public ReadOnly Property Service_AccesDetail() As Service_AccesDetailDataTable
+        Get
+            Return Me.tableService_AccesDetail
+        End Get
+    End Property
+    
+    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
      Global.System.ComponentModel.BrowsableAttribute(true),  _
      Global.System.ComponentModel.DesignerSerializationVisibilityAttribute(Global.System.ComponentModel.DesignerSerializationVisibility.Visible)>  _
     Public Overrides Property SchemaSerializationMode() As Global.System.Data.SchemaSerializationMode
@@ -515,6 +545,12 @@ Partial Public Class TallyDs
             End If
             If (Not (ds.Tables("Service_Bills_Heads")) Is Nothing) Then
                 MyBase.Tables.Add(New Service_Bills_HeadsDataTable(ds.Tables("Service_Bills_Heads")))
+            End If
+            If (Not (ds.Tables("Service_Acces")) Is Nothing) Then
+                MyBase.Tables.Add(New Service_AccesDataTable(ds.Tables("Service_Acces")))
+            End If
+            If (Not (ds.Tables("Service_AccesDetail")) Is Nothing) Then
+                MyBase.Tables.Add(New Service_AccesDetailDataTable(ds.Tables("Service_AccesDetail")))
             End If
             Me.DataSetName = ds.DataSetName
             Me.Prefix = ds.Prefix
@@ -674,6 +710,18 @@ Partial Public Class TallyDs
                 Me.tableService_Bills_Heads.InitVars
             End If
         End If
+        Me.tableService_Acces = CType(MyBase.Tables("Service_Acces"),Service_AccesDataTable)
+        If (initTable = true) Then
+            If (Not (Me.tableService_Acces) Is Nothing) Then
+                Me.tableService_Acces.InitVars
+            End If
+        End If
+        Me.tableService_AccesDetail = CType(MyBase.Tables("Service_AccesDetail"),Service_AccesDetailDataTable)
+        If (initTable = true) Then
+            If (Not (Me.tableService_AccesDetail) Is Nothing) Then
+                Me.tableService_AccesDetail.InitVars
+            End If
+        End If
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -726,6 +774,10 @@ Partial Public Class TallyDs
         MyBase.Tables.Add(Me.tableService_Bills)
         Me.tableService_Bills_Heads = New Service_Bills_HeadsDataTable()
         MyBase.Tables.Add(Me.tableService_Bills_Heads)
+        Me.tableService_Acces = New Service_AccesDataTable()
+        MyBase.Tables.Add(Me.tableService_Acces)
+        Me.tableService_AccesDetail = New Service_AccesDetailDataTable()
+        MyBase.Tables.Add(Me.tableService_AccesDetail)
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -856,6 +908,18 @@ Partial Public Class TallyDs
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+    Private Function ShouldSerializeService_Acces() As Boolean
+        Return false
+    End Function
+    
+    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+    Private Function ShouldSerializeService_AccesDetail() As Boolean
+        Return false
+    End Function
+    
+    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
     Private Sub SchemaChanged(ByVal sender As Object, ByVal e As Global.System.ComponentModel.CollectionChangeEventArgs)
         If (e.Action = Global.System.ComponentModel.CollectionChangeAction.Remove) Then
             Me.InitVars
@@ -974,6 +1038,12 @@ Partial Public Class TallyDs
     
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
     Public Delegate Sub Service_Bills_HeadsRowChangeEventHandler(ByVal sender As Object, ByVal e As Service_Bills_HeadsRowChangeEvent)
+    
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+    Public Delegate Sub Service_AccesRowChangeEventHandler(ByVal sender As Object, ByVal e As Service_AccesRowChangeEvent)
+    
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+    Public Delegate Sub Service_AccesDetailRowChangeEventHandler(ByVal sender As Object, ByVal e As Service_AccesDetailRowChangeEvent)
     
     '''<summary>
     '''Represents the strongly named DataTable class.
@@ -2635,6 +2705,12 @@ Partial Public Class TallyDs
         
         Private columnGSTIN As Global.System.Data.DataColumn
         
+        Private columnClaimNo As Global.System.Data.DataColumn
+        
+        Private columnClaimAccDocNo As Global.System.Data.DataColumn
+        
+        Private columnClamCrDate As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub New()
@@ -3151,6 +3227,30 @@ Partial Public Class TallyDs
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property ClaimNoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnClaimNo
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property ClaimAccDocNoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnClaimAccDocNo
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property ClamCrDateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnClamCrDate
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -3247,9 +3347,12 @@ Partial Public Class TallyDs
                     ByVal IGST28 As Decimal,  _
                     ByVal IGST18_Per As Decimal,  _
                     ByVal IGST28_Per As Decimal,  _
-                    ByVal GSTIN As String) As ServiceRow
+                    ByVal GSTIN As String,  _
+                    ByVal ClaimNo As String,  _
+                    ByVal ClaimAccDocNo As String,  _
+                    ByVal ClamCrDate As String) As ServiceRow
             Dim rowServiceRow As ServiceRow = CType(Me.NewRow,ServiceRow)
-            Dim columnValuesArray() As Object = New Object() {Id, Invoice_Number, Job_Card, Company_Name, Selling_Dealer_Name, Invoice_Date, Job_Card_Date, Reg_No, Chassis_No, Engine_No, Model_Code, Model_Description, Customer_Name, Mobile_No, Customer_Voice, KM_Reading, Service_Advisor, Work_Started_Date, Work_Completion_Date, Delivered_Date_Time, Type, Part_Labour_Code, Part_Labour_Description, HSN_SAC_code, Header_Job_Type, Job_Type, Rate, Issued_Qty, Discount, Status, Cancellation_Date, Mechanic, Insurance_Provider, Insurance_Policy_No, Insurance_Start_Date, Insurance_Expiry_Date, PaiseRoundingOff, CGST14_Per, CGST14, SGST14_Per, SGST14, Total_Amount, Taxable, Invoice_Amount, Updated, Tally, LastSeen, SGST9_Per, SGST9, CGST9_Per, CGST9, KFC1_Per, KFC1, PaiseRound, Taxable_Amount, IGST18, IGST28, IGST18_Per, IGST28_Per, GSTIN}
+            Dim columnValuesArray() As Object = New Object() {Id, Invoice_Number, Job_Card, Company_Name, Selling_Dealer_Name, Invoice_Date, Job_Card_Date, Reg_No, Chassis_No, Engine_No, Model_Code, Model_Description, Customer_Name, Mobile_No, Customer_Voice, KM_Reading, Service_Advisor, Work_Started_Date, Work_Completion_Date, Delivered_Date_Time, Type, Part_Labour_Code, Part_Labour_Description, HSN_SAC_code, Header_Job_Type, Job_Type, Rate, Issued_Qty, Discount, Status, Cancellation_Date, Mechanic, Insurance_Provider, Insurance_Policy_No, Insurance_Start_Date, Insurance_Expiry_Date, PaiseRoundingOff, CGST14_Per, CGST14, SGST14_Per, SGST14, Total_Amount, Taxable, Invoice_Amount, Updated, Tally, LastSeen, SGST9_Per, SGST9, CGST9_Per, CGST9, KFC1_Per, KFC1, PaiseRound, Taxable_Amount, IGST18, IGST28, IGST18_Per, IGST28_Per, GSTIN, ClaimNo, ClaimAccDocNo, ClamCrDate}
             rowServiceRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowServiceRow)
             Return rowServiceRow
@@ -3332,6 +3435,9 @@ Partial Public Class TallyDs
             Me.columnIGST18_Per = MyBase.Columns("IGST18_Per")
             Me.columnIGST28_Per = MyBase.Columns("IGST28_Per")
             Me.columnGSTIN = MyBase.Columns("GSTIN")
+            Me.columnClaimNo = MyBase.Columns("ClaimNo")
+            Me.columnClaimAccDocNo = MyBase.Columns("ClaimAccDocNo")
+            Me.columnClamCrDate = MyBase.Columns("ClamCrDate")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -3457,6 +3563,12 @@ Partial Public Class TallyDs
             MyBase.Columns.Add(Me.columnIGST28_Per)
             Me.columnGSTIN = New Global.System.Data.DataColumn("GSTIN", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnGSTIN)
+            Me.columnClaimNo = New Global.System.Data.DataColumn("ClaimNo", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnClaimNo)
+            Me.columnClaimAccDocNo = New Global.System.Data.DataColumn("ClaimAccDocNo", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnClaimAccDocNo)
+            Me.columnClamCrDate = New Global.System.Data.DataColumn("ClamCrDate", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnClamCrDate)
             Me.columnId.DefaultValue = CType("",String)
             Me.columnInvoice_Number.DefaultValue = CType("",String)
             Me.columnJob_Card.DefaultValue = CType("",String)
@@ -3509,6 +3621,9 @@ Partial Public Class TallyDs
             Me.columnIGST18_Per.DefaultValue = CType(0.00D,Decimal)
             Me.columnIGST28_Per.DefaultValue = CType(0.00D,Decimal)
             Me.columnGSTIN.DefaultValue = CType("",String)
+            Me.columnClaimNo.DefaultValue = CType("",String)
+            Me.columnClaimAccDocNo.DefaultValue = CType("",String)
+            Me.columnClamCrDate.DefaultValue = CType("",String)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -3735,6 +3850,12 @@ Partial Public Class TallyDs
         Private columnDiscount_per As Global.System.Data.DataColumn
         
         Private columnIGST_Per As Global.System.Data.DataColumn
+        
+        Private columnClaimNo As Global.System.Data.DataColumn
+        
+        Private columnClaimAccDocNo As Global.System.Data.DataColumn
+        
+        Private columnClamCrDate As Global.System.Data.DataColumn
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
@@ -4132,6 +4253,30 @@ Partial Public Class TallyDs
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property ClaimNoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnClaimNo
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property ClaimAccDocNoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnClaimAccDocNo
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property ClamCrDateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnClamCrDate
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -4213,9 +4358,12 @@ Partial Public Class TallyDs
                     ByVal Updated As Short,  _
                     ByVal IGST As Double,  _
                     ByVal Discount_per As Double,  _
-                    ByVal IGST_Per As Double) As Service_DetailRow
+                    ByVal IGST_Per As Double,  _
+                    ByVal ClaimNo As String,  _
+                    ByVal ClaimAccDocNo As String,  _
+                    ByVal ClamCrDate As String) As Service_DetailRow
             Dim rowService_DetailRow As Service_DetailRow = CType(Me.NewRow,Service_DetailRow)
-            Dim columnValuesArray() As Object = New Object() {Id, Invoice_Number, Job_Card, Company_Name, Selling_Dealer_Name, Job_Card_Date, Reg_No, Chassis_No, Engine_No, Model_Code, Model_Description, Customer_Name, Mobile_No, Customer_Voice, KM_Reading, Service_Advisor, Work_Started_Date, Work_Completion_Date, Delivered_Date_Time, Part_Labour_Code, Part_Labour_Description, HSN_SAC_code, Header_Job_Type, Job_Type, Rate, Issued_Qty, Discount, Status, Cancellation_Date, Mechanic, Insurance_Provider, Insurance_Policy_No, Insurance_Start_Date, Insurance_Expiry_Date, PaiseRoundingOff, CGST_Per, CGST, SGST_Per, SGST, Total_Amount, Taxable, Updated, IGST, Discount_per, IGST_Per}
+            Dim columnValuesArray() As Object = New Object() {Id, Invoice_Number, Job_Card, Company_Name, Selling_Dealer_Name, Job_Card_Date, Reg_No, Chassis_No, Engine_No, Model_Code, Model_Description, Customer_Name, Mobile_No, Customer_Voice, KM_Reading, Service_Advisor, Work_Started_Date, Work_Completion_Date, Delivered_Date_Time, Part_Labour_Code, Part_Labour_Description, HSN_SAC_code, Header_Job_Type, Job_Type, Rate, Issued_Qty, Discount, Status, Cancellation_Date, Mechanic, Insurance_Provider, Insurance_Policy_No, Insurance_Start_Date, Insurance_Expiry_Date, PaiseRoundingOff, CGST_Per, CGST, SGST_Per, SGST, Total_Amount, Taxable, Updated, IGST, Discount_per, IGST_Per, ClaimNo, ClaimAccDocNo, ClamCrDate}
             rowService_DetailRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowService_DetailRow)
             Return rowService_DetailRow
@@ -4283,6 +4431,9 @@ Partial Public Class TallyDs
             Me.columnIGST = MyBase.Columns("IGST")
             Me.columnDiscount_per = MyBase.Columns("Discount_per")
             Me.columnIGST_Per = MyBase.Columns("IGST_Per")
+            Me.columnClaimNo = MyBase.Columns("ClaimNo")
+            Me.columnClaimAccDocNo = MyBase.Columns("ClaimAccDocNo")
+            Me.columnClamCrDate = MyBase.Columns("ClamCrDate")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -4378,6 +4529,12 @@ Partial Public Class TallyDs
             MyBase.Columns.Add(Me.columnDiscount_per)
             Me.columnIGST_Per = New Global.System.Data.DataColumn("IGST_Per", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnIGST_Per)
+            Me.columnClaimNo = New Global.System.Data.DataColumn("ClaimNo", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnClaimNo)
+            Me.columnClaimAccDocNo = New Global.System.Data.DataColumn("ClaimAccDocNo", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnClaimAccDocNo)
+            Me.columnClamCrDate = New Global.System.Data.DataColumn("ClamCrDate", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnClamCrDate)
             Me.columnId.DefaultValue = CType("",String)
             Me.columnInvoice_Number.DefaultValue = CType("",String)
             Me.columnJob_Card.DefaultValue = CType("",String)
@@ -4416,6 +4573,9 @@ Partial Public Class TallyDs
             Me.columnIGST.DefaultValue = CType(0R,Double)
             Me.columnDiscount_per.DefaultValue = CType(0R,Double)
             Me.columnIGST_Per.DefaultValue = CType(0R,Double)
+            Me.columnClaimNo.DefaultValue = CType("",String)
+            Me.columnClaimAccDocNo.DefaultValue = CType("",String)
+            Me.columnClamCrDate.DefaultValue = CType("",String)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -12436,6 +12596,2044 @@ Partial Public Class TallyDs
     End Class
     
     '''<summary>
+    '''Represents the strongly named DataTable class.
+    '''</summary>
+    <Global.System.Serializable(),  _
+     Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
+    Partial Public Class Service_AccesDataTable
+        Inherits Global.System.Data.TypedTableBase(Of Service_AccesRow)
+        
+        Private columnId As Global.System.Data.DataColumn
+        
+        Private columnInvoice_Number As Global.System.Data.DataColumn
+        
+        Private columnJob_Card As Global.System.Data.DataColumn
+        
+        Private columnCompany_Name As Global.System.Data.DataColumn
+        
+        Private columnSelling_Dealer_Name As Global.System.Data.DataColumn
+        
+        Private columnInvoice_Date As Global.System.Data.DataColumn
+        
+        Private columnJob_Card_Date As Global.System.Data.DataColumn
+        
+        Private columnReg_No As Global.System.Data.DataColumn
+        
+        Private columnChassis_No As Global.System.Data.DataColumn
+        
+        Private columnEngine_No As Global.System.Data.DataColumn
+        
+        Private columnModel_Code As Global.System.Data.DataColumn
+        
+        Private columnModel_Description As Global.System.Data.DataColumn
+        
+        Private columnCustomer_Name As Global.System.Data.DataColumn
+        
+        Private columnMobile_No As Global.System.Data.DataColumn
+        
+        Private columnCustomer_Voice As Global.System.Data.DataColumn
+        
+        Private columnKM_Reading As Global.System.Data.DataColumn
+        
+        Private columnService_Advisor As Global.System.Data.DataColumn
+        
+        Private columnWork_Started_Date As Global.System.Data.DataColumn
+        
+        Private columnWork_Completion_Date As Global.System.Data.DataColumn
+        
+        Private columnDelivered_Date_Time As Global.System.Data.DataColumn
+        
+        Private columnType As Global.System.Data.DataColumn
+        
+        Private columnPart_Labour_Code As Global.System.Data.DataColumn
+        
+        Private columnPart_Labour_Description As Global.System.Data.DataColumn
+        
+        Private columnHSN_SAC_code As Global.System.Data.DataColumn
+        
+        Private columnHeader_Job_Type As Global.System.Data.DataColumn
+        
+        Private columnJob_Type As Global.System.Data.DataColumn
+        
+        Private columnRate As Global.System.Data.DataColumn
+        
+        Private columnIssued_Qty As Global.System.Data.DataColumn
+        
+        Private columnDiscount As Global.System.Data.DataColumn
+        
+        Private columnStatus As Global.System.Data.DataColumn
+        
+        Private columnCancellation_Date As Global.System.Data.DataColumn
+        
+        Private columnMechanic As Global.System.Data.DataColumn
+        
+        Private columnInsurance_Provider As Global.System.Data.DataColumn
+        
+        Private columnInsurance_Policy_No As Global.System.Data.DataColumn
+        
+        Private columnInsurance_Start_Date As Global.System.Data.DataColumn
+        
+        Private columnInsurance_Expiry_Date As Global.System.Data.DataColumn
+        
+        Private columnPaiseRoundingOff As Global.System.Data.DataColumn
+        
+        Private columnCGST14_Per As Global.System.Data.DataColumn
+        
+        Private columnCGST14 As Global.System.Data.DataColumn
+        
+        Private columnSGST14_Per As Global.System.Data.DataColumn
+        
+        Private columnSGST14 As Global.System.Data.DataColumn
+        
+        Private columnTotal_Amount As Global.System.Data.DataColumn
+        
+        Private columnTaxable As Global.System.Data.DataColumn
+        
+        Private columnInvoice_Amount As Global.System.Data.DataColumn
+        
+        Private columnUpdated As Global.System.Data.DataColumn
+        
+        Private columnTally As Global.System.Data.DataColumn
+        
+        Private columnLastSeen As Global.System.Data.DataColumn
+        
+        Private columnSGST9_Per As Global.System.Data.DataColumn
+        
+        Private columnSGST9 As Global.System.Data.DataColumn
+        
+        Private columnCGST9_Per As Global.System.Data.DataColumn
+        
+        Private columnCGST9 As Global.System.Data.DataColumn
+        
+        Private columnKFC1_Per As Global.System.Data.DataColumn
+        
+        Private columnKFC1 As Global.System.Data.DataColumn
+        
+        Private columnPaiseRound As Global.System.Data.DataColumn
+        
+        Private columnTaxable_Amount As Global.System.Data.DataColumn
+        
+        Private columnIGST18 As Global.System.Data.DataColumn
+        
+        Private columnIGST28 As Global.System.Data.DataColumn
+        
+        Private columnIGST18_Per As Global.System.Data.DataColumn
+        
+        Private columnIGST28_Per As Global.System.Data.DataColumn
+        
+        Private columnGSTIN As Global.System.Data.DataColumn
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub New()
+            MyBase.New
+            Me.TableName = "Service_Acces"
+            Me.BeginInit
+            Me.InitClass
+            Me.EndInit
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Friend Sub New(ByVal table As Global.System.Data.DataTable)
+            MyBase.New
+            Me.TableName = table.TableName
+            If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
+                Me.CaseSensitive = table.CaseSensitive
+            End If
+            If (table.Locale.ToString <> table.DataSet.Locale.ToString) Then
+                Me.Locale = table.Locale
+            End If
+            If (table.Namespace <> table.DataSet.Namespace) Then
+                Me.Namespace = table.Namespace
+            End If
+            Me.Prefix = table.Prefix
+            Me.MinimumCapacity = table.MinimumCapacity
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
+            MyBase.New(info, context)
+            Me.InitVars
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property IdColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnId
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Invoice_NumberColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnInvoice_Number
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Job_CardColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnJob_Card
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Company_NameColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCompany_Name
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Selling_Dealer_NameColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnSelling_Dealer_Name
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Invoice_DateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnInvoice_Date
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Job_Card_DateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnJob_Card_Date
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Reg_NoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnReg_No
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Chassis_NoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnChassis_No
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Engine_NoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEngine_No
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Model_CodeColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnModel_Code
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Model_DescriptionColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnModel_Description
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Customer_NameColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCustomer_Name
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Mobile_NoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnMobile_No
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Customer_VoiceColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCustomer_Voice
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property KM_ReadingColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnKM_Reading
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Service_AdvisorColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnService_Advisor
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Work_Started_DateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnWork_Started_Date
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Work_Completion_DateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnWork_Completion_Date
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Delivered_Date_TimeColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnDelivered_Date_Time
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property TypeColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnType
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Part_Labour_CodeColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnPart_Labour_Code
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Part_Labour_DescriptionColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnPart_Labour_Description
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property HSN_SAC_codeColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnHSN_SAC_code
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Header_Job_TypeColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnHeader_Job_Type
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Job_TypeColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnJob_Type
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property RateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnRate
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Issued_QtyColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnIssued_Qty
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property DiscountColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnDiscount
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property StatusColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnStatus
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Cancellation_DateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCancellation_Date
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property MechanicColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnMechanic
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Insurance_ProviderColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnInsurance_Provider
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Insurance_Policy_NoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnInsurance_Policy_No
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Insurance_Start_DateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnInsurance_Start_Date
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Insurance_Expiry_DateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnInsurance_Expiry_Date
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property PaiseRoundingOffColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnPaiseRoundingOff
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property CGST14_PerColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCGST14_Per
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property CGST14Column() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCGST14
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property SGST14_PerColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnSGST14_Per
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property SGST14Column() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnSGST14
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Total_AmountColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnTotal_Amount
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property TaxableColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnTaxable
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Invoice_AmountColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnInvoice_Amount
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property UpdatedColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnUpdated
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property TallyColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnTally
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property LastSeenColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnLastSeen
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property SGST9_PerColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnSGST9_Per
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property SGST9Column() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnSGST9
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property CGST9_PerColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCGST9_Per
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property CGST9Column() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCGST9
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property KFC1_PerColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnKFC1_Per
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property KFC1Column() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnKFC1
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property PaiseRoundColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnPaiseRound
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Taxable_AmountColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnTaxable_Amount
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property IGST18Column() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnIGST18
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property IGST28Column() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnIGST28
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property IGST18_PerColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnIGST18_Per
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property IGST28_PerColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnIGST28_Per
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property GSTINColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnGSTIN
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
+         Global.System.ComponentModel.Browsable(false)>  _
+        Public ReadOnly Property Count() As Integer
+            Get
+                Return Me.Rows.Count
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Default ReadOnly Property Item(ByVal index As Integer) As Service_AccesRow
+            Get
+                Return CType(Me.Rows(index),Service_AccesRow)
+            End Get
+        End Property
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Event Service_AccesRowChanging As Service_AccesRowChangeEventHandler
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Event Service_AccesRowChanged As Service_AccesRowChangeEventHandler
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Event Service_AccesRowDeleting As Service_AccesRowChangeEventHandler
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Event Service_AccesRowDeleted As Service_AccesRowChangeEventHandler
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Overloads Sub AddService_AccesRow(ByVal row As Service_AccesRow)
+            Me.Rows.Add(row)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Overloads Function AddService_AccesRow( _
+                    ByVal Id As String,  _
+                    ByVal Invoice_Number As String,  _
+                    ByVal Job_Card As String,  _
+                    ByVal Company_Name As String,  _
+                    ByVal Selling_Dealer_Name As String,  _
+                    ByVal Invoice_Date As Date,  _
+                    ByVal Job_Card_Date As Date,  _
+                    ByVal Reg_No As String,  _
+                    ByVal Chassis_No As String,  _
+                    ByVal Engine_No As String,  _
+                    ByVal Model_Code As String,  _
+                    ByVal Model_Description As String,  _
+                    ByVal Customer_Name As String,  _
+                    ByVal Mobile_No As String,  _
+                    ByVal Customer_Voice As String,  _
+                    ByVal KM_Reading As String,  _
+                    ByVal Service_Advisor As String,  _
+                    ByVal Work_Started_Date As Date,  _
+                    ByVal Work_Completion_Date As Date,  _
+                    ByVal Delivered_Date_Time As Date,  _
+                    ByVal Type As String,  _
+                    ByVal Part_Labour_Code As String,  _
+                    ByVal Part_Labour_Description As String,  _
+                    ByVal HSN_SAC_code As String,  _
+                    ByVal Header_Job_Type As String,  _
+                    ByVal Job_Type As String,  _
+                    ByVal Rate As Decimal,  _
+                    ByVal Issued_Qty As Decimal,  _
+                    ByVal Discount As Decimal,  _
+                    ByVal Status As String,  _
+                    ByVal Cancellation_Date As Date,  _
+                    ByVal Mechanic As String,  _
+                    ByVal Insurance_Provider As String,  _
+                    ByVal Insurance_Policy_No As String,  _
+                    ByVal Insurance_Start_Date As Date,  _
+                    ByVal Insurance_Expiry_Date As Date,  _
+                    ByVal PaiseRoundingOff As Decimal,  _
+                    ByVal CGST14_Per As Decimal,  _
+                    ByVal CGST14 As Decimal,  _
+                    ByVal SGST14_Per As Decimal,  _
+                    ByVal SGST14 As Decimal,  _
+                    ByVal Total_Amount As Decimal,  _
+                    ByVal Taxable As Decimal,  _
+                    ByVal Invoice_Amount As Decimal,  _
+                    ByVal Updated As Short,  _
+                    ByVal Tally As Short,  _
+                    ByVal LastSeen As String,  _
+                    ByVal SGST9_Per As Decimal,  _
+                    ByVal SGST9 As Decimal,  _
+                    ByVal CGST9_Per As Decimal,  _
+                    ByVal CGST9 As Decimal,  _
+                    ByVal KFC1_Per As Decimal,  _
+                    ByVal KFC1 As Decimal,  _
+                    ByVal PaiseRound As Decimal,  _
+                    ByVal Taxable_Amount As Decimal,  _
+                    ByVal IGST18 As Decimal,  _
+                    ByVal IGST28 As Decimal,  _
+                    ByVal IGST18_Per As Decimal,  _
+                    ByVal IGST28_Per As Decimal,  _
+                    ByVal GSTIN As String) As Service_AccesRow
+            Dim rowService_AccesRow As Service_AccesRow = CType(Me.NewRow,Service_AccesRow)
+            Dim columnValuesArray() As Object = New Object() {Id, Invoice_Number, Job_Card, Company_Name, Selling_Dealer_Name, Invoice_Date, Job_Card_Date, Reg_No, Chassis_No, Engine_No, Model_Code, Model_Description, Customer_Name, Mobile_No, Customer_Voice, KM_Reading, Service_Advisor, Work_Started_Date, Work_Completion_Date, Delivered_Date_Time, Type, Part_Labour_Code, Part_Labour_Description, HSN_SAC_code, Header_Job_Type, Job_Type, Rate, Issued_Qty, Discount, Status, Cancellation_Date, Mechanic, Insurance_Provider, Insurance_Policy_No, Insurance_Start_Date, Insurance_Expiry_Date, PaiseRoundingOff, CGST14_Per, CGST14, SGST14_Per, SGST14, Total_Amount, Taxable, Invoice_Amount, Updated, Tally, LastSeen, SGST9_Per, SGST9, CGST9_Per, CGST9, KFC1_Per, KFC1, PaiseRound, Taxable_Amount, IGST18, IGST28, IGST18_Per, IGST28_Per, GSTIN}
+            rowService_AccesRow.ItemArray = columnValuesArray
+            Me.Rows.Add(rowService_AccesRow)
+            Return rowService_AccesRow
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Overrides Function Clone() As Global.System.Data.DataTable
+            Dim cln As Service_AccesDataTable = CType(MyBase.Clone,Service_AccesDataTable)
+            cln.InitVars
+            Return cln
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
+            Return New Service_AccesDataTable()
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Friend Sub InitVars()
+            Me.columnId = MyBase.Columns("Id")
+            Me.columnInvoice_Number = MyBase.Columns("Invoice_Number")
+            Me.columnJob_Card = MyBase.Columns("Job_Card")
+            Me.columnCompany_Name = MyBase.Columns("Company_Name")
+            Me.columnSelling_Dealer_Name = MyBase.Columns("Selling_Dealer_Name")
+            Me.columnInvoice_Date = MyBase.Columns("Invoice_Date")
+            Me.columnJob_Card_Date = MyBase.Columns("Job_Card_Date")
+            Me.columnReg_No = MyBase.Columns("Reg_No")
+            Me.columnChassis_No = MyBase.Columns("Chassis_No")
+            Me.columnEngine_No = MyBase.Columns("Engine_No")
+            Me.columnModel_Code = MyBase.Columns("Model_Code")
+            Me.columnModel_Description = MyBase.Columns("Model_Description")
+            Me.columnCustomer_Name = MyBase.Columns("Customer_Name")
+            Me.columnMobile_No = MyBase.Columns("Mobile_No")
+            Me.columnCustomer_Voice = MyBase.Columns("Customer_Voice")
+            Me.columnKM_Reading = MyBase.Columns("KM_Reading")
+            Me.columnService_Advisor = MyBase.Columns("Service_Advisor")
+            Me.columnWork_Started_Date = MyBase.Columns("Work_Started_Date")
+            Me.columnWork_Completion_Date = MyBase.Columns("Work_Completion_Date")
+            Me.columnDelivered_Date_Time = MyBase.Columns("Delivered_Date_Time")
+            Me.columnType = MyBase.Columns("Type")
+            Me.columnPart_Labour_Code = MyBase.Columns("Part_Labour_Code")
+            Me.columnPart_Labour_Description = MyBase.Columns("Part_Labour_Description")
+            Me.columnHSN_SAC_code = MyBase.Columns("HSN_SAC_code")
+            Me.columnHeader_Job_Type = MyBase.Columns("Header_Job_Type")
+            Me.columnJob_Type = MyBase.Columns("Job_Type")
+            Me.columnRate = MyBase.Columns("Rate")
+            Me.columnIssued_Qty = MyBase.Columns("Issued_Qty")
+            Me.columnDiscount = MyBase.Columns("Discount")
+            Me.columnStatus = MyBase.Columns("Status")
+            Me.columnCancellation_Date = MyBase.Columns("Cancellation_Date")
+            Me.columnMechanic = MyBase.Columns("Mechanic")
+            Me.columnInsurance_Provider = MyBase.Columns("Insurance_Provider")
+            Me.columnInsurance_Policy_No = MyBase.Columns("Insurance_Policy_No")
+            Me.columnInsurance_Start_Date = MyBase.Columns("Insurance_Start_Date")
+            Me.columnInsurance_Expiry_Date = MyBase.Columns("Insurance_Expiry_Date")
+            Me.columnPaiseRoundingOff = MyBase.Columns("PaiseRoundingOff")
+            Me.columnCGST14_Per = MyBase.Columns("CGST14_Per")
+            Me.columnCGST14 = MyBase.Columns("CGST14")
+            Me.columnSGST14_Per = MyBase.Columns("SGST14_Per")
+            Me.columnSGST14 = MyBase.Columns("SGST14")
+            Me.columnTotal_Amount = MyBase.Columns("Total_Amount")
+            Me.columnTaxable = MyBase.Columns("Taxable")
+            Me.columnInvoice_Amount = MyBase.Columns("Invoice_Amount")
+            Me.columnUpdated = MyBase.Columns("Updated")
+            Me.columnTally = MyBase.Columns("Tally")
+            Me.columnLastSeen = MyBase.Columns("LastSeen")
+            Me.columnSGST9_Per = MyBase.Columns("SGST9_Per")
+            Me.columnSGST9 = MyBase.Columns("SGST9")
+            Me.columnCGST9_Per = MyBase.Columns("CGST9_Per")
+            Me.columnCGST9 = MyBase.Columns("CGST9")
+            Me.columnKFC1_Per = MyBase.Columns("KFC1_Per")
+            Me.columnKFC1 = MyBase.Columns("KFC1")
+            Me.columnPaiseRound = MyBase.Columns("PaiseRound")
+            Me.columnTaxable_Amount = MyBase.Columns("Taxable_Amount")
+            Me.columnIGST18 = MyBase.Columns("IGST18")
+            Me.columnIGST28 = MyBase.Columns("IGST28")
+            Me.columnIGST18_Per = MyBase.Columns("IGST18_Per")
+            Me.columnIGST28_Per = MyBase.Columns("IGST28_Per")
+            Me.columnGSTIN = MyBase.Columns("GSTIN")
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Private Sub InitClass()
+            Me.columnId = New Global.System.Data.DataColumn("Id", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnId)
+            Me.columnInvoice_Number = New Global.System.Data.DataColumn("Invoice_Number", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnInvoice_Number)
+            Me.columnJob_Card = New Global.System.Data.DataColumn("Job_Card", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnJob_Card)
+            Me.columnCompany_Name = New Global.System.Data.DataColumn("Company_Name", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCompany_Name)
+            Me.columnSelling_Dealer_Name = New Global.System.Data.DataColumn("Selling_Dealer_Name", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnSelling_Dealer_Name)
+            Me.columnInvoice_Date = New Global.System.Data.DataColumn("Invoice_Date", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnInvoice_Date)
+            Me.columnJob_Card_Date = New Global.System.Data.DataColumn("Job_Card_Date", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnJob_Card_Date)
+            Me.columnReg_No = New Global.System.Data.DataColumn("Reg_No", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnReg_No)
+            Me.columnChassis_No = New Global.System.Data.DataColumn("Chassis_No", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnChassis_No)
+            Me.columnEngine_No = New Global.System.Data.DataColumn("Engine_No", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEngine_No)
+            Me.columnModel_Code = New Global.System.Data.DataColumn("Model_Code", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnModel_Code)
+            Me.columnModel_Description = New Global.System.Data.DataColumn("Model_Description", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnModel_Description)
+            Me.columnCustomer_Name = New Global.System.Data.DataColumn("Customer_Name", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCustomer_Name)
+            Me.columnMobile_No = New Global.System.Data.DataColumn("Mobile_No", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnMobile_No)
+            Me.columnCustomer_Voice = New Global.System.Data.DataColumn("Customer_Voice", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCustomer_Voice)
+            Me.columnKM_Reading = New Global.System.Data.DataColumn("KM_Reading", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnKM_Reading)
+            Me.columnService_Advisor = New Global.System.Data.DataColumn("Service_Advisor", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnService_Advisor)
+            Me.columnWork_Started_Date = New Global.System.Data.DataColumn("Work_Started_Date", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnWork_Started_Date)
+            Me.columnWork_Completion_Date = New Global.System.Data.DataColumn("Work_Completion_Date", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnWork_Completion_Date)
+            Me.columnDelivered_Date_Time = New Global.System.Data.DataColumn("Delivered_Date_Time", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnDelivered_Date_Time)
+            Me.columnType = New Global.System.Data.DataColumn("Type", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnType)
+            Me.columnPart_Labour_Code = New Global.System.Data.DataColumn("Part_Labour_Code", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnPart_Labour_Code)
+            Me.columnPart_Labour_Description = New Global.System.Data.DataColumn("Part_Labour_Description", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnPart_Labour_Description)
+            Me.columnHSN_SAC_code = New Global.System.Data.DataColumn("HSN_SAC_code", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnHSN_SAC_code)
+            Me.columnHeader_Job_Type = New Global.System.Data.DataColumn("Header_Job_Type", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnHeader_Job_Type)
+            Me.columnJob_Type = New Global.System.Data.DataColumn("Job_Type", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnJob_Type)
+            Me.columnRate = New Global.System.Data.DataColumn("Rate", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnRate)
+            Me.columnIssued_Qty = New Global.System.Data.DataColumn("Issued_Qty", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnIssued_Qty)
+            Me.columnDiscount = New Global.System.Data.DataColumn("Discount", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnDiscount)
+            Me.columnStatus = New Global.System.Data.DataColumn("Status", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnStatus)
+            Me.columnCancellation_Date = New Global.System.Data.DataColumn("Cancellation_Date", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCancellation_Date)
+            Me.columnMechanic = New Global.System.Data.DataColumn("Mechanic", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnMechanic)
+            Me.columnInsurance_Provider = New Global.System.Data.DataColumn("Insurance_Provider", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnInsurance_Provider)
+            Me.columnInsurance_Policy_No = New Global.System.Data.DataColumn("Insurance_Policy_No", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnInsurance_Policy_No)
+            Me.columnInsurance_Start_Date = New Global.System.Data.DataColumn("Insurance_Start_Date", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnInsurance_Start_Date)
+            Me.columnInsurance_Expiry_Date = New Global.System.Data.DataColumn("Insurance_Expiry_Date", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnInsurance_Expiry_Date)
+            Me.columnPaiseRoundingOff = New Global.System.Data.DataColumn("PaiseRoundingOff", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnPaiseRoundingOff)
+            Me.columnCGST14_Per = New Global.System.Data.DataColumn("CGST14_Per", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCGST14_Per)
+            Me.columnCGST14 = New Global.System.Data.DataColumn("CGST14", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCGST14)
+            Me.columnSGST14_Per = New Global.System.Data.DataColumn("SGST14_Per", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnSGST14_Per)
+            Me.columnSGST14 = New Global.System.Data.DataColumn("SGST14", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnSGST14)
+            Me.columnTotal_Amount = New Global.System.Data.DataColumn("Total_Amount", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnTotal_Amount)
+            Me.columnTaxable = New Global.System.Data.DataColumn("Taxable", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnTaxable)
+            Me.columnInvoice_Amount = New Global.System.Data.DataColumn("Invoice_Amount", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnInvoice_Amount)
+            Me.columnUpdated = New Global.System.Data.DataColumn("Updated", GetType(Short), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnUpdated)
+            Me.columnTally = New Global.System.Data.DataColumn("Tally", GetType(Short), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnTally)
+            Me.columnLastSeen = New Global.System.Data.DataColumn("LastSeen", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnLastSeen)
+            Me.columnSGST9_Per = New Global.System.Data.DataColumn("SGST9_Per", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnSGST9_Per)
+            Me.columnSGST9 = New Global.System.Data.DataColumn("SGST9", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnSGST9)
+            Me.columnCGST9_Per = New Global.System.Data.DataColumn("CGST9_Per", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCGST9_Per)
+            Me.columnCGST9 = New Global.System.Data.DataColumn("CGST9", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCGST9)
+            Me.columnKFC1_Per = New Global.System.Data.DataColumn("KFC1_Per", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnKFC1_Per)
+            Me.columnKFC1 = New Global.System.Data.DataColumn("KFC1", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnKFC1)
+            Me.columnPaiseRound = New Global.System.Data.DataColumn("PaiseRound", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnPaiseRound)
+            Me.columnTaxable_Amount = New Global.System.Data.DataColumn("Taxable_Amount", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnTaxable_Amount)
+            Me.columnIGST18 = New Global.System.Data.DataColumn("IGST18", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnIGST18)
+            Me.columnIGST28 = New Global.System.Data.DataColumn("IGST28", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnIGST28)
+            Me.columnIGST18_Per = New Global.System.Data.DataColumn("IGST18_Per", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnIGST18_Per)
+            Me.columnIGST28_Per = New Global.System.Data.DataColumn("IGST28_Per", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnIGST28_Per)
+            Me.columnGSTIN = New Global.System.Data.DataColumn("GSTIN", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnGSTIN)
+            Me.columnId.DefaultValue = CType("",String)
+            Me.columnInvoice_Number.DefaultValue = CType("",String)
+            Me.columnJob_Card.DefaultValue = CType("",String)
+            Me.columnCompany_Name.DefaultValue = CType("",String)
+            Me.columnSelling_Dealer_Name.DefaultValue = CType("",String)
+            Me.columnReg_No.DefaultValue = CType("",String)
+            Me.columnChassis_No.DefaultValue = CType("",String)
+            Me.columnEngine_No.DefaultValue = CType("",String)
+            Me.columnModel_Code.DefaultValue = CType("",String)
+            Me.columnModel_Description.DefaultValue = CType("",String)
+            Me.columnCustomer_Name.DefaultValue = CType("",String)
+            Me.columnMobile_No.DefaultValue = CType("",String)
+            Me.columnCustomer_Voice.DefaultValue = CType("",String)
+            Me.columnKM_Reading.DefaultValue = CType("",String)
+            Me.columnService_Advisor.DefaultValue = CType("",String)
+            Me.columnType.DefaultValue = CType("",String)
+            Me.columnPart_Labour_Code.DefaultValue = CType("",String)
+            Me.columnPart_Labour_Description.DefaultValue = CType("",String)
+            Me.columnHSN_SAC_code.DefaultValue = CType("",String)
+            Me.columnHeader_Job_Type.DefaultValue = CType("",String)
+            Me.columnJob_Type.DefaultValue = CType("",String)
+            Me.columnRate.DefaultValue = CType(0D,Decimal)
+            Me.columnIssued_Qty.DefaultValue = CType(0D,Decimal)
+            Me.columnDiscount.DefaultValue = CType(0D,Decimal)
+            Me.columnStatus.DefaultValue = CType("",String)
+            Me.columnMechanic.DefaultValue = CType("",String)
+            Me.columnInsurance_Provider.DefaultValue = CType("",String)
+            Me.columnInsurance_Policy_No.DefaultValue = CType("",String)
+            Me.columnPaiseRoundingOff.DefaultValue = CType(0D,Decimal)
+            Me.columnCGST14_Per.DefaultValue = CType(0D,Decimal)
+            Me.columnCGST14.DefaultValue = CType(0D,Decimal)
+            Me.columnSGST14_Per.DefaultValue = CType(0D,Decimal)
+            Me.columnSGST14.DefaultValue = CType(0D,Decimal)
+            Me.columnTotal_Amount.DefaultValue = CType(0D,Decimal)
+            Me.columnTaxable.DefaultValue = CType(0D,Decimal)
+            Me.columnInvoice_Amount.DefaultValue = CType(0.00D,Decimal)
+            Me.columnUpdated.DefaultValue = CType(0,Short)
+            Me.columnTally.DefaultValue = CType(0,Short)
+            Me.columnLastSeen.DefaultValue = CType("",String)
+            Me.columnSGST9_Per.DefaultValue = CType(0.00D,Decimal)
+            Me.columnSGST9.DefaultValue = CType(0.00D,Decimal)
+            Me.columnCGST9_Per.DefaultValue = CType(0.00D,Decimal)
+            Me.columnCGST9.DefaultValue = CType(0.00D,Decimal)
+            Me.columnKFC1_Per.DefaultValue = CType(0.00D,Decimal)
+            Me.columnKFC1.DefaultValue = CType(0.00D,Decimal)
+            Me.columnPaiseRound.DefaultValue = CType(0.00D,Decimal)
+            Me.columnTaxable_Amount.DefaultValue = CType(0.00D,Decimal)
+            Me.columnIGST18.DefaultValue = CType(0.00D,Decimal)
+            Me.columnIGST28.DefaultValue = CType(0.00D,Decimal)
+            Me.columnIGST18_Per.DefaultValue = CType(0.00D,Decimal)
+            Me.columnIGST28_Per.DefaultValue = CType(0.00D,Decimal)
+            Me.columnGSTIN.DefaultValue = CType("",String)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function NewService_AccesRow() As Service_AccesRow
+            Return CType(Me.NewRow,Service_AccesRow)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
+            Return New Service_AccesRow(builder)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Function GetRowType() As Global.System.Type
+            Return GetType(Service_AccesRow)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowChanged(e)
+            If (Not (Me.Service_AccesRowChangedEvent) Is Nothing) Then
+                RaiseEvent Service_AccesRowChanged(Me, New Service_AccesRowChangeEvent(CType(e.Row,Service_AccesRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowChanging(e)
+            If (Not (Me.Service_AccesRowChangingEvent) Is Nothing) Then
+                RaiseEvent Service_AccesRowChanging(Me, New Service_AccesRowChangeEvent(CType(e.Row,Service_AccesRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowDeleted(e)
+            If (Not (Me.Service_AccesRowDeletedEvent) Is Nothing) Then
+                RaiseEvent Service_AccesRowDeleted(Me, New Service_AccesRowChangeEvent(CType(e.Row,Service_AccesRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowDeleting(e)
+            If (Not (Me.Service_AccesRowDeletingEvent) Is Nothing) Then
+                RaiseEvent Service_AccesRowDeleting(Me, New Service_AccesRowChangeEvent(CType(e.Row,Service_AccesRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub RemoveService_AccesRow(ByVal row As Service_AccesRow)
+            Me.Rows.Remove(row)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
+            Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
+            Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
+            Dim ds As TallyDs = New TallyDs()
+            Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+            any1.Namespace = "http://www.w3.org/2001/XMLSchema"
+            any1.MinOccurs = New Decimal(0)
+            any1.MaxOccurs = Decimal.MaxValue
+            any1.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+            sequence.Items.Add(any1)
+            Dim any2 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+            any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1"
+            any2.MinOccurs = New Decimal(1)
+            any2.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+            sequence.Items.Add(any2)
+            Dim attribute1 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+            attribute1.Name = "namespace"
+            attribute1.FixedValue = ds.Namespace
+            type.Attributes.Add(attribute1)
+            Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+            attribute2.Name = "tableTypeName"
+            attribute2.FixedValue = "Service_AccesDataTable"
+            type.Attributes.Add(attribute2)
+            type.Particle = sequence
+            Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
+            If xs.Contains(dsSchema.TargetNamespace) Then
+                Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                Try 
+                    Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
+                    dsSchema.Write(s1)
+                    Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
+                    Do While schemas.MoveNext
+                        schema = CType(schemas.Current,Global.System.Xml.Schema.XmlSchema)
+                        s2.SetLength(0)
+                        schema.Write(s2)
+                        If (s1.Length = s2.Length) Then
+                            s1.Position = 0
+                            s2.Position = 0
+                            
+                            Do While ((s1.Position <> s1.Length)  _
+                                        AndAlso (s1.ReadByte = s2.ReadByte))
+                                
+                                
+                            Loop
+                            If (s1.Position = s1.Length) Then
+                                Return type
+                            End If
+                        End If
+                        
+                    Loop
+                Finally
+                    If (Not (s1) Is Nothing) Then
+                        s1.Close
+                    End If
+                    If (Not (s2) Is Nothing) Then
+                        s2.Close
+                    End If
+                End Try
+            End If
+            xs.Add(dsSchema)
+            Return type
+        End Function
+    End Class
+    
+    '''<summary>
+    '''Represents the strongly named DataTable class.
+    '''</summary>
+    <Global.System.Serializable(),  _
+     Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
+    Partial Public Class Service_AccesDetailDataTable
+        Inherits Global.System.Data.TypedTableBase(Of Service_AccesDetailRow)
+        
+        Private columnId As Global.System.Data.DataColumn
+        
+        Private columnInvoice_Number As Global.System.Data.DataColumn
+        
+        Private columnJob_Card As Global.System.Data.DataColumn
+        
+        Private columnCompany_Name As Global.System.Data.DataColumn
+        
+        Private columnSelling_Dealer_Name As Global.System.Data.DataColumn
+        
+        Private columnJob_Card_Date As Global.System.Data.DataColumn
+        
+        Private columnReg_No As Global.System.Data.DataColumn
+        
+        Private columnChassis_No As Global.System.Data.DataColumn
+        
+        Private columnEngine_No As Global.System.Data.DataColumn
+        
+        Private columnModel_Code As Global.System.Data.DataColumn
+        
+        Private columnModel_Description As Global.System.Data.DataColumn
+        
+        Private columnCustomer_Name As Global.System.Data.DataColumn
+        
+        Private columnMobile_No As Global.System.Data.DataColumn
+        
+        Private columnCustomer_Voice As Global.System.Data.DataColumn
+        
+        Private columnKM_Reading As Global.System.Data.DataColumn
+        
+        Private columnService_Advisor As Global.System.Data.DataColumn
+        
+        Private columnWork_Started_Date As Global.System.Data.DataColumn
+        
+        Private columnWork_Completion_Date As Global.System.Data.DataColumn
+        
+        Private columnDelivered_Date_Time As Global.System.Data.DataColumn
+        
+        Private columnPart_Labour_Code As Global.System.Data.DataColumn
+        
+        Private columnPart_Labour_Description As Global.System.Data.DataColumn
+        
+        Private columnHSN_SAC_code As Global.System.Data.DataColumn
+        
+        Private columnHeader_Job_Type As Global.System.Data.DataColumn
+        
+        Private columnJob_Type As Global.System.Data.DataColumn
+        
+        Private columnRate As Global.System.Data.DataColumn
+        
+        Private columnIssued_Qty As Global.System.Data.DataColumn
+        
+        Private columnDiscount As Global.System.Data.DataColumn
+        
+        Private columnStatus As Global.System.Data.DataColumn
+        
+        Private columnCancellation_Date As Global.System.Data.DataColumn
+        
+        Private columnMechanic As Global.System.Data.DataColumn
+        
+        Private columnInsurance_Provider As Global.System.Data.DataColumn
+        
+        Private columnInsurance_Policy_No As Global.System.Data.DataColumn
+        
+        Private columnInsurance_Start_Date As Global.System.Data.DataColumn
+        
+        Private columnInsurance_Expiry_Date As Global.System.Data.DataColumn
+        
+        Private columnPaiseRoundingOff As Global.System.Data.DataColumn
+        
+        Private columnCGST_Per As Global.System.Data.DataColumn
+        
+        Private columnCGST As Global.System.Data.DataColumn
+        
+        Private columnSGST_Per As Global.System.Data.DataColumn
+        
+        Private columnSGST As Global.System.Data.DataColumn
+        
+        Private columnTotal_Amount As Global.System.Data.DataColumn
+        
+        Private columnTaxable As Global.System.Data.DataColumn
+        
+        Private columnUpdated As Global.System.Data.DataColumn
+        
+        Private columnIGST As Global.System.Data.DataColumn
+        
+        Private columnDiscount_per As Global.System.Data.DataColumn
+        
+        Private columnIGST_Per As Global.System.Data.DataColumn
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub New()
+            MyBase.New
+            Me.TableName = "Service_AccesDetail"
+            Me.BeginInit
+            Me.InitClass
+            Me.EndInit
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Friend Sub New(ByVal table As Global.System.Data.DataTable)
+            MyBase.New
+            Me.TableName = table.TableName
+            If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
+                Me.CaseSensitive = table.CaseSensitive
+            End If
+            If (table.Locale.ToString <> table.DataSet.Locale.ToString) Then
+                Me.Locale = table.Locale
+            End If
+            If (table.Namespace <> table.DataSet.Namespace) Then
+                Me.Namespace = table.Namespace
+            End If
+            Me.Prefix = table.Prefix
+            Me.MinimumCapacity = table.MinimumCapacity
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
+            MyBase.New(info, context)
+            Me.InitVars
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property IdColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnId
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Invoice_NumberColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnInvoice_Number
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Job_CardColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnJob_Card
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Company_NameColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCompany_Name
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Selling_Dealer_NameColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnSelling_Dealer_Name
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Job_Card_DateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnJob_Card_Date
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Reg_NoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnReg_No
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Chassis_NoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnChassis_No
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Engine_NoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEngine_No
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Model_CodeColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnModel_Code
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Model_DescriptionColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnModel_Description
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Customer_NameColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCustomer_Name
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Mobile_NoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnMobile_No
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Customer_VoiceColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCustomer_Voice
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property KM_ReadingColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnKM_Reading
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Service_AdvisorColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnService_Advisor
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Work_Started_DateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnWork_Started_Date
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Work_Completion_DateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnWork_Completion_Date
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Delivered_Date_TimeColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnDelivered_Date_Time
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Part_Labour_CodeColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnPart_Labour_Code
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Part_Labour_DescriptionColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnPart_Labour_Description
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property HSN_SAC_codeColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnHSN_SAC_code
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Header_Job_TypeColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnHeader_Job_Type
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Job_TypeColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnJob_Type
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property RateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnRate
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Issued_QtyColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnIssued_Qty
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property DiscountColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnDiscount
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property StatusColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnStatus
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Cancellation_DateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCancellation_Date
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property MechanicColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnMechanic
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Insurance_ProviderColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnInsurance_Provider
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Insurance_Policy_NoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnInsurance_Policy_No
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Insurance_Start_DateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnInsurance_Start_Date
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Insurance_Expiry_DateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnInsurance_Expiry_Date
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property PaiseRoundingOffColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnPaiseRoundingOff
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property CGST_PerColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCGST_Per
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property CGSTColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCGST
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property SGST_PerColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnSGST_Per
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property SGSTColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnSGST
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Total_AmountColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnTotal_Amount
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property TaxableColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnTaxable
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property UpdatedColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnUpdated
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property IGSTColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnIGST
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Discount_perColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnDiscount_per
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property IGST_PerColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnIGST_Per
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
+         Global.System.ComponentModel.Browsable(false)>  _
+        Public ReadOnly Property Count() As Integer
+            Get
+                Return Me.Rows.Count
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Default ReadOnly Property Item(ByVal index As Integer) As Service_AccesDetailRow
+            Get
+                Return CType(Me.Rows(index),Service_AccesDetailRow)
+            End Get
+        End Property
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Event Service_AccesDetailRowChanging As Service_AccesDetailRowChangeEventHandler
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Event Service_AccesDetailRowChanged As Service_AccesDetailRowChangeEventHandler
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Event Service_AccesDetailRowDeleting As Service_AccesDetailRowChangeEventHandler
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Event Service_AccesDetailRowDeleted As Service_AccesDetailRowChangeEventHandler
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Overloads Sub AddService_AccesDetailRow(ByVal row As Service_AccesDetailRow)
+            Me.Rows.Add(row)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Overloads Function AddService_AccesDetailRow( _
+                    ByVal Id As String,  _
+                    ByVal Invoice_Number As String,  _
+                    ByVal Job_Card As String,  _
+                    ByVal Company_Name As String,  _
+                    ByVal Selling_Dealer_Name As String,  _
+                    ByVal Job_Card_Date As Date,  _
+                    ByVal Reg_No As String,  _
+                    ByVal Chassis_No As String,  _
+                    ByVal Engine_No As String,  _
+                    ByVal Model_Code As String,  _
+                    ByVal Model_Description As String,  _
+                    ByVal Customer_Name As String,  _
+                    ByVal Mobile_No As String,  _
+                    ByVal Customer_Voice As String,  _
+                    ByVal KM_Reading As String,  _
+                    ByVal Service_Advisor As String,  _
+                    ByVal Work_Started_Date As Date,  _
+                    ByVal Work_Completion_Date As Date,  _
+                    ByVal Delivered_Date_Time As Date,  _
+                    ByVal Part_Labour_Code As String,  _
+                    ByVal Part_Labour_Description As String,  _
+                    ByVal HSN_SAC_code As String,  _
+                    ByVal Header_Job_Type As String,  _
+                    ByVal Job_Type As String,  _
+                    ByVal Rate As Decimal,  _
+                    ByVal Issued_Qty As Decimal,  _
+                    ByVal Discount As Decimal,  _
+                    ByVal Status As String,  _
+                    ByVal Cancellation_Date As Date,  _
+                    ByVal Mechanic As String,  _
+                    ByVal Insurance_Provider As String,  _
+                    ByVal Insurance_Policy_No As String,  _
+                    ByVal Insurance_Start_Date As Date,  _
+                    ByVal Insurance_Expiry_Date As Date,  _
+                    ByVal PaiseRoundingOff As Decimal,  _
+                    ByVal CGST_Per As Decimal,  _
+                    ByVal CGST As Decimal,  _
+                    ByVal SGST_Per As Decimal,  _
+                    ByVal SGST As Decimal,  _
+                    ByVal Total_Amount As Decimal,  _
+                    ByVal Taxable As Decimal,  _
+                    ByVal Updated As Short,  _
+                    ByVal IGST As Double,  _
+                    ByVal Discount_per As Double,  _
+                    ByVal IGST_Per As Double) As Service_AccesDetailRow
+            Dim rowService_AccesDetailRow As Service_AccesDetailRow = CType(Me.NewRow,Service_AccesDetailRow)
+            Dim columnValuesArray() As Object = New Object() {Id, Invoice_Number, Job_Card, Company_Name, Selling_Dealer_Name, Job_Card_Date, Reg_No, Chassis_No, Engine_No, Model_Code, Model_Description, Customer_Name, Mobile_No, Customer_Voice, KM_Reading, Service_Advisor, Work_Started_Date, Work_Completion_Date, Delivered_Date_Time, Part_Labour_Code, Part_Labour_Description, HSN_SAC_code, Header_Job_Type, Job_Type, Rate, Issued_Qty, Discount, Status, Cancellation_Date, Mechanic, Insurance_Provider, Insurance_Policy_No, Insurance_Start_Date, Insurance_Expiry_Date, PaiseRoundingOff, CGST_Per, CGST, SGST_Per, SGST, Total_Amount, Taxable, Updated, IGST, Discount_per, IGST_Per}
+            rowService_AccesDetailRow.ItemArray = columnValuesArray
+            Me.Rows.Add(rowService_AccesDetailRow)
+            Return rowService_AccesDetailRow
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Overrides Function Clone() As Global.System.Data.DataTable
+            Dim cln As Service_AccesDetailDataTable = CType(MyBase.Clone,Service_AccesDetailDataTable)
+            cln.InitVars
+            Return cln
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
+            Return New Service_AccesDetailDataTable()
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Friend Sub InitVars()
+            Me.columnId = MyBase.Columns("Id")
+            Me.columnInvoice_Number = MyBase.Columns("Invoice_Number")
+            Me.columnJob_Card = MyBase.Columns("Job_Card")
+            Me.columnCompany_Name = MyBase.Columns("Company_Name")
+            Me.columnSelling_Dealer_Name = MyBase.Columns("Selling_Dealer_Name")
+            Me.columnJob_Card_Date = MyBase.Columns("Job_Card_Date")
+            Me.columnReg_No = MyBase.Columns("Reg_No")
+            Me.columnChassis_No = MyBase.Columns("Chassis_No")
+            Me.columnEngine_No = MyBase.Columns("Engine_No")
+            Me.columnModel_Code = MyBase.Columns("Model_Code")
+            Me.columnModel_Description = MyBase.Columns("Model_Description")
+            Me.columnCustomer_Name = MyBase.Columns("Customer_Name")
+            Me.columnMobile_No = MyBase.Columns("Mobile_No")
+            Me.columnCustomer_Voice = MyBase.Columns("Customer_Voice")
+            Me.columnKM_Reading = MyBase.Columns("KM_Reading")
+            Me.columnService_Advisor = MyBase.Columns("Service_Advisor")
+            Me.columnWork_Started_Date = MyBase.Columns("Work_Started_Date")
+            Me.columnWork_Completion_Date = MyBase.Columns("Work_Completion_Date")
+            Me.columnDelivered_Date_Time = MyBase.Columns("Delivered_Date_Time")
+            Me.columnPart_Labour_Code = MyBase.Columns("Part_Labour_Code")
+            Me.columnPart_Labour_Description = MyBase.Columns("Part_Labour_Description")
+            Me.columnHSN_SAC_code = MyBase.Columns("HSN_SAC_code")
+            Me.columnHeader_Job_Type = MyBase.Columns("Header_Job_Type")
+            Me.columnJob_Type = MyBase.Columns("Job_Type")
+            Me.columnRate = MyBase.Columns("Rate")
+            Me.columnIssued_Qty = MyBase.Columns("Issued_Qty")
+            Me.columnDiscount = MyBase.Columns("Discount")
+            Me.columnStatus = MyBase.Columns("Status")
+            Me.columnCancellation_Date = MyBase.Columns("Cancellation_Date")
+            Me.columnMechanic = MyBase.Columns("Mechanic")
+            Me.columnInsurance_Provider = MyBase.Columns("Insurance_Provider")
+            Me.columnInsurance_Policy_No = MyBase.Columns("Insurance_Policy_No")
+            Me.columnInsurance_Start_Date = MyBase.Columns("Insurance_Start_Date")
+            Me.columnInsurance_Expiry_Date = MyBase.Columns("Insurance_Expiry_Date")
+            Me.columnPaiseRoundingOff = MyBase.Columns("PaiseRoundingOff")
+            Me.columnCGST_Per = MyBase.Columns("CGST_Per")
+            Me.columnCGST = MyBase.Columns("CGST")
+            Me.columnSGST_Per = MyBase.Columns("SGST_Per")
+            Me.columnSGST = MyBase.Columns("SGST")
+            Me.columnTotal_Amount = MyBase.Columns("Total_Amount")
+            Me.columnTaxable = MyBase.Columns("Taxable")
+            Me.columnUpdated = MyBase.Columns("Updated")
+            Me.columnIGST = MyBase.Columns("IGST")
+            Me.columnDiscount_per = MyBase.Columns("Discount_per")
+            Me.columnIGST_Per = MyBase.Columns("IGST_Per")
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Private Sub InitClass()
+            Me.columnId = New Global.System.Data.DataColumn("Id", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnId)
+            Me.columnInvoice_Number = New Global.System.Data.DataColumn("Invoice_Number", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnInvoice_Number)
+            Me.columnJob_Card = New Global.System.Data.DataColumn("Job_Card", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnJob_Card)
+            Me.columnCompany_Name = New Global.System.Data.DataColumn("Company_Name", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCompany_Name)
+            Me.columnSelling_Dealer_Name = New Global.System.Data.DataColumn("Selling_Dealer_Name", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnSelling_Dealer_Name)
+            Me.columnJob_Card_Date = New Global.System.Data.DataColumn("Job_Card_Date", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnJob_Card_Date)
+            Me.columnReg_No = New Global.System.Data.DataColumn("Reg_No", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnReg_No)
+            Me.columnChassis_No = New Global.System.Data.DataColumn("Chassis_No", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnChassis_No)
+            Me.columnEngine_No = New Global.System.Data.DataColumn("Engine_No", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEngine_No)
+            Me.columnModel_Code = New Global.System.Data.DataColumn("Model_Code", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnModel_Code)
+            Me.columnModel_Description = New Global.System.Data.DataColumn("Model_Description", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnModel_Description)
+            Me.columnCustomer_Name = New Global.System.Data.DataColumn("Customer_Name", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCustomer_Name)
+            Me.columnMobile_No = New Global.System.Data.DataColumn("Mobile_No", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnMobile_No)
+            Me.columnCustomer_Voice = New Global.System.Data.DataColumn("Customer_Voice", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCustomer_Voice)
+            Me.columnKM_Reading = New Global.System.Data.DataColumn("KM_Reading", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnKM_Reading)
+            Me.columnService_Advisor = New Global.System.Data.DataColumn("Service_Advisor", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnService_Advisor)
+            Me.columnWork_Started_Date = New Global.System.Data.DataColumn("Work_Started_Date", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnWork_Started_Date)
+            Me.columnWork_Completion_Date = New Global.System.Data.DataColumn("Work_Completion_Date", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnWork_Completion_Date)
+            Me.columnDelivered_Date_Time = New Global.System.Data.DataColumn("Delivered_Date_Time", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnDelivered_Date_Time)
+            Me.columnPart_Labour_Code = New Global.System.Data.DataColumn("Part_Labour_Code", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnPart_Labour_Code)
+            Me.columnPart_Labour_Description = New Global.System.Data.DataColumn("Part_Labour_Description", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnPart_Labour_Description)
+            Me.columnHSN_SAC_code = New Global.System.Data.DataColumn("HSN_SAC_code", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnHSN_SAC_code)
+            Me.columnHeader_Job_Type = New Global.System.Data.DataColumn("Header_Job_Type", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnHeader_Job_Type)
+            Me.columnJob_Type = New Global.System.Data.DataColumn("Job_Type", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnJob_Type)
+            Me.columnRate = New Global.System.Data.DataColumn("Rate", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnRate)
+            Me.columnIssued_Qty = New Global.System.Data.DataColumn("Issued_Qty", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnIssued_Qty)
+            Me.columnDiscount = New Global.System.Data.DataColumn("Discount", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnDiscount)
+            Me.columnStatus = New Global.System.Data.DataColumn("Status", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnStatus)
+            Me.columnCancellation_Date = New Global.System.Data.DataColumn("Cancellation_Date", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCancellation_Date)
+            Me.columnMechanic = New Global.System.Data.DataColumn("Mechanic", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnMechanic)
+            Me.columnInsurance_Provider = New Global.System.Data.DataColumn("Insurance_Provider", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnInsurance_Provider)
+            Me.columnInsurance_Policy_No = New Global.System.Data.DataColumn("Insurance_Policy_No", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnInsurance_Policy_No)
+            Me.columnInsurance_Start_Date = New Global.System.Data.DataColumn("Insurance_Start_Date", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnInsurance_Start_Date)
+            Me.columnInsurance_Expiry_Date = New Global.System.Data.DataColumn("Insurance_Expiry_Date", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnInsurance_Expiry_Date)
+            Me.columnPaiseRoundingOff = New Global.System.Data.DataColumn("PaiseRoundingOff", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnPaiseRoundingOff)
+            Me.columnCGST_Per = New Global.System.Data.DataColumn("CGST_Per", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCGST_Per)
+            Me.columnCGST = New Global.System.Data.DataColumn("CGST", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCGST)
+            Me.columnSGST_Per = New Global.System.Data.DataColumn("SGST_Per", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnSGST_Per)
+            Me.columnSGST = New Global.System.Data.DataColumn("SGST", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnSGST)
+            Me.columnTotal_Amount = New Global.System.Data.DataColumn("Total_Amount", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnTotal_Amount)
+            Me.columnTaxable = New Global.System.Data.DataColumn("Taxable", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnTaxable)
+            Me.columnUpdated = New Global.System.Data.DataColumn("Updated", GetType(Short), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnUpdated)
+            Me.columnIGST = New Global.System.Data.DataColumn("IGST", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnIGST)
+            Me.columnDiscount_per = New Global.System.Data.DataColumn("Discount_per", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnDiscount_per)
+            Me.columnIGST_Per = New Global.System.Data.DataColumn("IGST_Per", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnIGST_Per)
+            Me.columnId.DefaultValue = CType("",String)
+            Me.columnInvoice_Number.DefaultValue = CType("",String)
+            Me.columnJob_Card.DefaultValue = CType("",String)
+            Me.columnCompany_Name.DefaultValue = CType("",String)
+            Me.columnSelling_Dealer_Name.DefaultValue = CType("",String)
+            Me.columnReg_No.DefaultValue = CType("",String)
+            Me.columnChassis_No.DefaultValue = CType("",String)
+            Me.columnEngine_No.DefaultValue = CType("",String)
+            Me.columnModel_Code.DefaultValue = CType("",String)
+            Me.columnModel_Description.DefaultValue = CType("",String)
+            Me.columnCustomer_Name.DefaultValue = CType("",String)
+            Me.columnMobile_No.DefaultValue = CType("",String)
+            Me.columnCustomer_Voice.DefaultValue = CType("",String)
+            Me.columnKM_Reading.DefaultValue = CType("",String)
+            Me.columnService_Advisor.DefaultValue = CType("",String)
+            Me.columnPart_Labour_Code.DefaultValue = CType("",String)
+            Me.columnPart_Labour_Description.DefaultValue = CType("",String)
+            Me.columnHSN_SAC_code.DefaultValue = CType("",String)
+            Me.columnHeader_Job_Type.DefaultValue = CType("",String)
+            Me.columnJob_Type.DefaultValue = CType("",String)
+            Me.columnRate.DefaultValue = CType(0D,Decimal)
+            Me.columnIssued_Qty.DefaultValue = CType(0D,Decimal)
+            Me.columnDiscount.DefaultValue = CType(0D,Decimal)
+            Me.columnStatus.DefaultValue = CType("",String)
+            Me.columnMechanic.DefaultValue = CType("",String)
+            Me.columnInsurance_Provider.DefaultValue = CType("",String)
+            Me.columnInsurance_Policy_No.DefaultValue = CType("",String)
+            Me.columnPaiseRoundingOff.DefaultValue = CType(0D,Decimal)
+            Me.columnCGST_Per.DefaultValue = CType(0D,Decimal)
+            Me.columnCGST.DefaultValue = CType(0D,Decimal)
+            Me.columnSGST_Per.DefaultValue = CType(0D,Decimal)
+            Me.columnSGST.DefaultValue = CType(0D,Decimal)
+            Me.columnTotal_Amount.DefaultValue = CType(0D,Decimal)
+            Me.columnTaxable.DefaultValue = CType(0.00D,Decimal)
+            Me.columnUpdated.DefaultValue = CType(0,Short)
+            Me.columnIGST.DefaultValue = CType(0R,Double)
+            Me.columnDiscount_per.DefaultValue = CType(0R,Double)
+            Me.columnIGST_Per.DefaultValue = CType(0R,Double)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function NewService_AccesDetailRow() As Service_AccesDetailRow
+            Return CType(Me.NewRow,Service_AccesDetailRow)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
+            Return New Service_AccesDetailRow(builder)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Function GetRowType() As Global.System.Type
+            Return GetType(Service_AccesDetailRow)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowChanged(e)
+            If (Not (Me.Service_AccesDetailRowChangedEvent) Is Nothing) Then
+                RaiseEvent Service_AccesDetailRowChanged(Me, New Service_AccesDetailRowChangeEvent(CType(e.Row,Service_AccesDetailRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowChanging(e)
+            If (Not (Me.Service_AccesDetailRowChangingEvent) Is Nothing) Then
+                RaiseEvent Service_AccesDetailRowChanging(Me, New Service_AccesDetailRowChangeEvent(CType(e.Row,Service_AccesDetailRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowDeleted(e)
+            If (Not (Me.Service_AccesDetailRowDeletedEvent) Is Nothing) Then
+                RaiseEvent Service_AccesDetailRowDeleted(Me, New Service_AccesDetailRowChangeEvent(CType(e.Row,Service_AccesDetailRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowDeleting(e)
+            If (Not (Me.Service_AccesDetailRowDeletingEvent) Is Nothing) Then
+                RaiseEvent Service_AccesDetailRowDeleting(Me, New Service_AccesDetailRowChangeEvent(CType(e.Row,Service_AccesDetailRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub RemoveService_AccesDetailRow(ByVal row As Service_AccesDetailRow)
+            Me.Rows.Remove(row)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
+            Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
+            Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
+            Dim ds As TallyDs = New TallyDs()
+            Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+            any1.Namespace = "http://www.w3.org/2001/XMLSchema"
+            any1.MinOccurs = New Decimal(0)
+            any1.MaxOccurs = Decimal.MaxValue
+            any1.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+            sequence.Items.Add(any1)
+            Dim any2 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+            any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1"
+            any2.MinOccurs = New Decimal(1)
+            any2.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+            sequence.Items.Add(any2)
+            Dim attribute1 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+            attribute1.Name = "namespace"
+            attribute1.FixedValue = ds.Namespace
+            type.Attributes.Add(attribute1)
+            Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+            attribute2.Name = "tableTypeName"
+            attribute2.FixedValue = "Service_AccesDetailDataTable"
+            type.Attributes.Add(attribute2)
+            type.Particle = sequence
+            Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
+            If xs.Contains(dsSchema.TargetNamespace) Then
+                Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                Try 
+                    Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
+                    dsSchema.Write(s1)
+                    Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
+                    Do While schemas.MoveNext
+                        schema = CType(schemas.Current,Global.System.Xml.Schema.XmlSchema)
+                        s2.SetLength(0)
+                        schema.Write(s2)
+                        If (s1.Length = s2.Length) Then
+                            s1.Position = 0
+                            s2.Position = 0
+                            
+                            Do While ((s1.Position <> s1.Length)  _
+                                        AndAlso (s1.ReadByte = s2.ReadByte))
+                                
+                                
+                            Loop
+                            If (s1.Position = s1.Length) Then
+                                Return type
+                            End If
+                        End If
+                        
+                    Loop
+                Finally
+                    If (Not (s1) Is Nothing) Then
+                        s1.Close
+                    End If
+                    If (Not (s2) Is Nothing) Then
+                        s2.Close
+                    End If
+                End Try
+            End If
+            xs.Add(dsSchema)
+            Return type
+        End Function
+    End Class
+    
+    '''<summary>
     '''Represents strongly named DataRow class.
     '''</summary>
     Partial Public Class PurchaseVehicleRow
@@ -15333,6 +17531,51 @@ Partial Public Class TallyDs
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property ClaimNo() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService.ClaimNoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'ClaimNo' in table 'Service' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService.ClaimNoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property ClaimAccDocNo() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService.ClaimAccDocNoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'ClaimAccDocNo' in table 'Service' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService.ClaimAccDocNoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property ClamCrDate() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService.ClamCrDateColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'ClamCrDate' in table 'Service' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService.ClamCrDateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Function IsIdNull() As Boolean
             Return Me.IsNull(Me.tableService.IdColumn)
         End Function
@@ -16050,6 +18293,42 @@ Partial Public Class TallyDs
         Public Sub SetGSTINNull()
             Me(Me.tableService.GSTINColumn) = Global.System.Convert.DBNull
         End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsClaimNoNull() As Boolean
+            Return Me.IsNull(Me.tableService.ClaimNoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetClaimNoNull()
+            Me(Me.tableService.ClaimNoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsClaimAccDocNoNull() As Boolean
+            Return Me.IsNull(Me.tableService.ClaimAccDocNoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetClaimAccDocNoNull()
+            Me(Me.tableService.ClaimAccDocNoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsClamCrDateNull() As Boolean
+            Return Me.IsNull(Me.tableService.ClamCrDateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetClamCrDateNull()
+            Me(Me.tableService.ClamCrDateColumn) = Global.System.Convert.DBNull
+        End Sub
     End Class
     
     '''<summary>
@@ -16746,6 +19025,51 @@ Partial Public Class TallyDs
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property ClaimNo() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Detail.ClaimNoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'ClaimNo' in table 'Service_Detail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Detail.ClaimNoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property ClaimAccDocNo() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Detail.ClaimAccDocNoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'ClaimAccDocNo' in table 'Service_Detail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Detail.ClaimAccDocNoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property ClamCrDate() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Detail.ClamCrDateColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'ClamCrDate' in table 'Service_Detail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Detail.ClamCrDateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Function IsIdNull() As Boolean
             Return Me.IsNull(Me.tableService_Detail.IdColumn)
         End Function
@@ -17282,6 +19606,42 @@ Partial Public Class TallyDs
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetIGST_PerNull()
             Me(Me.tableService_Detail.IGST_PerColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsClaimNoNull() As Boolean
+            Return Me.IsNull(Me.tableService_Detail.ClaimNoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetClaimNoNull()
+            Me(Me.tableService_Detail.ClaimNoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsClaimAccDocNoNull() As Boolean
+            Return Me.IsNull(Me.tableService_Detail.ClaimAccDocNoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetClaimAccDocNoNull()
+            Me(Me.tableService_Detail.ClaimAccDocNoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsClamCrDateNull() As Boolean
+            Return Me.IsNull(Me.tableService_Detail.ClamCrDateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetClamCrDateNull()
+            Me(Me.tableService_Detail.ClamCrDateColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -24636,6 +26996,2887 @@ Partial Public Class TallyDs
     End Class
     
     '''<summary>
+    '''Represents strongly named DataRow class.
+    '''</summary>
+    Partial Public Class Service_AccesRow
+        Inherits Global.System.Data.DataRow
+        
+        Private tableService_Acces As Service_AccesDataTable
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
+            MyBase.New(rb)
+            Me.tableService_Acces = CType(Me.Table,Service_AccesDataTable)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Id() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.IdColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Id' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.IdColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Invoice_Number() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Invoice_NumberColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Invoice_Number' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Invoice_NumberColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Job_Card() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Job_CardColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Job_Card' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Job_CardColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Company_Name() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Company_NameColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Company_Name' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Company_NameColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Selling_Dealer_Name() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Selling_Dealer_NameColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Selling_Dealer_Name' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Selling_Dealer_NameColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Invoice_Date() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Invoice_DateColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Invoice_Date' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Invoice_DateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Job_Card_Date() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Job_Card_DateColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Job_Card_Date' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Job_Card_DateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Reg_No() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Reg_NoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Reg_No' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Reg_NoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Chassis_No() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Chassis_NoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Chassis_No' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Chassis_NoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Engine_No() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Engine_NoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Engine_No' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Engine_NoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Model_Code() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Model_CodeColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Model_Code' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Model_CodeColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Model_Description() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Model_DescriptionColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Model_Description' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Model_DescriptionColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Customer_Name() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Customer_NameColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Customer_Name' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Customer_NameColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Mobile_No() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Mobile_NoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Mobile_No' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Mobile_NoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Customer_Voice() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Customer_VoiceColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Customer_Voice' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Customer_VoiceColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property KM_Reading() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.KM_ReadingColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'KM_Reading' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.KM_ReadingColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Service_Advisor() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Service_AdvisorColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Service_Advisor' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Service_AdvisorColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Work_Started_Date() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Work_Started_DateColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Work_Started_Date' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Work_Started_DateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Work_Completion_Date() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Work_Completion_DateColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Work_Completion_Date' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Work_Completion_DateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Delivered_Date_Time() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Delivered_Date_TimeColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Delivered_Date_Time' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Delivered_Date_TimeColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Type() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.TypeColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Type' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.TypeColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Part_Labour_Code() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Part_Labour_CodeColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Part_Labour_Code' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Part_Labour_CodeColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Part_Labour_Description() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Part_Labour_DescriptionColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Part_Labour_Description' in table 'Service_Acces' is DBNull"& _ 
+                            ".", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Part_Labour_DescriptionColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property HSN_SAC_code() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.HSN_SAC_codeColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'HSN_SAC_code' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.HSN_SAC_codeColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Header_Job_Type() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Header_Job_TypeColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Header_Job_Type' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Header_Job_TypeColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Job_Type() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Job_TypeColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Job_Type' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Job_TypeColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Rate() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.RateColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Rate' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.RateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Issued_Qty() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Issued_QtyColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Issued_Qty' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Issued_QtyColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Discount() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.DiscountColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Discount' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.DiscountColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Status() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.StatusColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Status' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.StatusColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Cancellation_Date() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Cancellation_DateColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Cancellation_Date' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Cancellation_DateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Mechanic() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.MechanicColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Mechanic' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.MechanicColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Insurance_Provider() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Insurance_ProviderColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Insurance_Provider' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Insurance_ProviderColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Insurance_Policy_No() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Insurance_Policy_NoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Insurance_Policy_No' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Insurance_Policy_NoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Insurance_Start_Date() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Insurance_Start_DateColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Insurance_Start_Date' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Insurance_Start_DateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Insurance_Expiry_Date() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Insurance_Expiry_DateColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Insurance_Expiry_Date' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Insurance_Expiry_DateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property PaiseRoundingOff() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.PaiseRoundingOffColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'PaiseRoundingOff' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.PaiseRoundingOffColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property CGST14_Per() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.CGST14_PerColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'CGST14_Per' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.CGST14_PerColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property CGST14() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.CGST14Column),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'CGST14' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.CGST14Column) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property SGST14_Per() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.SGST14_PerColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'SGST14_Per' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.SGST14_PerColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property SGST14() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.SGST14Column),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'SGST14' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.SGST14Column) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Total_Amount() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Total_AmountColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Total_Amount' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Total_AmountColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Taxable() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.TaxableColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Taxable' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.TaxableColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Invoice_Amount() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Invoice_AmountColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Invoice_Amount' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Invoice_AmountColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Updated() As Short
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.UpdatedColumn),Short)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Updated' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.UpdatedColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Tally() As Short
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.TallyColumn),Short)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Tally' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.TallyColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property LastSeen() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.LastSeenColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'LastSeen' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.LastSeenColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property SGST9_Per() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.SGST9_PerColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'SGST9_Per' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.SGST9_PerColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property SGST9() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.SGST9Column),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'SGST9' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.SGST9Column) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property CGST9_Per() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.CGST9_PerColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'CGST9_Per' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.CGST9_PerColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property CGST9() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.CGST9Column),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'CGST9' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.CGST9Column) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property KFC1_Per() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.KFC1_PerColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'KFC1_Per' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.KFC1_PerColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property KFC1() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.KFC1Column),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'KFC1' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.KFC1Column) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property PaiseRound() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.PaiseRoundColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'PaiseRound' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.PaiseRoundColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Taxable_Amount() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.Taxable_AmountColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Taxable_Amount' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.Taxable_AmountColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property IGST18() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.IGST18Column),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'IGST18' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.IGST18Column) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property IGST28() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.IGST28Column),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'IGST28' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.IGST28Column) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property IGST18_Per() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.IGST18_PerColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'IGST18_Per' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.IGST18_PerColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property IGST28_Per() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.IGST28_PerColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'IGST28_Per' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.IGST28_PerColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property GSTIN() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_Acces.GSTINColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'GSTIN' in table 'Service_Acces' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_Acces.GSTINColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsIdNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.IdColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetIdNull()
+            Me(Me.tableService_Acces.IdColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsInvoice_NumberNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Invoice_NumberColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetInvoice_NumberNull()
+            Me(Me.tableService_Acces.Invoice_NumberColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsJob_CardNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Job_CardColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetJob_CardNull()
+            Me(Me.tableService_Acces.Job_CardColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsCompany_NameNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Company_NameColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetCompany_NameNull()
+            Me(Me.tableService_Acces.Company_NameColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsSelling_Dealer_NameNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Selling_Dealer_NameColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetSelling_Dealer_NameNull()
+            Me(Me.tableService_Acces.Selling_Dealer_NameColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsInvoice_DateNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Invoice_DateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetInvoice_DateNull()
+            Me(Me.tableService_Acces.Invoice_DateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsJob_Card_DateNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Job_Card_DateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetJob_Card_DateNull()
+            Me(Me.tableService_Acces.Job_Card_DateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsReg_NoNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Reg_NoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetReg_NoNull()
+            Me(Me.tableService_Acces.Reg_NoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsChassis_NoNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Chassis_NoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetChassis_NoNull()
+            Me(Me.tableService_Acces.Chassis_NoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsEngine_NoNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Engine_NoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetEngine_NoNull()
+            Me(Me.tableService_Acces.Engine_NoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsModel_CodeNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Model_CodeColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetModel_CodeNull()
+            Me(Me.tableService_Acces.Model_CodeColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsModel_DescriptionNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Model_DescriptionColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetModel_DescriptionNull()
+            Me(Me.tableService_Acces.Model_DescriptionColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsCustomer_NameNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Customer_NameColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetCustomer_NameNull()
+            Me(Me.tableService_Acces.Customer_NameColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsMobile_NoNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Mobile_NoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetMobile_NoNull()
+            Me(Me.tableService_Acces.Mobile_NoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsCustomer_VoiceNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Customer_VoiceColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetCustomer_VoiceNull()
+            Me(Me.tableService_Acces.Customer_VoiceColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsKM_ReadingNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.KM_ReadingColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetKM_ReadingNull()
+            Me(Me.tableService_Acces.KM_ReadingColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsService_AdvisorNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Service_AdvisorColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetService_AdvisorNull()
+            Me(Me.tableService_Acces.Service_AdvisorColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsWork_Started_DateNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Work_Started_DateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetWork_Started_DateNull()
+            Me(Me.tableService_Acces.Work_Started_DateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsWork_Completion_DateNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Work_Completion_DateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetWork_Completion_DateNull()
+            Me(Me.tableService_Acces.Work_Completion_DateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsDelivered_Date_TimeNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Delivered_Date_TimeColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetDelivered_Date_TimeNull()
+            Me(Me.tableService_Acces.Delivered_Date_TimeColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsTypeNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.TypeColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetTypeNull()
+            Me(Me.tableService_Acces.TypeColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsPart_Labour_CodeNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Part_Labour_CodeColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetPart_Labour_CodeNull()
+            Me(Me.tableService_Acces.Part_Labour_CodeColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsPart_Labour_DescriptionNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Part_Labour_DescriptionColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetPart_Labour_DescriptionNull()
+            Me(Me.tableService_Acces.Part_Labour_DescriptionColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsHSN_SAC_codeNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.HSN_SAC_codeColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetHSN_SAC_codeNull()
+            Me(Me.tableService_Acces.HSN_SAC_codeColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsHeader_Job_TypeNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Header_Job_TypeColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetHeader_Job_TypeNull()
+            Me(Me.tableService_Acces.Header_Job_TypeColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsJob_TypeNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Job_TypeColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetJob_TypeNull()
+            Me(Me.tableService_Acces.Job_TypeColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsRateNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.RateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetRateNull()
+            Me(Me.tableService_Acces.RateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsIssued_QtyNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Issued_QtyColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetIssued_QtyNull()
+            Me(Me.tableService_Acces.Issued_QtyColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsDiscountNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.DiscountColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetDiscountNull()
+            Me(Me.tableService_Acces.DiscountColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsStatusNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.StatusColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetStatusNull()
+            Me(Me.tableService_Acces.StatusColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsCancellation_DateNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Cancellation_DateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetCancellation_DateNull()
+            Me(Me.tableService_Acces.Cancellation_DateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsMechanicNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.MechanicColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetMechanicNull()
+            Me(Me.tableService_Acces.MechanicColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsInsurance_ProviderNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Insurance_ProviderColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetInsurance_ProviderNull()
+            Me(Me.tableService_Acces.Insurance_ProviderColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsInsurance_Policy_NoNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Insurance_Policy_NoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetInsurance_Policy_NoNull()
+            Me(Me.tableService_Acces.Insurance_Policy_NoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsInsurance_Start_DateNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Insurance_Start_DateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetInsurance_Start_DateNull()
+            Me(Me.tableService_Acces.Insurance_Start_DateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsInsurance_Expiry_DateNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Insurance_Expiry_DateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetInsurance_Expiry_DateNull()
+            Me(Me.tableService_Acces.Insurance_Expiry_DateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsPaiseRoundingOffNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.PaiseRoundingOffColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetPaiseRoundingOffNull()
+            Me(Me.tableService_Acces.PaiseRoundingOffColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsCGST14_PerNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.CGST14_PerColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetCGST14_PerNull()
+            Me(Me.tableService_Acces.CGST14_PerColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsCGST14Null() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.CGST14Column)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetCGST14Null()
+            Me(Me.tableService_Acces.CGST14Column) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsSGST14_PerNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.SGST14_PerColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetSGST14_PerNull()
+            Me(Me.tableService_Acces.SGST14_PerColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsSGST14Null() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.SGST14Column)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetSGST14Null()
+            Me(Me.tableService_Acces.SGST14Column) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsTotal_AmountNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Total_AmountColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetTotal_AmountNull()
+            Me(Me.tableService_Acces.Total_AmountColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsTaxableNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.TaxableColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetTaxableNull()
+            Me(Me.tableService_Acces.TaxableColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsInvoice_AmountNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Invoice_AmountColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetInvoice_AmountNull()
+            Me(Me.tableService_Acces.Invoice_AmountColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsUpdatedNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.UpdatedColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetUpdatedNull()
+            Me(Me.tableService_Acces.UpdatedColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsTallyNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.TallyColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetTallyNull()
+            Me(Me.tableService_Acces.TallyColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsLastSeenNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.LastSeenColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetLastSeenNull()
+            Me(Me.tableService_Acces.LastSeenColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsSGST9_PerNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.SGST9_PerColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetSGST9_PerNull()
+            Me(Me.tableService_Acces.SGST9_PerColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsSGST9Null() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.SGST9Column)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetSGST9Null()
+            Me(Me.tableService_Acces.SGST9Column) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsCGST9_PerNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.CGST9_PerColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetCGST9_PerNull()
+            Me(Me.tableService_Acces.CGST9_PerColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsCGST9Null() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.CGST9Column)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetCGST9Null()
+            Me(Me.tableService_Acces.CGST9Column) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsKFC1_PerNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.KFC1_PerColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetKFC1_PerNull()
+            Me(Me.tableService_Acces.KFC1_PerColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsKFC1Null() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.KFC1Column)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetKFC1Null()
+            Me(Me.tableService_Acces.KFC1Column) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsPaiseRoundNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.PaiseRoundColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetPaiseRoundNull()
+            Me(Me.tableService_Acces.PaiseRoundColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsTaxable_AmountNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.Taxable_AmountColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetTaxable_AmountNull()
+            Me(Me.tableService_Acces.Taxable_AmountColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsIGST18Null() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.IGST18Column)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetIGST18Null()
+            Me(Me.tableService_Acces.IGST18Column) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsIGST28Null() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.IGST28Column)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetIGST28Null()
+            Me(Me.tableService_Acces.IGST28Column) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsIGST18_PerNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.IGST18_PerColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetIGST18_PerNull()
+            Me(Me.tableService_Acces.IGST18_PerColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsIGST28_PerNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.IGST28_PerColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetIGST28_PerNull()
+            Me(Me.tableService_Acces.IGST28_PerColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsGSTINNull() As Boolean
+            Return Me.IsNull(Me.tableService_Acces.GSTINColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetGSTINNull()
+            Me(Me.tableService_Acces.GSTINColumn) = Global.System.Convert.DBNull
+        End Sub
+    End Class
+    
+    '''<summary>
+    '''Represents strongly named DataRow class.
+    '''</summary>
+    Partial Public Class Service_AccesDetailRow
+        Inherits Global.System.Data.DataRow
+        
+        Private tableService_AccesDetail As Service_AccesDetailDataTable
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
+            MyBase.New(rb)
+            Me.tableService_AccesDetail = CType(Me.Table,Service_AccesDetailDataTable)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Id() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.IdColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Id' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.IdColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Invoice_Number() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Invoice_NumberColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Invoice_Number' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Invoice_NumberColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Job_Card() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Job_CardColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Job_Card' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Job_CardColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Company_Name() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Company_NameColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Company_Name' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Company_NameColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Selling_Dealer_Name() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Selling_Dealer_NameColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Selling_Dealer_Name' in table 'Service_AccesDetail' is DBNu"& _ 
+                            "ll.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Selling_Dealer_NameColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Job_Card_Date() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Job_Card_DateColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Job_Card_Date' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Job_Card_DateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Reg_No() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Reg_NoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Reg_No' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Reg_NoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Chassis_No() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Chassis_NoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Chassis_No' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Chassis_NoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Engine_No() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Engine_NoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Engine_No' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Engine_NoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Model_Code() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Model_CodeColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Model_Code' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Model_CodeColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Model_Description() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Model_DescriptionColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Model_Description' in table 'Service_AccesDetail' is DBNull"& _ 
+                            ".", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Model_DescriptionColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Customer_Name() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Customer_NameColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Customer_Name' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Customer_NameColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Mobile_No() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Mobile_NoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Mobile_No' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Mobile_NoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Customer_Voice() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Customer_VoiceColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Customer_Voice' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Customer_VoiceColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property KM_Reading() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.KM_ReadingColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'KM_Reading' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.KM_ReadingColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Service_Advisor() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Service_AdvisorColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Service_Advisor' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Service_AdvisorColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Work_Started_Date() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Work_Started_DateColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Work_Started_Date' in table 'Service_AccesDetail' is DBNull"& _ 
+                            ".", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Work_Started_DateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Work_Completion_Date() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Work_Completion_DateColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Work_Completion_Date' in table 'Service_AccesDetail' is DBN"& _ 
+                            "ull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Work_Completion_DateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Delivered_Date_Time() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Delivered_Date_TimeColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Delivered_Date_Time' in table 'Service_AccesDetail' is DBNu"& _ 
+                            "ll.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Delivered_Date_TimeColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Part_Labour_Code() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Part_Labour_CodeColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Part_Labour_Code' in table 'Service_AccesDetail' is DBNull."& _ 
+                            "", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Part_Labour_CodeColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Part_Labour_Description() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Part_Labour_DescriptionColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Part_Labour_Description' in table 'Service_AccesDetail' is "& _ 
+                            "DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Part_Labour_DescriptionColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property HSN_SAC_code() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.HSN_SAC_codeColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'HSN_SAC_code' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.HSN_SAC_codeColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Header_Job_Type() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Header_Job_TypeColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Header_Job_Type' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Header_Job_TypeColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Job_Type() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Job_TypeColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Job_Type' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Job_TypeColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Rate() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.RateColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Rate' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.RateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Issued_Qty() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Issued_QtyColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Issued_Qty' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Issued_QtyColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Discount() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.DiscountColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Discount' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.DiscountColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Status() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.StatusColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Status' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.StatusColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Cancellation_Date() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Cancellation_DateColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Cancellation_Date' in table 'Service_AccesDetail' is DBNull"& _ 
+                            ".", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Cancellation_DateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Mechanic() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.MechanicColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Mechanic' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.MechanicColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Insurance_Provider() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Insurance_ProviderColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Insurance_Provider' in table 'Service_AccesDetail' is DBNul"& _ 
+                            "l.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Insurance_ProviderColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Insurance_Policy_No() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Insurance_Policy_NoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Insurance_Policy_No' in table 'Service_AccesDetail' is DBNu"& _ 
+                            "ll.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Insurance_Policy_NoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Insurance_Start_Date() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Insurance_Start_DateColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Insurance_Start_Date' in table 'Service_AccesDetail' is DBN"& _ 
+                            "ull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Insurance_Start_DateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Insurance_Expiry_Date() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Insurance_Expiry_DateColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Insurance_Expiry_Date' in table 'Service_AccesDetail' is DB"& _ 
+                            "Null.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Insurance_Expiry_DateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property PaiseRoundingOff() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.PaiseRoundingOffColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'PaiseRoundingOff' in table 'Service_AccesDetail' is DBNull."& _ 
+                            "", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.PaiseRoundingOffColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property CGST_Per() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.CGST_PerColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'CGST_Per' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.CGST_PerColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property CGST() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.CGSTColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'CGST' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.CGSTColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property SGST_Per() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.SGST_PerColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'SGST_Per' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.SGST_PerColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property SGST() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.SGSTColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'SGST' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.SGSTColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Total_Amount() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Total_AmountColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Total_Amount' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Total_AmountColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Taxable() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.TaxableColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Taxable' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.TaxableColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Updated() As Short
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.UpdatedColumn),Short)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Updated' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.UpdatedColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property IGST() As Double
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.IGSTColumn),Double)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'IGST' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.IGSTColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Discount_per() As Double
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.Discount_perColumn),Double)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Discount_per' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.Discount_perColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property IGST_Per() As Double
+            Get
+                Try 
+                    Return CType(Me(Me.tableService_AccesDetail.IGST_PerColumn),Double)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'IGST_Per' in table 'Service_AccesDetail' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableService_AccesDetail.IGST_PerColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsIdNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.IdColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetIdNull()
+            Me(Me.tableService_AccesDetail.IdColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsInvoice_NumberNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Invoice_NumberColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetInvoice_NumberNull()
+            Me(Me.tableService_AccesDetail.Invoice_NumberColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsJob_CardNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Job_CardColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetJob_CardNull()
+            Me(Me.tableService_AccesDetail.Job_CardColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsCompany_NameNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Company_NameColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetCompany_NameNull()
+            Me(Me.tableService_AccesDetail.Company_NameColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsSelling_Dealer_NameNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Selling_Dealer_NameColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetSelling_Dealer_NameNull()
+            Me(Me.tableService_AccesDetail.Selling_Dealer_NameColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsJob_Card_DateNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Job_Card_DateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetJob_Card_DateNull()
+            Me(Me.tableService_AccesDetail.Job_Card_DateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsReg_NoNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Reg_NoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetReg_NoNull()
+            Me(Me.tableService_AccesDetail.Reg_NoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsChassis_NoNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Chassis_NoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetChassis_NoNull()
+            Me(Me.tableService_AccesDetail.Chassis_NoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsEngine_NoNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Engine_NoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetEngine_NoNull()
+            Me(Me.tableService_AccesDetail.Engine_NoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsModel_CodeNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Model_CodeColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetModel_CodeNull()
+            Me(Me.tableService_AccesDetail.Model_CodeColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsModel_DescriptionNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Model_DescriptionColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetModel_DescriptionNull()
+            Me(Me.tableService_AccesDetail.Model_DescriptionColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsCustomer_NameNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Customer_NameColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetCustomer_NameNull()
+            Me(Me.tableService_AccesDetail.Customer_NameColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsMobile_NoNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Mobile_NoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetMobile_NoNull()
+            Me(Me.tableService_AccesDetail.Mobile_NoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsCustomer_VoiceNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Customer_VoiceColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetCustomer_VoiceNull()
+            Me(Me.tableService_AccesDetail.Customer_VoiceColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsKM_ReadingNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.KM_ReadingColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetKM_ReadingNull()
+            Me(Me.tableService_AccesDetail.KM_ReadingColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsService_AdvisorNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Service_AdvisorColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetService_AdvisorNull()
+            Me(Me.tableService_AccesDetail.Service_AdvisorColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsWork_Started_DateNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Work_Started_DateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetWork_Started_DateNull()
+            Me(Me.tableService_AccesDetail.Work_Started_DateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsWork_Completion_DateNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Work_Completion_DateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetWork_Completion_DateNull()
+            Me(Me.tableService_AccesDetail.Work_Completion_DateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsDelivered_Date_TimeNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Delivered_Date_TimeColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetDelivered_Date_TimeNull()
+            Me(Me.tableService_AccesDetail.Delivered_Date_TimeColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsPart_Labour_CodeNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Part_Labour_CodeColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetPart_Labour_CodeNull()
+            Me(Me.tableService_AccesDetail.Part_Labour_CodeColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsPart_Labour_DescriptionNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Part_Labour_DescriptionColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetPart_Labour_DescriptionNull()
+            Me(Me.tableService_AccesDetail.Part_Labour_DescriptionColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsHSN_SAC_codeNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.HSN_SAC_codeColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetHSN_SAC_codeNull()
+            Me(Me.tableService_AccesDetail.HSN_SAC_codeColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsHeader_Job_TypeNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Header_Job_TypeColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetHeader_Job_TypeNull()
+            Me(Me.tableService_AccesDetail.Header_Job_TypeColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsJob_TypeNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Job_TypeColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetJob_TypeNull()
+            Me(Me.tableService_AccesDetail.Job_TypeColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsRateNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.RateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetRateNull()
+            Me(Me.tableService_AccesDetail.RateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsIssued_QtyNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Issued_QtyColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetIssued_QtyNull()
+            Me(Me.tableService_AccesDetail.Issued_QtyColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsDiscountNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.DiscountColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetDiscountNull()
+            Me(Me.tableService_AccesDetail.DiscountColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsStatusNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.StatusColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetStatusNull()
+            Me(Me.tableService_AccesDetail.StatusColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsCancellation_DateNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Cancellation_DateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetCancellation_DateNull()
+            Me(Me.tableService_AccesDetail.Cancellation_DateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsMechanicNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.MechanicColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetMechanicNull()
+            Me(Me.tableService_AccesDetail.MechanicColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsInsurance_ProviderNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Insurance_ProviderColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetInsurance_ProviderNull()
+            Me(Me.tableService_AccesDetail.Insurance_ProviderColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsInsurance_Policy_NoNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Insurance_Policy_NoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetInsurance_Policy_NoNull()
+            Me(Me.tableService_AccesDetail.Insurance_Policy_NoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsInsurance_Start_DateNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Insurance_Start_DateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetInsurance_Start_DateNull()
+            Me(Me.tableService_AccesDetail.Insurance_Start_DateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsInsurance_Expiry_DateNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Insurance_Expiry_DateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetInsurance_Expiry_DateNull()
+            Me(Me.tableService_AccesDetail.Insurance_Expiry_DateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsPaiseRoundingOffNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.PaiseRoundingOffColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetPaiseRoundingOffNull()
+            Me(Me.tableService_AccesDetail.PaiseRoundingOffColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsCGST_PerNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.CGST_PerColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetCGST_PerNull()
+            Me(Me.tableService_AccesDetail.CGST_PerColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsCGSTNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.CGSTColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetCGSTNull()
+            Me(Me.tableService_AccesDetail.CGSTColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsSGST_PerNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.SGST_PerColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetSGST_PerNull()
+            Me(Me.tableService_AccesDetail.SGST_PerColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsSGSTNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.SGSTColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetSGSTNull()
+            Me(Me.tableService_AccesDetail.SGSTColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsTotal_AmountNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Total_AmountColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetTotal_AmountNull()
+            Me(Me.tableService_AccesDetail.Total_AmountColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsTaxableNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.TaxableColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetTaxableNull()
+            Me(Me.tableService_AccesDetail.TaxableColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsUpdatedNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.UpdatedColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetUpdatedNull()
+            Me(Me.tableService_AccesDetail.UpdatedColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsIGSTNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.IGSTColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetIGSTNull()
+            Me(Me.tableService_AccesDetail.IGSTColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsDiscount_perNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.Discount_perColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetDiscount_perNull()
+            Me(Me.tableService_AccesDetail.Discount_perColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsIGST_PerNull() As Boolean
+            Return Me.IsNull(Me.tableService_AccesDetail.IGST_PerColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetIGST_PerNull()
+            Me(Me.tableService_AccesDetail.IGST_PerColumn) = Global.System.Convert.DBNull
+        End Sub
+    End Class
+    
+    '''<summary>
     '''Row event argument class
     '''</summary>
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
@@ -25377,6 +30618,78 @@ Partial Public Class TallyDs
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public ReadOnly Property Row() As Service_Bills_HeadsRow
+            Get
+                Return Me.eventRow
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Action() As Global.System.Data.DataRowAction
+            Get
+                Return Me.eventAction
+            End Get
+        End Property
+    End Class
+    
+    '''<summary>
+    '''Row event argument class
+    '''</summary>
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+    Public Class Service_AccesRowChangeEvent
+        Inherits Global.System.EventArgs
+        
+        Private eventRow As Service_AccesRow
+        
+        Private eventAction As Global.System.Data.DataRowAction
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub New(ByVal row As Service_AccesRow, ByVal action As Global.System.Data.DataRowAction)
+            MyBase.New
+            Me.eventRow = row
+            Me.eventAction = action
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Row() As Service_AccesRow
+            Get
+                Return Me.eventRow
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Action() As Global.System.Data.DataRowAction
+            Get
+                Return Me.eventAction
+            End Get
+        End Property
+    End Class
+    
+    '''<summary>
+    '''Row event argument class
+    '''</summary>
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+    Public Class Service_AccesDetailRowChangeEvent
+        Inherits Global.System.EventArgs
+        
+        Private eventRow As Service_AccesDetailRow
+        
+        Private eventAction As Global.System.Data.DataRowAction
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub New(ByVal row As Service_AccesDetailRow, ByVal action As Global.System.Data.DataRowAction)
+            MyBase.New
+            Me.eventRow = row
+            Me.eventAction = action
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Row() As Service_AccesDetailRow
             Get
                 Return Me.eventRow
             End Get
